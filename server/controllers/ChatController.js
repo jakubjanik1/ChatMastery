@@ -24,9 +24,18 @@ exports.getConversations = (req, res) => {
                         });
 
                         if (conversations.length == fullConversations.length) {
+                            fullConversations.sort((x, y) => x.lastMessage.createdAt < y.lastMessage.createdAt);
                             res.json(fullConversations);
                         }
                     })
             })
         });
+};
+
+exports.getMessages = (req, res) => {
+    Message.find({ conversationId: req.params.id })
+        .populate('author','name')
+        .sort('createdAt')
+        .select('-conversationId')
+        .then(messages => res.json(messages));
 };
