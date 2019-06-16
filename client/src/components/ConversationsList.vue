@@ -46,7 +46,7 @@ export default {
 <style lang="scss" scoped>
     .conversations {
         height: 100vh;
-        width: 360px;
+        min-width: 360px;
         border-radius: 2px;
         border-right: 1px solid #f2f2f2;
     }

@@ -16,7 +16,7 @@ export default {
     computed: {
         date() {
             const date = this.conversation.lastMessage.createdAt;
-            return moment(date).fromNow().replace(' ago', '');
+            return moment(date).fromNow();
         },
         lastMessage() {
             return this.conversation.lastMessage.body;
