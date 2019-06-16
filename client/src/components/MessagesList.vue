@@ -14,6 +14,7 @@
 
 <script>
 import ChatService from '@/services/ChatService';
+import EventBus from '@/services/EventBus';
 import MessagesItem from './MessagesItem';
 import VueScroll from 'vuescroll';
 
@@ -34,15 +35,17 @@ export default {
         };
     },
     mounted() {
-        this.getMessages();
+        EventBus.$on('conversationChanged', (id) => { 
+            this.getMessages(id)
 
-        this.$refs.scroll.scrollBy({
-            dy: 1000000000000
+            this.$refs.scroll.scrollBy({
+                dy: 1000000000000
+            });
         });
     },
     methods: {
-        async getMessages() {
-            const response = await ChatService.fetchMessages('5d01fcc506276e0d80b31a86');
+        async getMessages(conversationId) {
+            const response = await ChatService.fetchMessages(conversationId);
             this.messages = response.data;
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="conversation">
+    <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationChanged">
         <img class="conversation__picture" src="@/assets/profile.jpg">
         <div class="conversation__receiver">{{ receiver }}</div>
         <div class="conversation__last-message">{{ lastMessage }}</div>
@@ -9,10 +9,19 @@
 
 <script>
 import moment from 'moment';
+import EventBus from '@/services/EventBus';
 
 export default {
     name: 'ConversationsItem',
     props: [ 'conversation' ],
+    data() {
+        return {
+            isActive: false
+        };
+    },
+    mounted() {
+        EventBus.$on('conversationChanged', () => this.isActive = false);
+    },
     computed: {
         date() {
             const date = this.conversation.lastMessage.createdAt;
@@ -23,6 +32,12 @@ export default {
         },
         receiver() {
             return this.conversation.members[0].name;
+        }
+    },
+    methods: {
+        emitConversationChanged() {
+            EventBus.$emit('conversationChanged', this.conversation._id);
+            this.isActive = true;
         }
     }
 }
@@ -37,17 +52,6 @@ export default {
         grid-template-rows: 25px 25px;
         grid-template-areas: "picture receiver date"
                              "picture last-message last-message";
-
-        &:hover {
-            background: #009ef7;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: .3s ease-in-out;
-        }
-
-        &:hover * {
-            color: #fff;
-        }
 
         &__picture {
             width: 50px;
@@ -73,6 +77,17 @@ export default {
             justify-self: right;
             font-size: 12px;
             color: #9e9e9e;
+        }
+
+         &:hover, &--active {
+            background: #009ef7;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: .3s ease-in-out;
+        }
+
+        &:hover *, &--active * {
+            color: #fff;
         }
 
         & > * {
