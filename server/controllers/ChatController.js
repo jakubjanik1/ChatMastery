@@ -39,3 +39,10 @@ exports.getMessages = (req, res) => {
         .select('-conversationId')
         .then(messages => res.json(messages));
 };
+
+exports.storeMessage = (req, res) => {
+    const message = new Message(req.body);
+
+    message.save()
+        .then(response => res.json('Success'));
+};
