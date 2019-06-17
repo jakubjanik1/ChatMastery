@@ -35,8 +35,10 @@ export default {
         };
     },
     mounted() {
-        EventBus.$on('conversationChanged', (id) => { 
-            this.getMessages(id)
+        EventBus.$on('conversationChanged', (id) => {
+            localStorage.setItem('conversationId', id);
+
+            this.getMessages(id);
 
             this.$refs.scroll.scrollBy({
                 dy: 1000000000000
@@ -54,7 +56,8 @@ export default {
 
 <style lang="scss" scoped>
     .messages {
-        width: 100vw;
+        background: #f6f6f6;
+        width: 100%;
         height: 100vh;
     }
 </style>

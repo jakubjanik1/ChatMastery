@@ -36,7 +36,9 @@ export default {
     },
     methods: {
         async getConversations() {
-            const response = await ChatService.fetchConversations();
+            const userId = localStorage.getItem('userId');
+
+            const response = await ChatService.fetchConversations(userId);
             this.conversations = response.data;
         }
     }
@@ -48,6 +50,6 @@ export default {
         height: 100vh;
         min-width: 360px;
         border-radius: 2px;
-        border-right: 1px solid #f2f2f2;
+        border-right: 2px solid #f2f2f2;
     }
 </style>

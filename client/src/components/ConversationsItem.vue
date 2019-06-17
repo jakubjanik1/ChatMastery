@@ -28,7 +28,8 @@ export default {
             return moment(date).fromNow();
         },
         lastMessage() {
-            return this.conversation.lastMessage.body;
+            const message = this.conversation.lastMessage.body;
+            return message.length > 30 ? `${message.slice(0, 30)}...` : message;
         },
         receiver() {
             return this.conversation.members[0].name;
@@ -61,7 +62,7 @@ export default {
         }
 
         &__receiver {
-            color: #000;
+            color: #292929;
             font-weight: 600;
             grid-area: receiver;
         }

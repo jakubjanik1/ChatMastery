@@ -20,7 +20,9 @@ export default {
             return moment(this.message.createdAt).fromNow();
         },
         getClass() {
-            const isSender = '5cfd1455363b4aa323668add' == this.message.author._id;
+            const userId = localStorage.getItem('userId');
+
+            const isSender = userId == this.message.author._id;
             return isSender ? 'message--sender' : 'message--receiver';
         }
     }
@@ -36,10 +38,10 @@ export default {
         box-sizing: content-box;
 
         &:last-of-type {
-            padding-bottom: 50px;
+            padding-bottom: 50px + 64px;
 
             .message__date {
-                bottom: 32px;
+                bottom: 32px + 64px;
             }
         }
 
