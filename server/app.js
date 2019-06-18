@@ -18,3 +18,5 @@ app.use(cors());
 app.use('/chat', chatRoutes);
 
 app.listen(8080, () => console.log('Server listening...'));
+
+module.exports = app;

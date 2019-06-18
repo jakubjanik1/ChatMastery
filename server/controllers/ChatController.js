@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
+const io = require('../socket');
 
 exports.getConversations = (req, res) => {
     Conversation.find({ members: req.params.userId })
@@ -16,7 +17,7 @@ exports.getConversations = (req, res) => {
                 Message.find({ conversationId: conversation._id })
                     .sort('-createdAt')
                     .limit(1)
-                    .select('-_id body createdAt')
+                    .select('body createdAt')
                     .then(message => {
                         fullConversations.push({
                              ...conversation._doc, 
@@ -44,5 +45,8 @@ exports.storeMessage = (req, res) => {
     const message = new Message(req.body);
 
     message.save()
-        .then(response => res.json('Success'));
+        .then(() => {
+            io.emit('messageAdded', message);
+            res.json('Success');
+        });
 };
