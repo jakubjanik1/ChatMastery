@@ -22,7 +22,7 @@ export default {
         getClass() {
             const userId = localStorage.getItem('userId');
 
-            const isSender = userId == this.message.author._id;
+            const isSender = userId == (this.message.author._id || this.message.author);
             return isSender ? 'message--sender' : 'message--receiver';
         }
     }

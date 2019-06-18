@@ -5,6 +5,7 @@
                 :key="conversation._id" 
                 v-for="conversation in conversations"
                 :conversation="conversation">
+
             </conversations-item>
         </vue-scroll>
     </div>
@@ -40,6 +41,24 @@ export default {
 
             const response = await ChatService.fetchConversations(userId);
             this.conversations = response.data;
+        }
+    },
+    sockets: {
+        messageAdded(message) {
+            this.conversations.forEach(conversation => {
+                const conversationId = localStorage.getItem('conversationId');
+
+                if (conversation._id == message.conversationId) {
+                    conversation.lastMessage.body = message.body;
+                    conversation.lastMessage.createdAt = message.createdAt;
+
+                    return;
+                }
+            });
+
+            this.conversations.sort((a, b) => 
+                Date.parse(b.lastMessage.createdAt) - Date.parse(a.lastMessage.createdAt)
+            );
         }
     }
 }

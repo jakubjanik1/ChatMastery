@@ -35,20 +35,35 @@ export default {
         };
     },
     mounted() {
-        EventBus.$on('conversationChanged', (id) => {
+        localStorage.setItem('conversationId', '');
+
+        EventBus.$on('conversationChanged', id => {
             localStorage.setItem('conversationId', id);
 
             this.getMessages(id);
 
-            this.$refs.scroll.scrollBy({
-                dy: 1000000000000
-            });
+            this.scrollDown();
         });
     },
     methods: {
         async getMessages(conversationId) {
             const response = await ChatService.fetchMessages(conversationId);
             this.messages = response.data;
+        },
+        scrollDown() {
+            this.$refs.scroll.scrollBy({
+                dy: 1000000000000
+            });
+        }
+    },
+    sockets: {
+        messageAdded(message) {
+            const conversationId = localStorage.getItem('conversationId');
+            
+            if (message.conversationId == conversationId) {
+                this.messages.push(message);
+                this.scrollDown();
+            }
         }
     }
 }
