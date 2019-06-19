@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import moment from 'moment';
+import { formatDate } from '@/helpers';
 
 export default {
     name: 'MessagesItem',
     props: [ 'message' ],
     computed: {
         date() {
-            return moment(this.message.createdAt).fromNow();
+            return formatDate(this.message.createdAt);
         },
         getClass() {
             const userId = localStorage.getItem('userId');

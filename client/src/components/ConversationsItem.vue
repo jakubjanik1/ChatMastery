@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import { formatDate } from '@/helpers';
 import EventBus from '@/services/EventBus';
 
 export default {
@@ -24,8 +24,7 @@ export default {
     },
     computed: {
         date() {
-            const date = this.conversation.lastMessage.createdAt;
-            return moment(date).fromNow();
+            return formatDate(this.conversation.lastMessage.createdAt);
         },
         lastMessage() {
             const message = this.conversation.lastMessage.body;
