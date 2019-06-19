@@ -1,5 +1,5 @@
 <template>
-    <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationChanged">
+    <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationSelected">
         <img class="conversation__picture" src="@/assets/profile.jpg">
         <div class="conversation__receiver">{{ receiver }}</div>
         <div class="conversation__last-message">{{ lastMessage }}</div>
@@ -20,7 +20,7 @@ export default {
         };
     },
     mounted() {
-        EventBus.$on('conversationChanged', () => this.isActive = false);
+        EventBus.$on('conversationSelected', () => this.isActive = false);
     },
     computed: {
         date() {
@@ -35,8 +35,8 @@ export default {
         }
     },
     methods: {
-        emitConversationChanged() {
-            EventBus.$emit('conversationChanged', this.conversation._id);
+        emitConversationSelected() {
+            EventBus.$emit('conversationSelected', this.conversation._id);
             this.isActive = true;
         }
     }

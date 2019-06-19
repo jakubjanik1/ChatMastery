@@ -1,10 +1,10 @@
 <template>
-    <div class="message-input">
+    <div class="message-input" v-show="isVisible">
         <input 
             class="message-input__input" 
-            placeholder="Type a message..." 
-            v-model="body"
-            spellcheck="false">
+            placeholder="Type a message..."
+            spellcheck="false"
+            v-model="body">
 
         <button 
             class="message-input__button" 
@@ -18,13 +18,18 @@
 
 <script>
 import ChatService from '@/services/ChatService';
+import EventBus from '@/services/EventBus';
 
 export default {
     name: 'MessageInput',
     data() {
         return {
-            body: ''
+            body: '',
+            isVisible: false
         };
+    },
+    created() {
+        EventBus.$on('conversationSelected', () => this.isVisible = true);
     },
     methods: {
         async addMessage() {

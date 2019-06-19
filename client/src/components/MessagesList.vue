@@ -37,7 +37,7 @@ export default {
     mounted() {
         localStorage.setItem('conversationId', '');
 
-        EventBus.$on('conversationChanged', id => {
+        EventBus.$on('conversationSelected', id => {
             localStorage.setItem('conversationId', id);
 
             this.getMessages(id);
