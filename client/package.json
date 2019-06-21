@@ -11,6 +11,7 @@
     "core-js": "^2.6.5",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
+    "vue-material-design-icons": "^3.2.0",
     "vue-socket.io": "^3.0.7",
     "vuescroll": "^4.13.0"
   },

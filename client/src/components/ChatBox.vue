@@ -20,6 +20,7 @@ export default {
 
 <style lang="scss" scoped>
     .chat-box {
+        grid-area: chat-box;
         width: 100%;
     }
 </style>

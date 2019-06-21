@@ -53,6 +53,10 @@ export default {
         grid-template-areas: "picture receiver date"
                              "picture last-message last-message";
 
+        &:last-of-type {
+            margin-bottom: 66px;
+        }
+
         &__picture {
             width: 50px;
             height: 50px;

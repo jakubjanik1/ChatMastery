@@ -39,6 +39,7 @@ export default {
 
         &:last-of-type {
             padding-bottom: 50px + 64px;
+            margin-bottom: 64px;
 
             .message__date {
                 bottom: 32px + 64px;
