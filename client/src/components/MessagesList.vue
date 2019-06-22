@@ -1,6 +1,6 @@
 <template>
     <div class="messages">
-        <vue-scroll :ops="scrollOptions" ref="scroll">
+        <vue-scroll ref="scroll">
             <messages-item 
                 :key="message._id"
                 v-for="message in messages"
@@ -16,22 +16,15 @@
 import ChatService from '@/services/ChatService';
 import EventBus from '@/services/EventBus';
 import MessagesItem from './MessagesItem';
-import VueScroll from 'vuescroll';
 
 export default {
     name: 'MessagesList',
     components: {
-        MessagesItem,
-        VueScroll
+        MessagesItem
     },
     data() {
         return {
-            messages: [],
-            scrollOptions: {
-                bar: {
-                    size: 0
-                }
-            }
+            messages: []
         };
     },
     mounted() {

@@ -1,6 +1,6 @@
 <template>
     <div class="conversations">
-        <vue-scroll :ops="scrollOptions">
+        <vue-scroll>
             <conversations-item 
                 :key="conversation._id" 
                 v-for="conversation in conversations"
@@ -14,22 +14,15 @@
 <script>
 import ConversationsItem from './ConversationsItem';
 import ChatService from '@/services/ChatService';
-import VueScroll from 'vuescroll';
 
 export default {
     name: 'ConversationsList',
     components: {
-        ConversationsItem,
-        VueScroll
+        ConversationsItem
     },
     data() {
         return {
-            conversations: [],
-            scrollOptions: {
-                bar: {
-                    size: 0
-                }
-            }
+            conversations: []
         };
     },
     created() {
@@ -68,7 +61,7 @@ export default {
     .conversations {
         grid-area: conversations-list;
         height: 100vh;
-        min-width: 360px;
+        min-width: 360px - 2px;
         border-radius: 2px;
         border-right: 2px solid #f2f2f2;
     }

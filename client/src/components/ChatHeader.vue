@@ -1,11 +1,6 @@
 <template>
     <div class="chat-header">
-        <search-icon 
-            class="chat-header__search"
-            :size="27" 
-            fillColor="#c3c4c4">
-
-        </search-icon>
+        <users-search-box></users-search-box>
 
         <img class="chat-header__logo" src="@/assets/logo.png">
 
@@ -17,12 +12,12 @@
 </template>
 
 <script>
-import SearchIcon from 'vue-material-design-icons/Magnify';
+import UsersSearchBox from './UsersSearchBox';
 
 export default {
     name: 'ChatHeader',
     components: {
-        SearchIcon
+        UsersSearchBox
     }
 }
 </script>
