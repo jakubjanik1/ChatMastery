@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const chatRoutes = require('./routes/chat');
+const usersRoutes = require('./routes/users');
 const app = express();
 
 mongoose.connect('mongodb://localhost/chatmastery', { useNewUrlParser: true });
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/chat', chatRoutes);
+app.use('/users', usersRoutes);
 
 app.listen(8080, () => console.log('Server listening...'));
 
