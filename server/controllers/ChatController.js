@@ -50,3 +50,10 @@ exports.storeMessage = (req, res) => {
             res.json('Success');
         });
 };
+
+exports.storeConversation = (req, res) => {
+    const conversation = new Conversation(req.body);
+
+    conversation.save()
+        .then(response => res.send(response._id));
+}
