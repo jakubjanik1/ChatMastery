@@ -21,6 +21,13 @@ export default {
     },
     mounted() {
         EventBus.$on('conversationSelected', () => this.isActive = false);
+
+        EventBus.$on('newConversation', (userId) => {
+            const conversationAlreadyExists = (this.conversation.members[0]._id == userId);
+            if (conversationAlreadyExists) {
+                this.emitConversationSelected();
+            }
+        })
     },
     computed: {
         date() {

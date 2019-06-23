@@ -30,19 +30,35 @@ export default {
     },
     created() {
         EventBus.$on('conversationSelected', () => this.isVisible = true);
+        EventBus.$on('newConversation', () => this.isVisible = true);
     },
     methods: {
         async addMessage() {
-            const conversationId = localStorage.getItem('conversationId');
             const userId = localStorage.getItem('userId');
-
+            const conversationId = await this.getConversationId();
+            
+            localStorage.setItem('conversationId', conversationId.data);
+            
             await ChatService.storeMessage({
                 'body': this.body,
-                'conversationId': conversationId,
+                'conversationId': conversationId.data,
                 'author': userId
             });
 
             this.body = '';
+        },
+        async getConversationId() {
+            const conversationId = localStorage.getItem('conversationId');
+            if (conversationId) {
+                return { data: conversationId };
+            } else {
+                return await ChatService.storeConversation({
+                    'members': [
+                        localStorage.getItem('userId'),
+                        localStorage.getItem('receiverUserId')
+                    ]
+                });
+            }
         }
     },
     computed: {

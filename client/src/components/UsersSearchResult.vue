@@ -1,14 +1,22 @@
 <template>
-    <div class="users-search-result">
+    <div class="users-search-result" @click="emitNewConversation">
         <img class="users-search-result__picture" src="@/assets/profile.jpg">
         <div class="users-search-result__name">{{ user.name }}</div>
     </div>    
 </template>
 
 <script>
+import EventBus from '@/services/EventBus';
+
 export default {
     name: 'UsersSearchResult',
-    props: [ 'user' ]
+    props: [ 'user' ],
+    methods: {
+        emitNewConversation() {
+            EventBus.$emit('newConversation', this.user._id);
+            localStorage.setItem('receiverUserId', this.user._id);
+        }
+    }
 }
 </script>
 

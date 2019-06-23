@@ -38,16 +38,14 @@ export default {
     },
     sockets: {
         messageAdded(message) {
-            this.conversations.forEach(conversation => {
-                const conversationId = localStorage.getItem('conversationId');
+            const foundIndex = this.conversations.findIndex(x => x._id == message.conversationId);
 
-                if (conversation._id == message.conversationId) {
-                    conversation.lastMessage.body = message.body;
-                    conversation.lastMessage.createdAt = message.createdAt;
-
-                    return;
-                }
-            });
+            if (foundIndex != -1) {
+                this.conversations[foundIndex].lastMessage.body = message.body;
+                this.conversations[foundIndex].lastMessage.createdAt = message.createdAt
+            } else {
+                this.getConversations();
+            }
 
             this.conversations.sort((a, b) => 
                 Date.parse(b.lastMessage.createdAt) - Date.parse(a.lastMessage.createdAt)

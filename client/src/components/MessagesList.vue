@@ -37,6 +37,12 @@ export default {
 
             this.scrollDown();
         });
+
+        EventBus.$on('newConversation', () => {
+            localStorage.setItem('conversationId', '');
+            
+            this.messages = [];
+        });
     },
     methods: {
         async getMessages(conversationId) {

@@ -11,5 +11,9 @@ export default {
 
     storeMessage(message) {
         return Api().post(`/chat/conversation/message`, message);
+    },
+
+    storeConversation(conversation) {
+        return Api().post('/chat/conversation', conversation);
     }
 }
