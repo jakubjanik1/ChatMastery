@@ -34,7 +34,9 @@ export default {
   #app {
     display: grid;
     grid-template-columns: 360px auto;
+    grid-template-rows: 64px auto 64px;
     grid-template-areas: "header header"
-                         "conversations-list chat-box";
+                         "conversations-list chat-box"
+                         "conversations-list message-input";
   }
 </style>

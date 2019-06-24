@@ -38,11 +38,10 @@ export default {
         box-sizing: content-box;
 
         &:last-of-type {
-            padding-bottom: 50px + 64px;
-            margin-bottom: 64px;
+            padding-bottom: 55px;
 
             .message__date {
-                bottom: 32px + 64px;
+                bottom: 37px;
             }
         }
 

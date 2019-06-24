@@ -1,5 +1,5 @@
 <template>
-    <div class="message-input" v-show="isVisible">
+    <div class="message-input" :class="{ 'message-input--invisible' : !isVisible }">
         <input 
             class="message-input__input" 
             placeholder="Type a message..."
@@ -78,10 +78,16 @@ export default {
         height: 55px;
         background: #fafafa;
         border-top: 2px solid #f2f2f2;
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        left: 361px;
+        grid-area: message-input;
+
+        &--invisible {
+            border-top-color: #f6f6f6;
+            background: #f6f6f6;
+
+            & > * {
+                display: none;
+            }
+        }
 
         &__input {
             color: #292929;

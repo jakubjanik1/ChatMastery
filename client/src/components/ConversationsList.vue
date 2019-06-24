@@ -58,7 +58,7 @@ export default {
 <style lang="scss" scoped>
     .conversations {
         grid-area: conversations-list;
-        height: 100vh;
+        height: calc(100vh - (64px));
         min-width: 360px - 2px;
         border-radius: 2px;
         border-right: 2px solid #f2f2f2;

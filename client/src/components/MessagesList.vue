@@ -72,6 +72,7 @@ export default {
     .messages {
         background: #f6f6f6;
         width: 100%;
-        height: 100vh;
+        height: calc(100vh - (121px));
+        border-top: 2px solid #f2f2f2;
     }
 </style>
