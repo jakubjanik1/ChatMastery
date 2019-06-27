@@ -3,7 +3,9 @@
         <img class="conversation__picture" src="@/assets/profile.jpg">
         <div class="conversation__receiver">{{ receiver }}</div>
         <div class="conversation__last-message">{{ lastMessage }}</div>
+
         <div class="conversation__date">{{ date }}</div>
+        <div class="conversation__unread-messages" v-show="unreadMessages">{{ unreadMessages }}</div>
     </div>
 </template>
 
@@ -39,12 +41,31 @@ export default {
         },
         receiver() {
             return this.conversation.members[0].name;
+        },
+        unreadMessages() {
+            return this.conversation.unreadMessages;
         }
     },
     methods: {
         emitConversationSelected() {
             EventBus.$emit('conversationSelected', this.conversation._id);
+
+            this.readMessages();
+
             this.isActive = true;
+        },
+        readMessages() {
+            const userId = localStorage.getItem('userId');
+
+            this.$socket.emit('readMessages', { conversationId: this.conversation._id, userId });
+        }
+    },
+    sockets: {
+        messageAdded(message) {
+            const currentConversationId = localStorage.getItem('conversationId');
+            if (currentConversationId == message.conversationId && message.conversationId == this.conversation._id) {
+                this.readMessages();
+            }
         }
     }
 }
@@ -58,7 +79,7 @@ export default {
         grid-template-columns: 70px auto auto;
         grid-template-rows: 25px 25px;
         grid-template-areas: "picture receiver date"
-                             "picture last-message last-message";
+                             "picture last-message unread-messages";
 
         &__picture {
             width: 50px;
@@ -86,11 +107,31 @@ export default {
             color: #9e9e9e;
         }
 
+        &__unread-messages {
+            grid-area: unread-messages;
+            background: #009ef7;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 50%;
+            height: 16px;
+            min-width: 16px;
+            justify-self: right;
+            align-self: center;
+            justify-content: center;
+            padding: 2px;
+        }
+
          &:hover, &--active {
             background: #009ef7;
             cursor: pointer;
             border-radius: 2px;
             transition: .3s ease-in-out;
+
+            .conversation__unread-messages {
+                background: #fff;
+                color: #009ef7;
+            }
         }
 
         &:hover *, &--active * {

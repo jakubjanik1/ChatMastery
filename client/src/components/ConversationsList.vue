@@ -14,6 +14,7 @@
 <script>
 import ConversationsItem from './ConversationsItem';
 import ChatService from '@/services/ChatService';
+import EventBus from '@/services/EventBus';
 
 export default {
     name: 'ConversationsList',
@@ -26,6 +27,8 @@ export default {
         };
     },
     created() {
+        EventBus.$on('conversationSelected', () => this.getConversations());
+
         this.getConversations();
     },
     methods: {
@@ -38,18 +41,7 @@ export default {
     },
     sockets: {
         messageAdded(message) {
-            const foundIndex = this.conversations.findIndex(x => x._id == message.conversationId);
-
-            if (foundIndex != -1) {
-                this.conversations[foundIndex].lastMessage.body = message.body;
-                this.conversations[foundIndex].lastMessage.createdAt = message.createdAt
-            } else {
-                this.getConversations();
-            }
-
-            this.conversations.sort((a, b) => 
-                Date.parse(b.lastMessage.createdAt) - Date.parse(a.lastMessage.createdAt)
-            );
+            this.getConversations();
         }
     }
 }
