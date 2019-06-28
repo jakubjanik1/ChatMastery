@@ -24,12 +24,14 @@ export default {
     mounted() {
         EventBus.$on('conversationSelected', () => this.isActive = false);
 
-        EventBus.$on('newConversation', (userId) => {
+        EventBus.$on('newConversation', ({ _id: userId }) => {
             const conversationAlreadyExists = (this.conversation.members[0]._id == userId);
             if (conversationAlreadyExists) {
                 this.emitConversationSelected();
             }
-        })
+        });
+
+        EventBus.$on('returnToConversations', () => this.isActive = false);
     },
     computed: {
         date() {
@@ -37,7 +39,7 @@ export default {
         },
         lastMessage() {
             const message = this.conversation.lastMessage.body;
-            return message.length > 30 ? `${message.slice(0, 30)}...` : message;
+            return message.length > 30 ? `${message.slice(0, 24)}...` : message;
         },
         receiver() {
             return this.conversation.members[0].name;
@@ -48,7 +50,7 @@ export default {
     },
     methods: {
         emitConversationSelected() {
-            EventBus.$emit('conversationSelected', this.conversation._id);
+            EventBus.$emit('conversationSelected', this.conversation);
 
             this.readMessages();
 
@@ -141,6 +143,10 @@ export default {
         & > * {
             display: flex;
             align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            width: calc(100vw - (40px));
         }
     }
 </style>

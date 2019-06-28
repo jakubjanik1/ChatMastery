@@ -13,7 +13,7 @@ export default {
     props: [ 'user' ],
     methods: {
         emitNewConversation() {
-            EventBus.$emit('newConversation', this.user._id);
+            EventBus.$emit('newConversation', this.user);
             localStorage.setItem('receiverUserId', this.user._id);
         }
     }

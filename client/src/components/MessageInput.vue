@@ -102,7 +102,7 @@ export default {
             }
 
             &::placeholder {
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 500;
                 color: #292929;
             }
@@ -120,9 +120,14 @@ export default {
 
         & * {
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             border: 0;
+        }
+
+        @media (max-width: 900px) {
+            padding: 0 12px 0 18px;
+            height: 50px;
         }
     }
 </style>

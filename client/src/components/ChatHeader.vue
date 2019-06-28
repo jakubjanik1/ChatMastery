@@ -32,13 +32,6 @@ export default {
         border-bottom: 2px solid #f2f2f2;
         grid-area: header;
 
-        &__search {
-            cursor: pointer;
-            margin-top: 5px;
-            margin-left: 40px;
-            width: 360px - 40px;
-        }
-
         &__logo {
             height: 35px;
         }
@@ -65,6 +58,27 @@ export default {
             text-align: right;
             width: 360px - 40px;
             margin-right: 40px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .chat-header {
+            flex-direction: column;
+            height: 100%;
+            width: 100vw;
+            align-items: center;
+
+            &__logo {
+                order: 1;
+                margin: 12px 0 8px 0;
+            }
+
+            &__wrapper {
+                order: 2;
+                text-align: center;
+                margin-right: 0;
+                margin: 8px 0;
+            }
         }
     }
 </style>

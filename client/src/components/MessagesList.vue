@@ -30,7 +30,7 @@ export default {
     mounted() {
         localStorage.setItem('conversationId', '');
 
-        EventBus.$on('conversationSelected', id => {
+        EventBus.$on('conversationSelected', ({ _id: id }) => {
             localStorage.setItem('conversationId', id);
 
             this.getMessages(id);
@@ -70,9 +70,14 @@ export default {
 
 <style lang="scss" scoped>
     .messages {
+        grid-area: messages-list;
         background: #f6f6f6;
         width: 100%;
-        height: calc(100vh - (121px));
+        height: calc((var(--vh, 1vh) * 100) - (121px));
         border-top: 2px solid #f2f2f2;
+
+        @media (max-width: 900px) {
+            height: calc((var(--vh, 1vh) * 100) - (94px));
+        }
     }
 </style>

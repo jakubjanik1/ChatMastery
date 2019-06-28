@@ -120,4 +120,37 @@ export default {
             left: 168px;
         }
     }
+
+    @media (max-width: 900px) {
+        .message {
+            padding: 20px 25px 0 25px;
+            font-size: 13px;
+
+            &:last-of-type {
+                padding-bottom: 40px;
+
+                .message__date {
+                    bottom: 25px;
+                }
+            }
+
+            & ~ & {
+                padding-top: 40px;
+            }
+
+            &__date {
+                font-size: 10px;
+            }
+        }
+        
+        .message--receiver .message__date {
+            bottom: -15px;
+            left: 93px;
+        }
+
+        .message--sender .message__date {
+            bottom: -15px;
+            right: 93px;
+        }
+    }
 </style>

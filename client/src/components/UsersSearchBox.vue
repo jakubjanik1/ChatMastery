@@ -80,19 +80,18 @@ export default {
         padding-left: 40px;
         position: relative;
 
-        &__icon:hover {
+        &__icon:hover, &__close:hover {
             cursor: pointer;           
         }
 
-        &__close:hover {
-            cursor: pointer;
-        }
-
         &__icon, &__close {
-            animation: fade-in .3s;
             height: 100%;
             display: flex;
             align-items: center;
+        }
+
+        &__close {
+            animation: fade-in .3s;
         }
 
         &__results {
@@ -124,6 +123,19 @@ export default {
         @keyframes fade-in {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+    }
+
+    @media (max-width: 900px) {
+        .users-search-box {
+            margin: 8px 0;
+            order: 3;
+            position: static;
+
+            &__results {
+                width: 100vw;
+                top: 141px;
+            }
         }
     }
 </style>

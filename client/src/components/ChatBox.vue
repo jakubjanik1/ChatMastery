@@ -1,5 +1,6 @@
 <template>
     <div class="chat-box">
+        <conversation-info></conversation-info>
         <messages-list></messages-list>
         <message-input></message-input>
     </div>
@@ -8,12 +9,14 @@
 <script>
 import MessagesList from './MessagesList';
 import MessageInput from './MessageInput';
+import ConversationInfo from './ConversationInfo';
 
 export default {
     name: 'ChatBox',
     components: {
         MessagesList,
-        MessageInput
+        MessageInput,
+        ConversationInfo
     }
 }
 </script>
@@ -21,6 +24,11 @@ export default {
 <style lang="scss" scoped>
     .chat-box {
         grid-area: chat-box;
+        grid-template-columns: auto;
+        grid-template-rows: 40px auto 64px;
+        grid-template-areas: "conversation-info"
+                             "messages-list"
+                             "message-input";
         width: 100%;
     }
 </style>
