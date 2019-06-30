@@ -1,6 +1,8 @@
 <template>
     <div class="messages">
-        <vue-scroll ref="scroll">
+        <loading-circle :loading="isLoading"></loading-circle>
+
+        <vue-scroll ref="scroll" v-show="! isLoading">
             <messages-receiver-info></messages-receiver-info>
 
             <messages-item 
@@ -19,16 +21,19 @@ import ChatService from '@/services/ChatService';
 import EventBus from '@/services/EventBus';
 import MessagesItem from './MessagesItem';
 import MessagesReceiverInfo from './MessagesReceiverInfo';
+import LoadingCircle from './LoadingCircle';
 
 export default {
     name: 'MessagesList',
     components: {
         MessagesItem,
-        MessagesReceiverInfo
+        MessagesReceiverInfo,
+        LoadingCircle
     },
     data() {
         return {
-            messages: []
+            messages: [],
+            isLoading: false
         };
     },
     mounted() {
@@ -50,8 +55,12 @@ export default {
     },
     methods: {
         async getMessages(conversationId) {
+            this.isLoading = true;
+
             const response = await ChatService.fetchMessages(conversationId);
-            this.messages = response.data;
+            this.messages = response.data;    
+
+            this.isLoading = false;
         },
         scrollDown() {
             this.$refs.scroll.scrollBy({
@@ -79,6 +88,7 @@ export default {
         width: 100%;
         height: calc((var(--vh, 1vh) * 100) - (121px));
         border-top: 2px solid #f2f2f2;
+        position: relative;
 
         @media (max-width: 900px) {
             height: calc((var(--vh, 1vh) * 100) - (94px));
