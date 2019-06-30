@@ -1,6 +1,8 @@
 <template>
     <div class="messages">
         <vue-scroll ref="scroll">
+            <messages-receiver-info></messages-receiver-info>
+
             <messages-item 
                 :key="message._id"
                 v-for="message in messages"
@@ -16,11 +18,13 @@
 import ChatService from '@/services/ChatService';
 import EventBus from '@/services/EventBus';
 import MessagesItem from './MessagesItem';
+import MessagesReceiverInfo from './MessagesReceiverInfo';
 
 export default {
     name: 'MessagesList',
     components: {
-        MessagesItem
+        MessagesItem,
+        MessagesReceiverInfo
     },
     data() {
         return {

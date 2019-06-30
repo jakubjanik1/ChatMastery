@@ -123,7 +123,7 @@ export default {
 
     @media (max-width: 900px) {
         .message {
-            padding: 20px 25px 0 25px;
+            padding: 40px 25px 0 25px;
             font-size: 13px;
 
             &:last-of-type {
@@ -132,10 +132,6 @@ export default {
                 .message__date {
                     bottom: 25px;
                 }
-            }
-
-            & ~ & {
-                padding-top: 40px;
             }
 
             &__date {
