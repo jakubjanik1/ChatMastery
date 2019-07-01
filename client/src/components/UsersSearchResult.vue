@@ -39,10 +39,6 @@ export default {
             font-weight: 600;
         }
 
-        &:last-of-type {
-            margin-bottom: 66px;
-        }
-
          &:hover {
             background: #009ef7;
             cursor: pointer;

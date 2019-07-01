@@ -79,17 +79,20 @@ export default {
         border-radius: 2px;
         border-right: 2px solid #f2f2f2;
         position: relative;
+
         &--empty {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: 40px;
         }
+
         &__info {
             font-weight: 600;
             font-size: 14px;
             color: #292929;
         }
+
         &__more {
             font-size: 13px;
             color: #9e9e9e;
@@ -97,8 +100,10 @@ export default {
             text-align: center;
             line-height: 1.5em;
         }
+        
         @media (max-width: 900px) {
             border-right: 0;
+            height: calc((var(--vh, 1vh) * 100) - (136px));
         }
     }
 </style>

@@ -97,7 +97,7 @@ export default {
         &__results {
             position: absolute;
             top: 52px;
-            height: 100vh;
+            height: calc((var(--vh, 1vh) * 100) - (64px));
             width: 360px - 2px;
             background: #fff;
             z-index: 1;
@@ -133,8 +133,8 @@ export default {
             position: static;
 
             &__results {
-                width: 100vw;
-                top: 141px;
+                height: calc((var(--vh, 1vh) * 100) - (136px));
+                top: 145px;
             }
         }
     }
