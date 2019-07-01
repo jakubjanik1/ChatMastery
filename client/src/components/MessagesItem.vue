@@ -59,6 +59,10 @@ export default {
             }
         }
 
+         &__body {
+            white-space: pre-wrap;
+        }
+
         &__author {
             width: 50px;
             height: 50px;

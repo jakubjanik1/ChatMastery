@@ -1,10 +1,16 @@
 <template>
     <div class="message-input" :class="{ 'message-input--invisible' : !isVisible }">
-        <input 
-            class="message-input__input" 
-            placeholder="Type a message..."
-            spellcheck="false"
-            v-model="body">
+        <div class="message-input__scroll" v-bar>
+             <textarea 
+                class="message-input__input" 
+                placeholder="Type a message..."
+                spellcheck="false"
+                v-model="body"
+                :class="{ 'message-input__input--empty': !isMultiline || isEmpty }">
+
+            </textarea>
+        </div>
+       
 
         <button 
             class="message-input__button" 
@@ -29,8 +35,8 @@ export default {
         };
     },
     created() {
-        EventBus.$on('conversationSelected', () => this.isVisible = true);
-        EventBus.$on('newConversation', () => this.isVisible = true);
+        EventBus.$on('conversationSelected', this.setup);
+        EventBus.$on('newConversation', this.setup);
     },
     methods: {
         async addMessage() {
@@ -59,11 +65,18 @@ export default {
                     ]
                 });
             }
+        },
+        setup() {
+            this.isVisible = true;
+            this.body = '';
         }
     },
     computed: {
          isEmpty() {
             return this.body.trim() == '';
+        },
+        isMultiline() {
+            return this.body.includes('\n');
         }
     }
 }
@@ -89,13 +102,18 @@ export default {
             }
         }
 
+        &__scroll {
+            width: 100%;
+            margin-right: 32px;
+        }
+
         &__input {
             color: #292929;
-            margin-right: 32px;
             padding: 0;
-            width: 100%;
-            height: 100%;
             background: inherit;
+            height: 100%;
+            padding: 0;
+            resize: none;
 
             &:focus {
                 outline: 0;
@@ -105,6 +123,10 @@ export default {
                 font-size: 14px;
                 font-weight: 500;
                 color: #292929;
+            }
+
+            &--empty {
+                padding-top: 17px;
             }
         }
 
