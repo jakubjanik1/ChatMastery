@@ -78,6 +78,7 @@ export default {
         min-width: 360px - 2px;
         border-radius: 2px;
         border-right: 2px solid #f2f2f2;
+        border-top: 2px solid #f2f2f2;
         position: relative;
 
         &--empty {
@@ -103,7 +104,7 @@ export default {
         
         @media (max-width: 900px) {
             border-right: 0;
-            height: calc((var(--vh, 1vh) * 100) - (136px));
+            height: calc((var(--vh, 1vh) * 100) - (146px));
         }
     }
 </style>

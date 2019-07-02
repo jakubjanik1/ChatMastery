@@ -2,6 +2,9 @@ import Vue from 'vue';
 import App from './App.vue';
 import VueSocketIO from 'vue-socket.io';
 import VueScroll from 'vuescroll';
+import Vuebar from 'vuebar';
+
+Vue.use(Vuebar);
 
 Vue.use(VueScroll, {
   ops: {
@@ -12,7 +15,7 @@ Vue.use(VueScroll, {
 });
 
 Vue.use(new VueSocketIO({
-  connection: 'http://localhost:8888'
+  connection: 'http://192.168.0.103:8888'
 }));
 
 Vue.config.productionTip = false;

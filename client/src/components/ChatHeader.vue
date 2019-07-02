@@ -29,7 +29,6 @@ export default {
         align-items: center;
         height: 64px;
         background: #fff;
-        border-bottom: 2px solid #f2f2f2;
         grid-area: header;
 
         &__logo {

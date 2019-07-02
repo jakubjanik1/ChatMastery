@@ -11,9 +11,12 @@
 
         <input 
             class="users-search-box__input"
+            :class="{ 'users-search-box__input--focus': isOpen }"
             placeholder="Find a user..."
+            ref="input"
             v-show="isOpen" 
             v-model="name"
+            @focus="isOpen = true"
             @keyup="refreshResults">
 
         <close-icon
@@ -21,7 +24,7 @@
             fillColor="#c3c4c4"
             :size="27"
             v-show="isOpen"
-            @click="isOpen = false">
+            @click="hideResultsList">
 
         </close-icon>
 
@@ -67,6 +70,23 @@ export default {
 
             const response = await UsersService.search(this.name);
             this.foundUsers = response.data;
+        },
+        focusOnInput() {
+            if (this.isOpen) {
+                this.$refs.input.focus();
+            }
+        },
+        hideResultsList() {
+            this.isOpen = false;
+            this.$refs.input.blur();
+        }
+    },
+    watch: {
+        isOpen() {
+            if (! this.isOpen) {
+                this.name = '';
+                this.foundUsers = [];
+            }
         }
     }
 }
@@ -128,13 +148,30 @@ export default {
 
     @media (max-width: 900px) {
         .users-search-box {
-            margin: 8px 0;
+            margin: 8px 0 12px 51px;
             order: 3;
             position: static;
+            padding-left: 0;
+            max-width: 320px;
 
             &__results {
-                height: calc((var(--vh, 1vh) * 100) - (136px));
-                top: 145px;
+                height: calc((var(--vh, 1vh) * 100) - (146px));
+                width: 100vw;
+                top: 149px;
+            }
+
+            &__input {
+                display: block !important;
+                width: 250px;
+                margin-right: 0;
+
+                &--focus {
+                    width: 226px;
+                }
+            }
+
+            &__icon {
+                display: none;
             }
         }
     }
