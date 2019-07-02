@@ -148,11 +148,11 @@ export default {
 
     @media (max-width: 900px) {
         .users-search-box {
-            margin: 8px 0 12px 51px;
+            margin: 8px 0 12px 0;
+            padding-left: 0;
             order: 3;
             position: static;
-            padding-left: 0;
-            max-width: 320px;
+            max-width: 270px;
 
             &__results {
                 height: calc((var(--vh, 1vh) * 100) - (146px));
@@ -162,7 +162,8 @@ export default {
 
             &__input {
                 display: block !important;
-                width: 250px;
+                max-width: 270px;
+                width: 100%;
                 margin-right: 0;
 
                 &--focus {
