@@ -28,23 +28,14 @@
 
         </close-icon>
 
-        <div class="users-search-box__results" v-show="isOpen">
-            <vue-scroll>
-                <users-search-result 
-                    :key="user._id" 
-                    v-for="user in foundUsers" 
-                    :user="user">
-
-                </users-search-result>
-            </vue-scroll>
-        </div>
+        <users-search-results-list :users="foundUsers" :searchedName="name" v-show="isOpen"/>
     </div>
 </template>
 
 <script>
 import SearchIcon from 'vue-material-design-icons/Magnify';
 import CloseIcon from 'vue-material-design-icons/Close';
-import UsersSearchResult from './UsersSearchResult';
+import UsersSearchResultsList from './UsersSearchResultsList';
 import UsersService from '@/services/UsersService';
 
 export default {
@@ -52,7 +43,7 @@ export default {
     components: {
         SearchIcon,
         CloseIcon,
-        UsersSearchResult
+        UsersSearchResultsList
     },
     data() {
         return {
@@ -114,16 +105,6 @@ export default {
             animation: fade-in .3s;
         }
 
-        &__results {
-            position: absolute;
-            top: 52px;
-            height: calc((var(--vh, 1vh) * 100) - (64px));
-            width: 360px - 2px;
-            background: #fff;
-            z-index: 1;
-            left: 0;
-        }
-
         &__input {
             animation: fade-in .3s;
             font-family: inherit;
@@ -153,12 +134,6 @@ export default {
             order: 3;
             position: static;
             max-width: 270px;
-
-            &__results {
-                height: calc((var(--vh, 1vh) * 100) - (146px));
-                width: 100vw;
-                top: 149px;
-            }
 
             &__input {
                 display: block !important;

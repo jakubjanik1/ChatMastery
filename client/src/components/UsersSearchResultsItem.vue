@@ -1,7 +1,7 @@
 <template>
-    <div class="users-search-result" @click="emitNewConversation">
-        <img class="users-search-result__picture" src="@/assets/profile.jpg">
-        <div class="users-search-result__name">{{ user.name }}</div>
+    <div class="users-search-results-item" @click="emitNewConversation">
+        <img class="users-search-results-item__picture" src="@/assets/profile.jpg">
+        <div class="users-search-results-item__name">{{ user.name }}</div>
     </div>    
 </template>
 
@@ -9,7 +9,7 @@
 import EventBus from '@/services/EventBus';
 
 export default {
-    name: 'UsersSearchResult',
+    name: 'UsersSearchResultsItem',
     props: [ 'user' ],
     methods: {
         emitNewConversation() {
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .users-search-result {
+    .users-search-results-item {
         display: flex;
         align-items: center;
         border-bottom: 1px solid #f9f9f9;
