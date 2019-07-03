@@ -1,8 +1,8 @@
 <template>
     <div class="chat-box">
-        <conversation-info></conversation-info>
-        <messages-list></messages-list>
-        <message-input></message-input>
+        <conversation-info />
+        <messages-list />
+        <message-input />
     </div>
 </template>
 

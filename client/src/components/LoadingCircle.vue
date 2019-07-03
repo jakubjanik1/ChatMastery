@@ -4,9 +4,7 @@
             :loading="loading" 
             color="#2ca9f8"
             size="40px"
-        >
-
-        </clip-loader>
+        />
 </template>
 
 <script>

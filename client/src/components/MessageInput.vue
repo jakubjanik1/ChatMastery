@@ -10,7 +10,6 @@
 
             </textarea>
         </div>
-       
 
         <button 
             class="message-input__button" 

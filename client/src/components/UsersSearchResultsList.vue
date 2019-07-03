@@ -53,11 +53,14 @@ export default {
     .users-search-results-list {
         position: absolute;
         top: 52px;
-        height: calc((var(--vh, 1vh) * 100) - (64px));
         width: 360px - 2px;
         background: #fff;
         z-index: 1;
         left: 0;
+
+        &--found {
+            height: calc((var(--vh, 1vh) * 100) - (64px));
+        }
 
         &--start, &--not-found {
             display: flex;
@@ -81,9 +84,12 @@ export default {
         }
 
         @media (max-width: 900px) {
-            height: calc((var(--vh, 1vh) * 100) - (146px));
             width: 100vw;
-            top: 149px;
+            top: 147px;
+
+            &--found {
+                height: calc((var(--vh, 1vh) * 100) - (146px));
+            }
         }
     }
 

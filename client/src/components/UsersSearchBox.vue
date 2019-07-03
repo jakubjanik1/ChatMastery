@@ -5,9 +5,7 @@
             :size="27" 
             fillColor="#c3c4c4"
             v-show="! isOpen"
-            @click="isOpen = true">
-
-        </search-icon>
+            @click="isOpen = true" />
 
         <input 
             class="users-search-box__input"
@@ -24,9 +22,7 @@
             fillColor="#c3c4c4"
             :size="27"
             v-show="isOpen"
-            @click="hideResultsList">
-
-        </close-icon>
+            @click="hideResultsList" />
 
         <users-search-results-list 
             :users="foundUsers" 

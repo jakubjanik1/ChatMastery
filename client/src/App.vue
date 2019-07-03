@@ -1,8 +1,8 @@
 <template>
   <div class="app" :class="showChat ? 'app__chat' : 'app__conversations'">
-    <chat-header v-show="! showChat || isLarge"></chat-header>
-    <conversations-list v-show="! showChat || isLarge"></conversations-list>
-    <chat-box v-show="showChat || isLarge"></chat-box>
+    <chat-header v-show="! showChat || isLarge" />
+    <conversations-list v-show="! showChat || isLarge" />
+    <chat-box v-show="showChat || isLarge" />
   </div>
 </template>
 
@@ -71,10 +71,10 @@ export default {
   @media (max-width: 900px) {
     .app {
       &__conversations {
-        grid-template-columns: auto auto;
+        grid-template-columns: auto;
         grid-template-rows: auto auto;
-        grid-template-areas: "header header"
-                             "conversations-list conversations-list";
+        grid-template-areas: "header"
+                             "conversations-list";
       }
 
       &__chat {

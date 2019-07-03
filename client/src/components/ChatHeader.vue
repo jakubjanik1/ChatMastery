@@ -1,6 +1,6 @@
 <template>
     <div class="chat-header">
-        <users-search-box></users-search-box>
+        <users-search-box />
 
         <img class="chat-header__logo" src="@/assets/logo.png">
 
