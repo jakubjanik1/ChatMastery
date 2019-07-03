@@ -11,11 +11,20 @@
         </div>
 
         <div class="users-search-results-list--start" v-else-if="searchedName == ''">
-            <account-search-icon :size="80" fillColor="#009ef7" />
+            <users-search-icon :size="80" fillColor="#009ef7" />
             <div class="users-search-results-list__info">Search for chat friends</div>
             <div class="users-search-results-list__more">
                 Find existing chat or start new one.
                 Users are filtered by their name.
+            </div>
+        </div>
+
+         <div class="users-search-results-list--not-found" v-else>
+            <users-not-found :size="80" fillColor="#009ef7" />
+            <div class="users-search-results-list__info">Nothing found</div>
+            <div class="users-search-results-list__more">
+                Nothing matched your search terms.
+                Maybe try to search again.
             </div>
         </div>
     </div>
@@ -23,13 +32,15 @@
 
 <script>
 import UsersSearchResultsItem from './UsersSearchResultsItem';
-import AccountSearchIcon from 'vue-material-design-icons/AccountSearch';
+import UsersSearchIcon from 'vue-material-design-icons/AccountSearch';
+import UsersNotFound from 'vue-material-design-icons/AccountRemove';
 
 export default {
     name: 'UsersSearchResultsList',
     components: {
         UsersSearchResultsItem,
-        AccountSearchIcon
+        UsersSearchIcon,
+        UsersNotFound
     },
     props: [
         'users',
@@ -48,7 +59,7 @@ export default {
         z-index: 1;
         left: 0;
 
-        &--start {
+        &--start, &--not-found {
             display: flex;
             flex-direction: column;
             align-items: center;

@@ -28,7 +28,11 @@
 
         </close-icon>
 
-        <users-search-results-list :users="foundUsers" :searchedName="name" v-show="isOpen"/>
+        <users-search-results-list 
+            :users="foundUsers" 
+            :searchedName="name" 
+            v-show="isOpen"
+        />
     </div>
 </template>
 
