@@ -7,8 +7,15 @@ const MessageSchema = new Schema({
         required: true
     },
     body: {
-        type: String,
-        required: true
+        type: {
+            type: String,
+            enum: [ 'text', 'image' ],
+            required: true
+         },
+        content: {
+            type: String,
+            required: true 
+        }
     },
     author: {
         type: Schema.Types.ObjectId,

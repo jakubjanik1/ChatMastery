@@ -3,6 +3,7 @@ const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
 const mongoose = require('mongoose');
 const io = require('../socket');
+const cloudinary = require('../config/cloudinary');
 
 exports.getConversations = async (req, res) => {
     const conversations = await Conversation.find({ members: req.params.userId })
@@ -71,4 +72,13 @@ exports.storeConversation = (req, res) => {
 
     conversation.save()
         .then(response => res.send(response._id));
+}
+
+exports.storeMessageImage = async (req, res) => {
+    const result = await cloudinary.v2.uploader.upload(
+        req.files.image.path,
+        { folder: 'chatmastery' }
+    );
+
+    return res.json({ url: result.url });
 }
