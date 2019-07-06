@@ -1,12 +1,27 @@
 <template>
     <div class="message-input" :class="{ 'message-input--invisible' : !isVisible }">
+        <attachment-icon 
+            class="message-input__icon" 
+            fillColor="#c3c4c4" 
+            :size="28" 
+            @click="openImageInput" 
+        />
+
+        <input 
+            class="message-input__image" 
+            ref="image" 
+            type="file"
+            accept="image/*"
+            @change="addImage"
+        >
+
         <div class="message-input__scroll" v-bar>
              <textarea 
-                class="message-input__input" 
+                class="message-input__text" 
                 placeholder="Type a message..."
                 spellcheck="false"
-                v-model="body"
-                :class="{ 'message-input__input--empty': !isMultiline || isEmpty }">
+                v-model="text"
+                :class="{ 'message-input__text--empty': !isMultiline || isEmpty }">
 
             </textarea>
         </div>
@@ -24,12 +39,18 @@
 <script>
 import ChatService from '@/services/ChatService';
 import EventBus from '@/services/EventBus';
+import Api from '@/services/Api';
+import AttachmentIcon from 'vue-material-design-icons/Paperclip';
 
 export default {
     name: 'MessageInput',
+    components: {
+        AttachmentIcon
+    },
     data() {
         return {
-            body: '',
+            text: '',
+            image: null,
             isVisible: false
         };
     },
@@ -38,19 +59,34 @@ export default {
         EventBus.$on('newConversation', this.setup);
     },
     methods: {
+        async addImage(event) {
+            const image = event.target.files[0];
+            event.target.files = null;
+
+            const response = await ChatService.storeMessageImage(image);
+            this.image = response.data.url;
+
+            this.addMessage();
+        },
         async addMessage() {
             const userId = localStorage.getItem('userId');
             const conversationId = await this.getConversationId();
             
             localStorage.setItem('conversationId', conversationId.data);
+
+            const body = {
+                type: this.image ? 'image' : 'text',
+                content: this.image ? this.image : this.text
+            };
             
             await ChatService.storeMessage({
-                'body': this.body,
+                'body': { ...body },
                 'conversationId': conversationId.data,
                 'author': userId
             });
 
-            this.body = '';
+            this.image = null;
+            this.text = '';
         },
         async getConversationId() {
             const conversationId = localStorage.getItem('conversationId');
@@ -67,15 +103,18 @@ export default {
         },
         setup() {
             this.isVisible = true;
-            this.body = '';
+            this.text = '';
+        },
+        openImageInput() {
+            this.$refs.image.click();
         }
     },
     computed: {
          isEmpty() {
-            return this.body.trim() == '';
+            return this.text.trim() == '';
         },
         isMultiline() {
-            return this.body.includes('\n');
+            return this.text.includes('\n');
         }
     }
 }
@@ -86,11 +125,12 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 32px;
+        padding: 0 32px 0 16px;
         height: 55px;
         background: #fafafa;
         border-top: 2px solid #f2f2f2;
         grid-area: message-input;
+        position: relative;
 
         &--invisible {
             border-top-color: #f6f6f6;
@@ -106,13 +146,14 @@ export default {
             margin-right: 32px;
         }
 
-        &__input {
+        &__text {
             color: #292929;
             padding: 0;
             background: inherit;
             height: 100%;
             padding: 0;
             resize: none;
+            margin-left: 16px;
 
             &:focus {
                 outline: 0;
@@ -127,6 +168,26 @@ export default {
             &--empty {
                 padding-top: 17px;
             }
+        }
+
+        &__image {
+            width: 26px;
+            height: 28px;
+
+            &::before {
+                width: 32px;
+                height: 32px;
+                background: #fafafa;
+                content: '';
+                display: inline-block;
+            }
+        }
+
+        &__icon {
+            position: absolute;
+            left: 16px;
+            height: 28px;
+            cursor: pointer;
         }
 
         &__button {
@@ -147,11 +208,19 @@ export default {
         }
 
         @media (max-width: 900px) {
-            padding: 0 12px 0 18px;
+            padding: 0 12px 0 12px;
             height: 50px;
 
             &__input::placeholder {
                 font-size: 13px;
+            }
+
+            &__text {
+                margin-left: 12px;
+            }
+
+            &__icon {
+                left: 12px;
             }
 
             & * {

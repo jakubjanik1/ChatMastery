@@ -4,7 +4,13 @@
         <div class="message__date">{{ date }}</div>
 
         <div class="message__bubble">
-            <div class="message__body">{{ message.body }}</div>
+            <div class="message__body--text" v-if="isText">{{ message.body.content }}</div>
+
+            <img 
+                class="message__body--image" 
+                v-else-if="isImage"
+                :src="message.body.content"
+            >
         </div>
     </div>
 </template>
@@ -24,6 +30,12 @@ export default {
 
             const isSender = userId == (this.message.author._id || this.message.author);
             return isSender ? 'message--sender' : 'message--receiver';
+        },
+        isImage() {
+            return this.message.body.type == 'image';
+        },
+        isText() {
+            return this.message.body.type == 'text';
         }
     }
 }
@@ -59,8 +71,15 @@ export default {
             }
         }
 
-         &__body {
-            white-space: pre-wrap;
+        &__body--text {
+            white-space: pre-line;
+        }
+
+        &__body--image {
+            border-radius: 2px;
+            max-width: 100%;
+            max-height: 250px;
+            margin-bottom: -4px;
         }
 
         &__author {

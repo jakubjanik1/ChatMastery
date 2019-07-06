@@ -14,7 +14,7 @@ export default {
   },
   created() {
     this.setViewportVariable();
-    window.onresize = () => this.setViewportVariable();
+    window.addEventListener('resize', this.setViewportVariable);
   },
   methods: {
     setViewportVariable() {

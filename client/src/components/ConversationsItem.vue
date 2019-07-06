@@ -41,7 +41,11 @@ export default {
         },
         lastMessage() {
             const message = this.conversation.lastMessage.body;
-            return message.length > 30 ? `${message.slice(0, 24)}...` : message;
+            if (message.type == 'image') {
+                return 'Image was sent';
+            } else {
+                return message.content.length > 25 ? `${message.content.slice(0, 25)}...` : message.content;
+            }
         },
         receiver() {
             return this.conversation.members[0].name;
@@ -102,6 +106,7 @@ export default {
             grid-area: last-message;
             font-size: 13px;
             color: #9e9e9e;
+            word-break: break-all;
         }
 
         &__date {
