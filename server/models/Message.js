@@ -18,7 +18,7 @@ const MessageSchema = new Schema({
         }
     },
     author: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     },
     createdAt: {

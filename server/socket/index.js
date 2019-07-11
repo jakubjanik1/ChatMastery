@@ -10,10 +10,11 @@ const mongoose = require('mongoose');
 io.on('connection', socket => {
 
     socket.on('readMessages', ({ conversationId, userId }) => {
+        console.log(userId);
         Message.updateMany({
             $and: [
                     { conversationId: conversationId },
-                    { author: { $ne: mongoose.Types.ObjectId(userId) } }
+                    { author: { $ne: userId } }
                 ]
             },
             { read: true }

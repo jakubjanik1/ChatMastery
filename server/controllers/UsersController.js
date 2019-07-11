@@ -6,3 +6,7 @@ exports.search = (req, res) => {
     User.find({ name: regex })
         .then(users => res.json(users));
 }
+
+exports.getLoggedInUser = (req, res) => {
+    return res.json(req.user);
+}

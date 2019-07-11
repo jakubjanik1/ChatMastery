@@ -9,7 +9,7 @@ exports.getConversations = async (req, res) => {
     const conversations = await Conversation.find({ members: req.params.userId })
         .populate({ 
             path: 'members', 
-            select: 'name', 
+            select: 'name avatar', 
             match: { _id: { $ne: req.params.userId }}
         });
         
@@ -25,7 +25,7 @@ exports.getConversations = async (req, res) => {
                     $match: { 
                         $and: [
                             { read: false },
-                            { author: { $ne: mongoose.Types.ObjectId(req.params.userId) } },
+                            { author: { $ne: req.params.userId } },
                             { conversationId: conversation._id }
                         ]
                     }
@@ -44,14 +44,16 @@ exports.getConversations = async (req, res) => {
 
             if (conversations.length == fullConversations.length) {
                 fullConversations.sort((x, y) => x.lastMessage.createdAt < y.lastMessage.createdAt);
-                res.json(fullConversations);
+                return res.json(fullConversations);
             }
         })
+
+        
 };
 
 exports.getMessages = (req, res) => {
     Message.find({ conversationId: req.params.id })
-        .populate('author','name')
+        .populate('author','name avatar')
         .sort('createdAt')
         .select('-conversationId')
         .then(messages => res.json(messages));

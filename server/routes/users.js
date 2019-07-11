@@ -5,4 +5,6 @@ const UsersController = require('../controllers/UsersController');
 
 router.get('/search/:query', UsersController.search);
 
+router.get('/me', UsersController.getLoggedInUser);
+
 module.exports = router;
