@@ -1,6 +1,6 @@
 <template>
     <div class="message" :class="getClass">
-        <img class="message__author" src="@/assets/profile.jpg">
+        <img class="message__author" :src="avatar">
         <div class="message__date">{{ date }}</div>
 
         <div class="message__bubble">
@@ -25,8 +25,11 @@ export default {
         date() {
             return formatDate(this.message.createdAt);
         },
+        avatar() {
+            return this.message.author.avatar;
+        },
         getClass() {
-            const userId = localStorage.getItem('userId');
+            const userId = this.$store.user._id;
 
             const isSender = userId == (this.message.author._id || this.message.author);
             return isSender ? 'message--sender' : 'message--receiver';

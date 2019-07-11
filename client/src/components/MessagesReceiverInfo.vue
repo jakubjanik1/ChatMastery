@@ -1,6 +1,6 @@
 <template>
     <div class="messages-receiver-info" v-if="receiver">
-        <img class="messages-receiver-info__picture" src="@/assets/profile.jpg">
+        <img class="messages-receiver-info__picture" :src="receiver.avatar">
         <div class="messages-receiver-info__name">{{ receiver.name }}</div>
     </div>
 </template>

@@ -69,7 +69,7 @@ export default {
             this.addMessage();
         },
         async addMessage() {
-            const userId = localStorage.getItem('userId');
+            const userId = this.$store.user._id;
             const conversationId = await this.getConversationId();
             
             localStorage.setItem('conversationId', conversationId.data);
@@ -95,7 +95,7 @@ export default {
             } else {
                 return await ChatService.storeConversation({
                     'members': [
-                        localStorage.getItem('userId'),
+                        this.$store.user._id,
                         localStorage.getItem('receiverUserId')
                     ]
                 });

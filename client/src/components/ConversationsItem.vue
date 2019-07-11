@@ -1,6 +1,6 @@
 <template>
     <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationSelected">
-        <img class="conversation__picture" src="@/assets/profile.jpg">
+        <img class="conversation__picture" :src="avatar">
         <div class="conversation__receiver">{{ receiver }}</div>
         <div class="conversation__last-message">{{ lastMessage }}</div>
 
@@ -52,6 +52,9 @@ export default {
         },
         unreadMessages() {
             return this.conversation.unreadMessages;
+        }, 
+        avatar() {
+            return this.conversation.members[0].avatar;
         }
     },
     methods: {
@@ -63,7 +66,7 @@ export default {
             this.isActive = true;
         },
         readMessages() {
-            const userId = localStorage.getItem('userId');
+            const userId = this.$store.user._id;
 
             this.$socket.emit('readMessages', { conversationId: this.conversation._id, userId });
         }

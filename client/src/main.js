@@ -4,6 +4,8 @@ import VueSocketIO from 'vue-socket.io';
 import VueScroll from 'vuescroll';
 import Vuebar from 'vuebar';
 
+Vue.prototype.$store = { user: {} };
+
 Vue.use(Vuebar);
 
 Vue.use(VueScroll, {
