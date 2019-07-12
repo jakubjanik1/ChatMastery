@@ -17,7 +17,7 @@ Vue.use(VueScroll, {
 });
 
 Vue.use(new VueSocketIO({
-  connection: 'http://192.168.0.103:8888'
+  connection: 'http://localhost:8888'
 }));
 
 Vue.config.productionTip = false;

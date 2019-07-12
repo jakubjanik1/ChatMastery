@@ -24,7 +24,7 @@ export default {
 
         return (
             <a class={`social-button social-button--${ this.type }`} 
-                href={`http://192.168.0.103:8080/auth/${ this.type }`}
+                href={`http://localhost:8080/auth/${ this.type }`}
             >
                 <Icon class="social-button__icon" size={ 28 } />
             </a> 

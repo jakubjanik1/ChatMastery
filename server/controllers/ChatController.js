@@ -12,6 +12,8 @@ exports.getConversations = async (req, res) => {
             select: 'name avatar', 
             match: { _id: { $ne: req.params.userId }}
         });
+
+        if (! conversations.length) return res.json([]);
         
         const fullConversations = [];
         conversations.forEach(async conversation => {

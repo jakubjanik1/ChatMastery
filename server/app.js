@@ -18,7 +18,7 @@ db.on('open', () => console.log('Connect to MongoDB successfully.'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: 'http://192.168.0.103:3000' }));
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,

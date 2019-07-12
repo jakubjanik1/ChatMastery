@@ -1,6 +1,6 @@
 <template>
     <div class="users-search-results-item" @click="emitNewConversation">
-        <img class="users-search-results-item__picture" src="@/assets/profile.jpg">
+        <img class="users-search-results-item__picture" :src="user.avatar">
         <div class="users-search-results-item__name">{{ user.name }}</div>
     </div>    
 </template>
