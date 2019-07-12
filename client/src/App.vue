@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <chat v-if="isLoggedIn" />
-    <login v-else />
+    <login v-else-if="! isLoading" />
   </div>
 </template>
 
@@ -18,14 +18,16 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: false
+      isLoggedIn: false,
+      isLoading: true
     }
   },
-  created() {
+  async created() {
     this.setViewportVariable();
     window.addEventListener('resize', this.setViewportVariable);
 
-    this.fetchUser();
+    await this.fetchUser();
+    this.isLoading = false;
   },
   methods: {
     setViewportVariable() {

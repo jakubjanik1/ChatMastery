@@ -66,7 +66,10 @@ exports.storeMessage = (req, res) => {
 
     message.save()
         .then(() => {
-            io.emit('messageAdded', message);
+            Message.find({ _id: message._id })
+                .populate('author','name avatar')
+                .then(messages => io.emit('messageAdded', messages[0]));
+                
             res.json('Success');
         });
 };
