@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <chat v-if="isLoggedIn" />
-    <div v-else>
-      <a href="http://192.168.0.103:8080/auth/github">github</a>
-    </div>
+    <login v-else />
   </div>
 </template>
 
 <script>
 import Chat from '@/views/Chat';
+import Login from '@/views/Login';
 import UsersService from './services/UsersService';
 
 export default {
   name: 'app',
   components: {
-    Chat
+    Chat,
+    Login
   },
   data() {
     return {
