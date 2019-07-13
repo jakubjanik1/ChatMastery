@@ -10,3 +10,8 @@ exports.search = (req, res) => {
 exports.getLoggedInUser = (req, res) => {
     return res.json(req.user);
 }
+
+exports.logout = (req, res) => {
+    req.logout();
+    return res.redirect('http://localhost:3000');
+}
