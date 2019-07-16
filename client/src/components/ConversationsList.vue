@@ -80,6 +80,7 @@ export default {
         border-right: 2px solid #f2f2f2;
         border-top: 2px solid #f2f2f2;
         position: relative;
+        background: #fff;
 
         &--empty {
             display: flex;
