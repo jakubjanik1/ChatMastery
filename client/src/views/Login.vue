@@ -125,14 +125,14 @@ export default {
             width: 100%;
             text-align: center;
             border-bottom: 1px solid #c3c4c4;
-            height: 14px;
+            height: 13px;
         }
 
         &__or {
             background: #fff;
             color: #c3c4c4;
             padding: 0 16px;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         &__control {
@@ -177,10 +177,15 @@ export default {
             padding: 10px 16px;
             width: 100%;
             margin-top: 50px;
-            box-sizing: border-box;
 
             &:focus {
                 outline: 0;
+            }
+
+            &:hover {
+                transition: .3s ease-in-out;
+                cursor: pointer;
+                background: darken(#3399FF, 5%);
             }
         }
 
@@ -189,6 +194,20 @@ export default {
             margin-top: 24px;
             font-weight: 600;
             cursor: pointer;
+
+            &:hover {
+                transition: .3s ease-in-out;
+                cursor: pointer;
+                color: darken(#3399FF, 5%);
+            }
+        }
+
+        & input, button {
+            font-family: inherit;
+        }
+
+        & input {
+            font-size: 14px;
         }
 
         @media (max-width: 700px) {

@@ -46,11 +46,7 @@ export default {
 
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-  *, *::before, *::after {
-    box-sizing: content-box;
-  }
-
+  
   body {
     font-family: 'Montserrat', sans-serif;;
     font-size: 14px;
