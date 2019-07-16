@@ -41,8 +41,8 @@ export default {
         padding: 12px;
         margin: 16px;
         border-radius: 4px;
-        width: 100px;
-        height: 24px;
+        width: 64px;
+        height: 22px;
         align-items: center;
         justify-content: center;
 

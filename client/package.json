@@ -13,15 +13,15 @@
     "core-js": "^2.6.5",
     "moment": "^2.24.0",
     "vue": "^2.6.10",
-    "vue-material-design-icons": "^3.2.0",
+    "vue-material-design-icons": "^3.3.1",
     "vue-socket.io": "^3.0.7",
     "vue-spinner": "^1.0.3",
     "vuebar": "0.0.20",
-    "vuescroll": "^4.13.0"
+    "vuescroll": "^4.13.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-service": "^3.9.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"

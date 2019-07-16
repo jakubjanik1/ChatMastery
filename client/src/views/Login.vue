@@ -1,9 +1,56 @@
 <template>
     <div class="login">
-        <social-button type="github" />
-        <social-button type="facebook" />
-        <social-button type="twitter" />
-        <social-button type="google" />
+        <img class="login__logo" src="@/assets/logo.png">
+
+        <div class="login__wrapper" v-if="showLoginForm">
+            <div class="login__title">Login to your account</div>
+            <div class="login__subtitle">
+                Don’t have an account? 
+                <span class="login__link" @click="showLoginForm = false">Sign Up Free!</span>
+            </div>
+
+            <div class="login__social">
+                <social-button type="github" />
+                <social-button type="facebook" />
+                <social-button type="twitter" />
+                <social-button type="google" />
+            </div>
+
+            <div class="login__line">
+                <span class="login__or">or</span>
+            </div>
+
+            <div class="login__control">
+                <input class="login__input" type="text" placeholder="Email address">
+                <span class="login__focus-border"></span>
+            </div>
+            <div class="login__control">
+                <input class="login__input" type="password" placeholder="Password">
+                <span class="login__focus-border"></span>
+            </div>
+            
+            <button class="login__button">Login with email</button>
+        </div>
+
+        <div class="login__wrapper" v-else>
+            <div class="login__title">Sign up for free!</div>
+
+            <div class="login__control">
+                <input class="login__input" type="text" placeholder="Email address">
+                <span class="login__focus-border"></span>
+            </div>
+            <div class="login__control">
+                <input class="login__input" type="text" placeholder="Full name">
+                <span class="login__focus-border"></span>
+            </div>
+            <div class="login__control">
+                <input class="login__input" type="password" placeholder="Password">
+                <span class="login__focus-border"></span>
+            </div>
+            
+            <button class="login__button">Sign up with email</button>
+            <span class="login__link" @click="showLoginForm = true">Already have an account?</span>
+        </div>
     </div>
 </template>
 
@@ -14,10 +61,154 @@ export default {
     name: 'Login',
     components: {
         SocialButton    
+    },
+    data() {
+        return {
+            showLoginForm: true
+        };
     }
 }
 </script>
 
 <style lang="scss" scoped>
+    .login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #f6f6f6;
+        box-sizing: border-box;
+        height: calc((var(--vh, 1vh) * 100));
+        overflow: auto;
 
+        &__logo {
+            margin: 40px 0;
+        }
+
+        &__wrapper {
+            background: #fff;
+            padding: 40px;
+            margin: 0 40px 40px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 2px;
+            max-width: 550px;
+            min-height: 510px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 3px 5px rgba(0,0,0,.05);
+        }
+
+        &__title {
+            font-weight: bold;
+            font-size: 20px;
+            color: #292929;
+        }
+
+        &__subtitle {
+            margin-top: 8px;
+            color: #292929;
+        }
+
+        &__social {
+            display: grid;
+            grid-template-areas: "button button button button";
+            margin: 16px 0;
+
+            @media (max-width: 560px) {
+                grid-template-areas: "button button" 
+                                     "button button";
+            }
+        }
+
+        &__line {
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid #c3c4c4;
+            height: 14px;
+        }
+
+        &__or {
+            background: #fff;
+            color: #c3c4c4;
+            padding: 0 16px;
+            font-size: 18px;
+        }
+
+        &__control {
+            position: relative;
+            width: 100%;
+        }
+
+        &__input {
+            border: 0;
+            border-bottom: 2px solid #c3c4c4;
+            padding: 8px 0;
+            margin-top: 32px;
+            width: 100%;
+
+            &:focus {
+                outline: 0;
+            }
+        }
+
+        &__input ~ &__focus-border {
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 0; 
+            height: 2px; 
+            background: #3399FF; 
+            transition: .4s;
+        }
+
+        &__input:focus ~ &__focus-border {
+            width: 100%;
+            transition: .4s;
+        }
+
+        &__button {
+            background: #3399FF; 
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            border: 0;
+            border-radius: 2px;
+            padding: 10px 16px;
+            width: 100%;
+            margin-top: 50px;
+            box-sizing: border-box;
+
+            &:focus {
+                outline: 0;
+            }
+        }
+
+        &__link {
+            color: #3399FF;
+            margin-top: 24px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media (max-width: 700px) {
+            padding: 0 16px;
+
+            &__wrapper {
+                margin: 0 0 40px 0;
+                padding: 20px;
+                min-height: 470px;
+            }
+
+            &__logo {
+                margin: 26px 0;
+            }
+        }
+
+        @media (max-width: 560px) {
+            &__wrapper {
+                min-height: 550px;
+            }
+        }
+    }
 </style>

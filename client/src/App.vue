@@ -56,5 +56,6 @@ export default {
     font-size: 14px;
     margin: 0;
     overflow: hidden;
+    background: #f6f6f6;
   }
 </style>
