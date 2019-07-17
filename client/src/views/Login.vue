@@ -6,7 +6,7 @@
             <div class="login__title">Login to your account</div>
             <div class="login__subtitle">
                 Don’t have an account? 
-                <span class="login__link" @click="showLoginForm = false">Sign Up Free!</span>
+                <span class="login__link" @click="toggleForm">Sign Up Free!</span>
             </div>
 
             <div class="login__social">
@@ -36,26 +36,50 @@
             <div class="login__title">Sign up for free!</div>
 
             <div class="login__control">
-                <input class="login__input" type="text" placeholder="Email address">
+                <input 
+                    class="login__input" 
+                    :class="{ 'login__input--error' : signupErrors.email }" 
+                    placeholder="Email address" 
+                    v-model="signupForm.email"
+                >
+
                 <span class="login__focus-border"></span>
             </div>
+            <div class="login__error" v-show="signupErrors.email">{{ signupErrors.email }}</div>
+
             <div class="login__control">
-                <input class="login__input" type="text" placeholder="Full name">
+                <input 
+                    class="login__input" 
+                    :class="{ 'login__input--error' : signupErrors.name }"
+                    placeholder="Full name" 
+                    v-model="signupForm.name"
+                >
                 <span class="login__focus-border"></span>
             </div>
+             <div class="login__error" v-show="signupErrors.name">{{ signupErrors.name }}</div>
+
             <div class="login__control">
-                <input class="login__input" type="password" placeholder="Password">
+                <input 
+                    class="login__input" 
+                    :class="{ 'login__input--error' : signupErrors.password }" 
+                    type="password" 
+                    placeholder="Password" 
+                    v-model="signupForm.password"
+                >
+
                 <span class="login__focus-border"></span>
             </div>
+            <div class="login__error" v-show="signupErrors.password">{{ signupErrors.password }}</div>
             
-            <button class="login__button">Sign up with email</button>
-            <span class="login__link" @click="showLoginForm = true">Already have an account?</span>
+            <button class="login__button" @click="signup">Sign up with email</button>
+            <span class="login__link" @click="toggleForm">Already have an account?</span>
         </div>
     </div>
 </template>
 
 <script>
 import SocialButton from '@/components/SocialButton';
+import UsersService from '@/services/UsersService';
 
 export default {
     name: 'Login',
@@ -64,8 +88,41 @@ export default {
     },
     data() {
         return {
-            showLoginForm: true
+            showLoginForm: true,
+            signupForm: {
+                email: '',
+                name: '',
+                password: ''
+            },
+            signupErrors: {}
         };
+    },
+    methods: {
+        async signup() {
+            const response = await UsersService.signup(this.signupForm);
+            
+            if (response.data.errors) {
+                this.signupErrors = response.data.errors.reduce((obj, item) => {
+                    obj[item.param] = item.msg;
+                    return obj;
+                }, {});
+            } else {
+                this.clearSignupForm();
+                this.showLoginForm = true;
+            }
+        },
+        clearSignupForm() {
+            this.signupForm.name = '';
+            this.signupForm.email = '';
+            this.signupForm.password = '';
+
+            this.signupErrors = {};
+        },
+        toggleForm() {
+            this.showLoginForm = !this.showLoginForm;
+
+            this.clearSignupForm();
+        }
     }
 }
 </script>
@@ -150,6 +207,10 @@ export default {
             &:focus {
                 outline: 0;
             }
+
+            &--error {
+                border-bottom-color: #f44336;
+            }
         }
 
         &__input ~ &__focus-border {
@@ -164,6 +225,11 @@ export default {
 
         &__input:focus ~ &__focus-border {
             width: 100%;
+            transition: .4s;
+        }
+
+        &__input--error:focus ~ &__focus-border {
+            width: 0%;
             transition: .4s;
         }
 
@@ -187,6 +253,12 @@ export default {
                 cursor: pointer;
                 background: darken(#3399FF, 5%);
             }
+        }
+
+        &__error {
+            color: #f44336;
+            align-self: flex-start;
+            margin-top: 12px;
         }
 
         &__link {

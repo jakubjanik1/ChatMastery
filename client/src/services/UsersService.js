@@ -6,5 +6,8 @@ export default {
     },
     fetchLoggedInUser() {
         return Api().get('/users/me', { withCredentials: true });
+    },
+    signup(user) {
+        return Api().post('/users/signup', user);
     }
 }
