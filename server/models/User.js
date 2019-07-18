@@ -32,6 +32,10 @@ UserSchema.pre('save', function(next) {
     next();
 });
 
+UserSchema.methods.verifyPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
 UserSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('User', UserSchema);

@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { check, validationResult } = require('express-validator');
+const passport = require('../auth/passport');
 
 exports.search = (req, res) => {
     const regex = new RegExp(`.*${req.params.query}.*`, 'i');
@@ -41,6 +42,17 @@ exports.signup = (req, res) => {
     user._id = ObjectId().toHexString();
 
     user.save().then(user => res.json(user))
+}
+
+exports.login = (req, res) => {
+    passport.authenticate('local', { badRequestMessage: 'Please fill in all fields' },
+        (err, user, info) => {
+            if (! user) {
+                return res.json({ error: info.message });
+            }
+            
+            req.logIn(user, () => res.json(user));
+    })(req, res);
 }
 
 exports.logout = (req, res) => {

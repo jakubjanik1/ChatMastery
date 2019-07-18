@@ -9,5 +9,8 @@ export default {
     },
     signup(user) {
         return Api().post('/users/signup', user);
+    },
+    login(user) {
+        return Api().post('/users/login', user, { withCredentials: true });
     }
 }

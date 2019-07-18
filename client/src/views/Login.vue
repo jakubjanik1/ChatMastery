@@ -21,15 +21,17 @@
             </div>
 
             <div class="login__control">
-                <input class="login__input" type="text" placeholder="Email address">
+                <input class="login__input" placeholder="Email address" v-model="loginForm.email">
                 <span class="login__focus-border"></span>
             </div>
             <div class="login__control">
-                <input class="login__input" type="password" placeholder="Password">
+                <input class="login__input" type="password" placeholder="Password" v-model="loginForm.password">
                 <span class="login__focus-border"></span>
             </div>
+
+            <div class="login__error login__error--login" v-show="loginError">{{ loginError }}</div>
             
-            <button class="login__button">Login with email</button>
+            <button class="login__button" @click="login">Login with email</button>
         </div>
 
         <div class="login__wrapper" v-else>
@@ -94,7 +96,12 @@ export default {
                 name: '',
                 password: ''
             },
-            signupErrors: {}
+            signupErrors: {},
+            loginForm: {
+                email: '',
+                password: ''
+            },
+            loginError: ''
         };
     },
     methods: {
@@ -122,6 +129,23 @@ export default {
             this.showLoginForm = !this.showLoginForm;
 
             this.clearSignupForm();
+            this.clearLoginForm();
+        },
+        clearLoginForm() {
+            this.loginForm.email = '';
+            this.loginForm.password = '';
+
+            this.loginError = '';
+        },
+        async login() {
+            const response = await UsersService.login(this.loginForm);
+
+            if (response.data.error) {
+                this.loginError = response.data.error;
+            } else {
+                this.loginError = '';
+                location.reload();
+            } 
         }
     }
 }
@@ -259,6 +283,11 @@ export default {
             color: #f44336;
             align-self: flex-start;
             margin-top: 12px;
+
+            &--login {
+                align-self: center;
+                margin-top: 18px;
+            }
         }
 
         &__link {
