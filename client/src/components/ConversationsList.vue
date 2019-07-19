@@ -15,8 +15,8 @@
             <message-icon :size="80" fillColor="#009ef7"></message-icon>
             <div class="conversations__info">No conversations, yet</div>
             <div class="conversations__more">
-                No conversations in your inbox yet!
-                Start chatting with your friends
+                <div>No conversations in your inbox yet!</div>
+                <div>Start chatting with your friends</div>
             </div>
         </div>
     </div>

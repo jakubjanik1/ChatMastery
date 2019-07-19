@@ -6,39 +6,43 @@
             class="user-info__caret" 
             fillColor="#c3c4c4"
             @click="toggleOptions"
-            v-click-outside="hideOptions"
+            
         />
  
-        <div class="user-info__options" v-show="showOptions">
-            <a class="user-info__option" href="#">Profile</a>
-            <a class="user-info__option" :href="`${ $baseUrl }/users/logout`">Logout</a>
-        </div>
+        <transition>
+            <div class="user-info__options" v-show="showOptions">
+                <a class="user-info__option" href="#">Profile</a>
+                <a class="user-info__option" :href="`${ $baseUrl }/users/logout`">Logout</a>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
 import ArrowDownIcon from 'vue-material-design-icons/ChevronDown';
-import VClickOutside from 'v-click-outside';
 
 export default {
     name: 'UserInfo',
     components: {
         ArrowDownIcon,
     },
-    directives: {
-        clickOutside: VClickOutside.directive
-    },
     data() {
         return {
             showOptions: false
         };
     },
+    created() {
+        window.onclick = this.hideOptions;
+    },
     methods: {
         toggleOptions() {
             this.showOptions = !this.showOptions;
         },
-        hideOptions() {
-            this.showOptions = false;
+        hideOptions(e) {
+            const isNotToggleButton = (e.target.textContent != 'Chevron Down icon');
+            if (isNotToggleButton) {
+                this.showOptions = false;
+            }
         }
     }
 }
@@ -81,6 +85,8 @@ export default {
             border: 1px solid #f2f2f2;
             border-radius: 2px;
             z-index: 1;
+
+            transition: 1s;
         }
 
         &__option {
@@ -108,5 +114,13 @@ export default {
             margin: 8px 0;
             width: auto;
         }
+    }
+
+    .v-enter-active, .v-leave-active {
+        transition: opacity .2s;
+    }
+
+    .v-enter, .v-leave-to {
+        opacity: 0;
     }
 </style>

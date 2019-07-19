@@ -2,7 +2,7 @@
     <div class="login">
         <img class="login__logo" src="@/assets/logo.png">
 
-        <div class="login__wrapper" v-if="showLoginForm">
+        <form class="login__wrapper" @submit.prevent v-if="showLoginForm">
             <div class="login__title">Login to your account</div>
             <div class="login__subtitle">
                 Don’t have an account? 
@@ -32,9 +32,9 @@
             <div class="login__error login__error--login" v-show="loginError">{{ loginError }}</div>
             
             <button class="login__button" @click="login">Login with email</button>
-        </div>
+        </form>
 
-        <div class="login__wrapper" v-else>
+        <form class="login__wrapper" @submit.prevent v-else>
             <div class="login__title">Sign up for free!</div>
 
             <div class="login__control">
@@ -75,7 +75,7 @@
             
             <button class="login__button" @click="signup">Sign up with email</button>
             <span class="login__link" @click="toggleForm">Already have an account?</span>
-        </div>
+        </form>
     </div>
 </template>
 

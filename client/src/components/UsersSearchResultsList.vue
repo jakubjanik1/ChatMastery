@@ -14,8 +14,8 @@
             <users-search-icon :size="80" fillColor="#009ef7" />
             <div class="users-search-results-list__info">Search for chat friends</div>
             <div class="users-search-results-list__more">
-                Find existing chat or start new one.
-                Users are filtered by their name.
+                <div>Find existing chat or start new one.</div>
+                <div>Users are filtered by their name.</div>
             </div>
         </div>
 
@@ -23,8 +23,8 @@
             <users-not-found :size="80" fillColor="#009ef7" />
             <div class="users-search-results-list__info">Nothing found</div>
             <div class="users-search-results-list__more">
-                Nothing matched your search terms.
-                Maybe try to search again.
+                <div>Nothing matched your search terms.</div>
+                <div>Maybe try to search again.</div>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@ export default {
 
         @media (max-width: 900px) {
             width: 100vw;
-            top: 147px;
+            top: 161px;
 
             &--found {
                 height: calc((var(--vh, 1vh) * 100) - (146px));
