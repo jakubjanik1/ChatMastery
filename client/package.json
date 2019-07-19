@@ -16,9 +16,7 @@
     "vue-socket.io": "^3.0.7",
     "vue-spinner": "^1.0.3",
     "vuebar": "0.0.20",
-    "vuescroll": "^4.13.1"
-  },
-  "devDependencies": {
+    "vuescroll": "^4.13.1",
     "@vue/cli-plugin-babel": "^3.9.2",
     "@vue/cli-service": "^3.9.2",
     "node-sass": "^4.9.0",

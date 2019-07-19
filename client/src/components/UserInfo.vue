@@ -11,7 +11,7 @@
  
         <div class="user-info__options" v-show="showOptions">
             <a class="user-info__option" href="#">Profile</a>
-            <a class="user-info__option" href="http://localhost:8080/users/logout">Logout</a>
+            <a class="user-info__option" :href="`${ $baseUrl }/users/logout`">Logout</a>
         </div>
     </div>
 </template>

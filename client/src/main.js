@@ -16,8 +16,11 @@ Vue.use(VueScroll, {
   }
 });
 
+const baseUrl = (process.env.NODE_ENV == 'development' ? 'http://localhost:8080' : '')
+Vue.prototype.$baseUrl = baseUrl;
+
 Vue.use(new VueSocketIO({
-  connection: 'http://localhost:8888'
+  connection: baseUrl
 }));
 
 Vue.config.productionTip = false;

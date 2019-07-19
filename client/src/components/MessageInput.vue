@@ -39,7 +39,6 @@
 <script>
 import ChatService from '@/services/ChatService';
 import EventBus from '@/services/EventBus';
-import Api from '@/services/Api';
 import AttachmentIcon from 'vue-material-design-icons/Paperclip';
 
 export default {

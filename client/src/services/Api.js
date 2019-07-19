@@ -2,6 +2,6 @@ import axios from 'axios';
 
 export default() => {
     return axios.create({
-        baseURL: 'http://localhost:8080'
+        baseURL: (process.env.NODE_ENV == 'development' ? 'http://localhost:8080' : '')
     });
 };

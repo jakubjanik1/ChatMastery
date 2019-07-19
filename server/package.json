@@ -4,7 +4,7 @@
   "description": "ChatMastery - server side",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "author": "Jakub Janik",
   "license": "ISC",

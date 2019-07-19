@@ -1,8 +1,6 @@
 const User = require('../models/User');
 const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
-const mongoose = require('mongoose');
-const io = require('../socket');
 const cloudinary = require('../config/cloudinary');
 
 exports.getConversations = async (req, res) => {
@@ -68,7 +66,7 @@ exports.storeMessage = (req, res) => {
         .then(() => {
             Message.find({ _id: message._id })
                 .populate('author','name avatar')
-                .then(messages => io.emit('messageAdded', messages[0]));
+                .then(messages => require('../socket').io().emit('messageAdded', messages[0]));
                 
             res.json('Success');
         });
