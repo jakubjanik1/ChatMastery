@@ -57,9 +57,10 @@ export default {
         background: #fff;
         z-index: 1;
         left: 0;
+        height: calc((var(--vh, 1vh) * 100) - (64px));
 
         &--found {
-            height: calc((var(--vh, 1vh) * 100) - (64px));
+            height: inherit;
         }
 
         &--start, &--not-found {
@@ -67,6 +68,7 @@ export default {
             flex-direction: column;
             align-items: center;
             margin-top: 40px;
+            height: inherit;
         }
 
         &__info {
@@ -88,7 +90,7 @@ export default {
             top: 161px;
 
             &--found {
-                height: calc((var(--vh, 1vh) * 100) - (146px));
+                height: calc((var(--vh, 1vh) * 100) - (160px));
             }
         }
     }

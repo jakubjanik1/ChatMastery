@@ -51,6 +51,7 @@ export default {
         justify-content: center;
         position: relative;
         height: 40px;
+        background: #fafafa;
 
         &__return {
             height: 38px;

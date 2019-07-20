@@ -140,6 +140,7 @@ export default {
                 max-width: 270px;
                 width: 100%;
                 margin-right: 0;
+                animation: none;
 
                 &--focus {
                     width: 226px;

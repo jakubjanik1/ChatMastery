@@ -105,7 +105,7 @@ export default {
         
         @media (max-width: 900px) {
             border-right: 0;
-            height: calc((var(--vh, 1vh) * 100) - (146px));
+            height: calc((var(--vh, 1vh) * 100) - (160px));
         }
     }
 </style>
