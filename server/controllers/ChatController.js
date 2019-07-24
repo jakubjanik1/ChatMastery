@@ -7,7 +7,7 @@ exports.getConversations = async (req, res) => {
     const conversations = await Conversation.find({ members: req.params.userId })
         .populate({ 
             path: 'members', 
-            select: 'name avatar', 
+            select: 'name avatar active', 
             match: { _id: { $ne: req.params.userId }}
         });
 

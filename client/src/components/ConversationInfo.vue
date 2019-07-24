@@ -9,7 +9,8 @@
             BACK
         </return-icon>
 
-        <div class="conversation-info__receiver">{{ receiver }}</div>
+        <div class="conversation-info__receiver">{{ receiver.name }}</div>
+        <div class="conversation-info__active" v-show="receiver.active"></div>
     </div>
 </template>
 
@@ -29,16 +30,23 @@ export default {
     },
     created() {
         EventBus.$on('conversationSelected', ({ members: receiver }) => {
-            this.receiver = receiver[0].name;
+            this.receiver = receiver[0];
         });
 
-        EventBus.$on('newConversation', ({ name }) => {
-            this.receiver = name;
+        EventBus.$on('newConversation', user => {
+            this.receiver = user;
         });
     },
     methods: {
         emitReturnToConversations() {
             EventBus.$emit('returnToConversations');
+        }
+    },
+    sockets: {
+        userStatusChanged({ userId, status }) {
+            if (userId == this.receiver._id) {
+                this.receiver.active = status;
+            }
         }
     }
 }
@@ -66,6 +74,14 @@ export default {
         &__receiver {
             color: #292929;
             font-weight: 600;
+        }
+
+        &__active {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecd8a;
+            margin-left: 8px;
         }
     }
 

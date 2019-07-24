@@ -12,7 +12,7 @@
         <transition>
             <div class="user-info__options" v-show="showOptions">
                 <a class="user-info__option" href="#">Profile</a>
-                <a class="user-info__option" :href="`${ $baseUrl }/users/logout`">Logout</a>
+                <a class="user-info__option" @click="logout" :href="`${ $baseUrl }/users/logout`">Logout</a>
             </div>
         </transition>
     </div>
@@ -43,6 +43,9 @@ export default {
             if (isNotToggleButton) {
                 this.showOptions = false;
             }
+        },
+        logout() {
+            this.$socket.emit('userLogout');
         }
     }
 }

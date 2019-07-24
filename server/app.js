@@ -24,14 +24,17 @@ if (process.env.NODE_ENV == 'development') {
     app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 }
 
-app.use(session({
+const sessionConfig = session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
         maxAge: 172800000
     }
-}));
+});
+
+app.use(sessionConfig);
+app.set('session', sessionConfig);
 
 app.use(passport.initialize());
 app.use(passport.session());

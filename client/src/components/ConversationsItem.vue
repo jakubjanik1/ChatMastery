@@ -1,8 +1,15 @@
 <template>
     <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationSelected">
-        <img class="conversation__picture" :src="avatar">
+        <div 
+            class="conversation__profile" 
+            :class="{ 'conversation__profile--active' : active }"
+        >
+            <img class="conversation__picture" :src="avatar">
+        </div>
+
         <div class="conversation__receiver">{{ receiver }}</div>
         <div class="conversation__last-message">{{ lastMessage }}</div>
+        
 
         <div class="conversation__date">{{ date }}</div>
         <div class="conversation__unread-messages" v-show="unreadMessages">{{ unreadMessages }}</div>
@@ -55,6 +62,9 @@ export default {
         }, 
         avatar() {
             return this.conversation.members[0].avatar;
+        },
+        active() {
+            return this.conversation.members[0].active;
         }
     },
     methods: {
@@ -77,6 +87,11 @@ export default {
             if (currentConversationId == message.conversationId && message.conversationId == this.conversation._id) {
                 this.readMessages();
             }
+        },
+        userStatusChanged({ userId, status }) {
+            if (userId == this.conversation.members[0]._id) {
+                this.conversation.members[0].active = status;
+            }
         }
     }
 }
@@ -92,11 +107,29 @@ export default {
         grid-template-areas: "picture receiver date"
                              "picture last-message unread-messages";
 
-        &__picture {
+        &__profile {
             width: 50px;
             height: 50px;
+            position: relative;
+            
+            &--active::after {
+                content: '';
+                position: absolute;
+                right: 1px;
+                bottom: 1px;
+                width: 12px;
+                height: 12px;
+                background: #2ecd8a;
+                border-radius: 50%;
+                border: 2px solid #fff;
+            }
+        }
+
+        &__picture {
+            width: inherit;
+            height: inherit;
             border-radius: 50%;
-            grid-area: picture;
+            grid-area: picture;       
         }
 
         &__receiver {
@@ -143,6 +176,11 @@ export default {
             .conversation__unread-messages {
                 background: #fff;
                 color: #009ef7;
+            }
+
+            .conversation__profile--active::after {
+                transition: .3s ease-in-out;
+                border-color: #009ef7;
             }
         }
 

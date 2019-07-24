@@ -21,6 +21,10 @@ const UserSchema = new Schema({
     avatar: { 
         type: String, 
         default: 'https://res.cloudinary.com/djc9jias4/image/upload/v1563346601/chatmastery/users/profile_ofmgkl.jpg'
+    },
+    active: {
+        type: Boolean,
+        default: false
     }
 });
 
