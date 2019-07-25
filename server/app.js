@@ -9,6 +9,7 @@ const path = require('path');
 const chatRoutes = require('./routes/chat');
 const usersRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
+const { notFound, catchErrors } = require('./middlewares/errors');
 const app = express();
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
@@ -16,6 +17,9 @@ const db = mongoose.connection;
 
 db.on('error', () => console.log('Failed to connect to MongoDB.'));
 db.on('open', () => console.log('Connect to MongoDB successfully.'));
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -40,6 +44,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 if (process.env.NODE_ENV == 'production') {
+    app.use(/\/[^\/]+/, (req, res, next) => {
+        if (req.header('Referer')) {
+            return next();
+        }
+    
+        return res.render('404', { homeUrl: process.env.CLIENT_URL });
+    });
+
     app.use(express.static(path.join(__dirname, '../client/dist')));
 
     app.get('/', (req, res) => {
@@ -50,5 +62,8 @@ if (process.env.NODE_ENV == 'production') {
 app.use('/chat', chatRoutes);
 app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
+
+app.use(notFound);
+app.use(catchErrors);
 
 module.exports = app;

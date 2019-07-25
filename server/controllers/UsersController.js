@@ -3,11 +3,11 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const { check, validationResult } = require('express-validator');
 const passport = require('../auth/passport');
 
-exports.search = (req, res) => {
+exports.search = async (req, res) => {
     const regex = new RegExp(`.*${req.params.query}.*`, 'i');
     
-    User.find({ name: regex })
-        .then(users => res.json(users));
+    const users = await User.find({ name: regex });
+    return res.json(users);
 }
 
 exports.getLoggedInUser = (req, res) => {
@@ -32,7 +32,7 @@ exports.validate = [
         .not().isEmpty().withMessage('Name is required')
 ]
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
     const errors = validationResult(req);
     if (! errors.isEmpty()) {
         return res.json({ errors: errors.array() });
@@ -41,7 +41,8 @@ exports.signup = (req, res) => {
     const user = new User(req.body);
     user._id = ObjectId().toHexString();
 
-    user.save().then(user => res.json(user))
+    const response = await user.save();
+    return res.json(response);
 }
 
 exports.login = (req, res) => {
