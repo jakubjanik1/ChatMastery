@@ -21,6 +21,7 @@
                 placeholder="Type a message..."
                 spellcheck="false"
                 v-model="text"
+                @focus="emitMessageInputFocus"
                 :class="{ 'message-input__text--empty': !isMultiline || isEmpty }">
 
             </textarea>
@@ -106,6 +107,9 @@ export default {
         },
         openImageInput() {
             this.$refs.image.click();
+        },
+        emitMessageInputFocus() {
+            EventBus.$emit('messageInputFocus');
         }
     },
     computed: {

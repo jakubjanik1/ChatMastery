@@ -18,9 +18,6 @@ const db = mongoose.connection;
 db.on('error', () => console.log('Failed to connect to MongoDB.'));
 db.on('open', () => console.log('Connect to MongoDB successfully.'));
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,7 +46,7 @@ if (process.env.NODE_ENV == 'production') {
             return next();
         }
     
-        return res.render('404', { homeUrl: process.env.CLIENT_URL });
+        return res.redirect('/');
     });
 
     app.use(express.static(path.join(__dirname, '../client/dist')));

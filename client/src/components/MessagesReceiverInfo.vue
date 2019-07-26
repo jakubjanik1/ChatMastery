@@ -43,5 +43,12 @@ export default {
             color: #292929;
             font-weight: 600;
         }
+
+        @media (max-width: 900px) {
+            &__picture {
+                width: 105px;
+                height: 105px;
+            }
+        }
     }
 </style>

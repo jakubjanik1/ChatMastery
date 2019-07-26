@@ -39,10 +39,10 @@ export default {
     mounted() {
         localStorage.setItem('conversationId', '');
 
-        EventBus.$on('conversationSelected', ({ _id: id }) => {
+        EventBus.$on('conversationSelected', async ({ _id: id }) => {
             localStorage.setItem('conversationId', id);
 
-            this.getMessages(id);
+            await this.getMessages(id);
 
             this.scrollDown();
         });
@@ -51,6 +51,10 @@ export default {
             localStorage.setItem('conversationId', '');
             
             this.messages = [];
+        });
+
+        EventBus.$on('messageInputFocus', () => {
+            this.scrollDown();
         });
     },
     methods: {
