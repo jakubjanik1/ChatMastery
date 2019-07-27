@@ -1,18 +1,24 @@
 <template>
     <div class="messages">
-        <loading-circle :loading="isLoading"></loading-circle>
+        <loading-circle :loading="isLoading" />
 
-        <vue-scroll ref="scroll" v-show="! isLoading">
-            <messages-receiver-info></messages-receiver-info>
+        <vue-scroll ref="scroll" v-show="! isLoading" @handle-scroll="handleScroll">
+            <messages-receiver-info />
 
             <messages-item 
                 :key="message._id"
                 v-for="message in messages"
                 :message="message"
-            >
-
-            </messages-item>
+            />
         </vue-scroll>
+
+        <arrow-down-icon 
+            class="messages__scroll-down" 
+            @click="scrollDown" 
+            v-if="showScrollDownButton" 
+            fillColor="#c3c4c4" 
+            :size="30" 
+        />
     </div>
 </template>
 
@@ -22,18 +28,21 @@ import EventBus from '@/services/EventBus';
 import MessagesItem from './MessagesItem';
 import MessagesReceiverInfo from './MessagesReceiverInfo';
 import LoadingCircle from './LoadingCircle';
+import ArrowDownIcon from 'vue-material-design-icons/ArrowDown';
 
 export default {
     name: 'MessagesList',
     components: {
         MessagesItem,
         MessagesReceiverInfo,
-        LoadingCircle
+        LoadingCircle,
+        ArrowDownIcon
     },
     data() {
         return {
             messages: [],
-            isLoading: false
+            isLoading: false,
+            showScrollDownButton: false
         };
     },
     mounted() {
@@ -70,7 +79,16 @@ export default {
             this.$refs.scroll.scrollBy({
                 dy: 1000000000000
             });
-        }
+        },
+        handleScroll(scroll) {
+            const { scrollHeight, scrollTop, clientHeight } = this.$refs.scroll.$el.firstChild;
+
+            if (scrollHeight - (scrollTop + clientHeight) >= 300) {
+                this.showScrollDownButton = true;
+            } else {
+                this.showScrollDownButton = false;
+            }
+        } 
     },
     sockets: {
         messageAdded(message) {
@@ -93,6 +111,28 @@ export default {
         height: calc((var(--vh, 1vh) * 100) - (121px));
         border-top: 2px solid #f2f2f2;
         position: relative;
+
+        &__scroll-down {
+            position: absolute;
+            right: calc(50% - 21px);
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            height: 30px;
+            background: #fff;
+            padding: 3px;
+            
+            @keyframes slide-in {
+                from { bottom: -40px; } 
+                to { bottom: 6px; }
+            }
+
+            animation: .3s slide-in;
+            animation-fill-mode: forwards;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
 
         @media (max-width: 900px) {
             height: calc((var(--vh, 1vh) * 100) - (94px));
