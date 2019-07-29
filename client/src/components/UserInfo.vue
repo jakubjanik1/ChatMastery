@@ -11,24 +11,29 @@
  
         <transition>
             <div class="user-info__options" v-show="showOptions">
-                <a class="user-info__option" href="#">Profile</a>
+                <a class="user-info__option" @click.prevent="showProfile = true" href="">Profile</a>
                 <a class="user-info__option" @click="logout" :href="`${ $baseUrl }/users/logout`">Logout</a>
             </div>
         </transition>
+
+        <profile :show="showProfile" @close="showProfile = false" />
     </div>
 </template>
 
 <script>
 import ArrowDownIcon from 'vue-material-design-icons/ChevronDown';
+import Profile from '@/views/Profile';
 
 export default {
     name: 'UserInfo',
     components: {
         ArrowDownIcon,
+        Profile
     },
     data() {
         return {
-            showOptions: false
+            showOptions: false,
+            showProfile: false
         };
     },
     created() {
