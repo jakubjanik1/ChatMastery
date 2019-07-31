@@ -12,5 +12,8 @@ export default {
     },
     login(user) {
         return Api().post('/users/login', user, { withCredentials: true });
+    },
+    update(id, user) {
+        return Api().put(`/users/${id}`, user);
     }
 }

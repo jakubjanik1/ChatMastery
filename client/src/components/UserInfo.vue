@@ -1,7 +1,7 @@
 <template>
     <div class="user-info">
-        <img class="user-info__avatar" :src="$store.user.avatar">
-        <div class="user-info__name">{{ $store.user.name }}</div>
+        <img class="user-info__avatar" :src="$root.user.avatar">
+        <div class="user-info__name">{{ $root.user.name }}</div>
         <arrow-down-icon 
             class="user-info__caret" 
             fillColor="#c3c4c4"

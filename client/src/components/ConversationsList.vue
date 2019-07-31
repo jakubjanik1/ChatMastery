@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         async getConversations() {
-            const userId = this.$store.user._id;
+            const userId = this.$root.user._id;
 
             const response = await ChatService.fetchConversations(userId);
             this.conversations = response.data;

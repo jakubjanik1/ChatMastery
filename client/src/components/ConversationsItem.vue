@@ -76,7 +76,7 @@ export default {
             this.isActive = true;
         },
         readMessages() {
-            const userId = this.$store.user._id;
+            const userId = this.$root.user._id;
 
             this.$socket.emit('readMessages', { conversationId: this.conversation._id, userId });
         }

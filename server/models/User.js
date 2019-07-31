@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     },
     avatar: { 
         type: String, 
-        default: 'https://res.cloudinary.com/djc9jias4/image/upload/v1563346601/chatmastery/users/profile_ofmgkl.jpg'
+        default: `https://res.cloudinary.com/${ process.env.CLOUDINARY_NAME }/image/upload/v1563346601/chatmastery/users/csf01uctelwcfcqarn8y.jpg`
     },
     active: {
         type: Boolean,

@@ -60,3 +60,9 @@ exports.logout = (req, res) => {
     req.logout();
     return res.redirect(process.env.CLIENT_URL);
 }
+
+exports.update = async (req, res) => {
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    
+    return res.json(user);
+}

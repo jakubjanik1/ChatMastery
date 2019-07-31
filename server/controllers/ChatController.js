@@ -82,12 +82,3 @@ exports.storeConversation = async (req, res) => {
     const response = await conversation.save();
     return res.send(response._id);
 }
-
-exports.storeMessageImage = async (req, res) => {
-    const result = await cloudinary.v2.uploader.upload(
-        req.files.image.path,
-        { folder: 'chatmastery/messages' }
-    );
-
-    return res.json({ url: result.url });
-}

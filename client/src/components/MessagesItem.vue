@@ -29,7 +29,7 @@ export default {
             return this.message.author.avatar;
         },
         getClass() {
-            const userId = this.$store.user._id;
+            const userId = this.$root.user._id;
 
             const isSender = userId == (this.message.author._id || this.message.author);
             return isSender ? 'message--sender' : 'message--receiver';

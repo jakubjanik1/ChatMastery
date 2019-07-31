@@ -38,7 +38,7 @@ export default {
       const response = await UsersService.fetchLoggedInUser();
       
       this.isLoggedIn = (Object.entries(response.data).length != 0);
-      this.$store.user = response.data;
+      this.$root.user = response.data;
     }
   }
 }

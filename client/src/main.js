@@ -4,8 +4,6 @@ import VueSocketIO from 'vue-socket.io';
 import VueScroll from 'vuescroll';
 import Vuebar from 'vuebar';
 
-Vue.prototype.$store = { user: {} };
-
 Vue.use(Vuebar);
 
 Vue.use(VueScroll, {
@@ -26,5 +24,8 @@ Vue.use(new VueSocketIO({
 Vue.config.productionTip = false;
 
 new Vue({
+  data: {
+    user: {}
+  },
   render: h => h(App),
 }).$mount('#app');

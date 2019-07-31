@@ -9,10 +9,11 @@ const path = require('path');
 const chatRoutes = require('./routes/chat');
 const usersRoutes = require('./routes/users');
 const authRoutes = require('./routes/auth');
+const uploadRoutes = require('./routes/upload');
 const { notFound, catchErrors } = require('./middlewares/errors');
 const app = express();
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useFindAndModify: false });
 const db = mongoose.connection;
 
 db.on('error', () => console.log('Failed to connect to MongoDB.'));
@@ -59,6 +60,7 @@ if (process.env.NODE_ENV == 'production') {
 app.use('/chat', chatRoutes);
 app.use('/users', usersRoutes);
 app.use('/auth', authRoutes);
+app.use('/upload', uploadRoutes);
 
 app.use(notFound);
 app.use(catchErrors);

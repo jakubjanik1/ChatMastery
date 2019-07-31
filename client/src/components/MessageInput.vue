@@ -39,6 +39,7 @@
 
 <script>
 import ChatService from '@/services/ChatService';
+import UploadService from '@/services/UploadService';
 import EventBus from '@/services/EventBus';
 import AttachmentIcon from 'vue-material-design-icons/Paperclip';
 
@@ -63,13 +64,13 @@ export default {
             const image = event.target.files[0];
             event.target.files = null;
 
-            const response = await ChatService.storeMessageImage(image);
+            const response = await UploadService.uploadImage(image, 'messages');
             this.image = response.data.url;
 
             this.addMessage();
         },
         async addMessage() {
-            const userId = this.$store.user._id;
+            const userId = this.$root.user._id;
             const conversationId = await this.getConversationId();
             
             localStorage.setItem('conversationId', conversationId.data);
@@ -95,7 +96,7 @@ export default {
             } else {
                 return await ChatService.storeConversation({
                     'members': [
-                        this.$store.user._id,
+                        this.$root.user._id,
                         localStorage.getItem('receiverUserId')
                     ]
                 });
