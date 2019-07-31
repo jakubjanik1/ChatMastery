@@ -6,6 +6,8 @@ import Vuebar from 'vuebar';
 
 Vue.use(Vuebar);
 
+window.location.hash = '';
+
 Vue.use(VueScroll, {
   ops: {
     bar: {

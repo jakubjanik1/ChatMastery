@@ -2,11 +2,13 @@ const passport = require('passport');
 const googleStrategy = require('./google');
 const githubStrategy = require('../auth/github');
 const localStrategy = require('../auth/local');
+const facebookStrategy = require('../auth/facebook');
 const User = require('../models/User');
 
 passport.use(googleStrategy);
 passport.use(githubStrategy);
 passport.use(localStrategy);
+passport.use(facebookStrategy);
 
 passport.serializeUser((user, done) => {
     return done(null, user);

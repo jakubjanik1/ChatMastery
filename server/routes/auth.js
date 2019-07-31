@@ -8,4 +8,7 @@ router.get('/github/callback', passport.authenticate('github', { successRedirect
 router.get('/google', passport.authenticate('google',  { scope: [ 'profile' ] }));
 router.get('/google/callback', passport.authenticate('google', { successRedirect: process.env.CLIENT_URL }));
 
+router.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: process.env.CLIENT_URL }));
+
 module.exports = router;
