@@ -12,7 +12,7 @@
             <div class="login__social">
                 <social-button type="github" />
                 <social-button type="facebook" />
-                <social-button type="twitter" />
+                <social-button type="spotify" />
                 <social-button type="google" />
             </div>
 

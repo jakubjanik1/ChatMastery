@@ -11,4 +11,7 @@ router.get('/google/callback', passport.authenticate('google', { successRedirect
 router.get('/facebook', passport.authenticate('facebook'));
 router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: process.env.CLIENT_URL }));
 
+router.get('/spotify', passport.authenticate('spotify'));
+router.get('/spotify/callback', passport.authenticate('spotify', { successRedirect: process.env.CLIENT_URL }));
+
 module.exports = router;

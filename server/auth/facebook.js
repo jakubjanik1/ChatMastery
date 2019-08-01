@@ -8,7 +8,10 @@ module.exports = new FacebookStrategy({
 }, (accessToken, refreshToken, profile, done) => {
     User.findOrCreate(
         { _id: profile.id }, 
-        { name: profile.displayName }, 
+        { 
+            name: profile.displayName,
+            avatar: `http://graph.facebook.com/${ profile.id }/picture?width=200&height=200&access_token=${ accessToken}`
+        }, 
         (err, user) => done(err, user)
     );
 });

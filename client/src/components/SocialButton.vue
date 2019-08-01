@@ -1,7 +1,7 @@
 <script>
 import GithubIcon from 'vue-material-design-icons/GithubFace';
 import FacebookIcon from 'vue-material-design-icons/Facebook';
-import TwitterIcon from 'vue-material-design-icons/Twitter';
+import SpotifyIcon from 'vue-material-design-icons/Spotify';
 import GoogleIcon from 'vue-material-design-icons/GooglePlus';
 
 export default {
@@ -9,14 +9,14 @@ export default {
     components: {
         GithubIcon,
         FacebookIcon,
-        TwitterIcon,
+        SpotifyIcon,
         GoogleIcon
     },
     props: {
         type: {
             type: String,
             required: true,
-            validator: value => [ 'github', 'facebook', 'google', 'twitter' ].includes(value)
+            validator: value => [ 'github', 'facebook', 'google', 'spotify' ].includes(value)
         }
     },
     render() { 
@@ -49,7 +49,7 @@ export default {
         $social-list: (
             "github": #333,
             "facebook": #4b70ab,
-            "twitter": #3B94D9,
+            "spotify": #1db954,
             "google": #DD4B39
         );
 

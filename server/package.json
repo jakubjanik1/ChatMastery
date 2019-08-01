@@ -27,6 +27,7 @@
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
+    "passport-spotify": "^1.0.1",
     "socket.io": "^2.2.0"
   }
 }
