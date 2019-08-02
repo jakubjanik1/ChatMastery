@@ -14,6 +14,6 @@ router.post('/login', UsersController.login);
 
 router.get('/logout', UsersController.logout);
 
-router.put('/:id', catchAsync(UsersController.update));
+router.put('/:id', UsersController.validate, catchAsync(UsersController.update));
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { check, validationResult } = require('express-validator');
+const emailValidator = require('email-validator');
 const passport = require('../auth/passport');
 
 exports.search = async (req, res) => {
@@ -16,15 +17,19 @@ exports.getLoggedInUser = (req, res) => {
 
 exports.validate = [
     check('email')
-        .custom(email => User.find({ email }).then(users => {
-            if (users.length) {
+        .if(check('email').exists())
+        .custom((email, { req }) => User.find({ email }).then(users => {
+            if (! email) {
+                return Promise.reject(req.body.socialAuth ? '' : 'Email is required');
+            } else if (! emailValidator.validate(email)) {
+                return Promise.reject('Please enter the valid email');
+            } else if (users.length && users[0]._id != req.body._id) {
                 return Promise.reject('Email already in use');
             }
-        }))
-        .isEmail().withMessage('Please enter a valid email address')
-        .not().isEmpty().withMessage('Email is required'),
+        })),
 
     check('password')
+        .if(check('password').exists())
         .isLength({ min: 6 }).withMessage('Your password must be at least 6 characters')
         .not().isEmpty().withMessage('Password is required'),
 
@@ -33,9 +38,8 @@ exports.validate = [
 ]
 
 exports.signup = async (req, res) => {
-    const errors = validationResult(req);
-    if (! errors.isEmpty()) {
-        return res.json({ errors: errors.array() });
+    if (! isValidate(req)) {
+        return res.json(getValidationErrors(req));
     }
 
     const user = new User(req.body);
@@ -62,7 +66,32 @@ exports.logout = (req, res) => {
 }
 
 exports.update = async (req, res) => {
+    if (! isValidate(req)) {
+        return res.json(getValidationErrors(req));
+    }
+
     const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
     
     return res.json(user);
+}
+
+function isValidate(req) {
+    const errors = validationResult(req);
+    return errors.isEmpty();
+}
+
+function getValidationErrors(req) {
+    const parseErrors = errors => {
+        const result = {};
+        errors.map(err => {
+            if (err.msg != 'Invalid value') {
+                result[err.param] = err.msg
+            }
+        });
+
+        return result;
+    };
+
+    const errors = validationResult(req);
+    return { errors: parseErrors(errors.array()) };
 }

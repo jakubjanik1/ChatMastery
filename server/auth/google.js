@@ -8,7 +8,11 @@ module.exports = new GoogleStrategy({
 }, (accessToken, refreshToken, profile, done) => {
     User.findOrCreate(
         { _id: profile.id }, 
-        { name: profile.displayName, avatar: profile._json.picture }, 
+        { 
+            name: profile.displayName,
+            avatar: profile._json.picture,
+            socialAuth: true
+        }, 
         (err, user) => done(err, user)
     );
 });

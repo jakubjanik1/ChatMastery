@@ -25,6 +25,10 @@ const UserSchema = new Schema({
     active: {
         type: Boolean,
         default: false
+    },
+    socialAuth: {
+        type: Boolean,
+        deafult: false
     }
 });
 

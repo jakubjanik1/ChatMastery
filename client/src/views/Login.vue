@@ -20,16 +20,19 @@
                 <span class="login__or">or</span>
             </div>
 
-            <div class="login__control">
-                <input class="login__input" placeholder="Email address" v-model="loginForm.email">
-                <span class="login__focus-border"></span>
-            </div>
-            <div class="login__control">
-                <input class="login__input" type="password" placeholder="Password" v-model="loginForm.password">
-                <span class="login__focus-border"></span>
-            </div>
+            <app-input 
+                class="login__input" 
+                v-model="loginForm.email" 
+                placeholder="Email address" 
+            />
+            <app-input 
+                class="login__input" 
+                v-model="loginForm.password" 
+                placeholder="Password" 
+                type="password"
+            />
 
-            <div class="login__error login__error--login" v-show="loginError">{{ loginError }}</div>
+            <div class="login__error" v-show="loginError">{{ loginError }}</div>
             
             <button class="login__button" @click="login">Login with email</button>
         </form>
@@ -37,41 +40,27 @@
         <form class="login__wrapper" @submit.prevent v-else>
             <div class="login__title">Sign up for free!</div>
 
-            <div class="login__control">
-                <input 
-                    class="login__input" 
-                    :class="{ 'login__input--error' : signupErrors.email }" 
-                    placeholder="Email address" 
-                    v-model="signupForm.email"
-                >
+            <app-input 
+                class="login__input" 
+                v-model="signupForm.email" 
+                placeholder="Email address" 
+                :error="signupErrors.email" 
+            />
 
-                <span class="login__focus-border"></span>
-            </div>
-            <div class="login__error" v-show="signupErrors.email">{{ signupErrors.email }}</div>
+            <app-input 
+                class="login__input" 
+                v-model="signupForm.name" 
+                placeholder="Full name" 
+                :error="signupErrors.name" 
+            />
 
-            <div class="login__control">
-                <input 
-                    class="login__input" 
-                    :class="{ 'login__input--error' : signupErrors.name }"
-                    placeholder="Full name" 
-                    v-model="signupForm.name"
-                >
-                <span class="login__focus-border"></span>
-            </div>
-             <div class="login__error" v-show="signupErrors.name">{{ signupErrors.name }}</div>
-
-            <div class="login__control">
-                <input 
-                    class="login__input" 
-                    :class="{ 'login__input--error' : signupErrors.password }" 
-                    type="password" 
-                    placeholder="Password" 
-                    v-model="signupForm.password"
-                >
-
-                <span class="login__focus-border"></span>
-            </div>
-            <div class="login__error" v-show="signupErrors.password">{{ signupErrors.password }}</div>
+            <app-input 
+                class="login__input" 
+                v-model="signupForm.password" 
+                placeholder="Password" 
+                :error="signupErrors.password" 
+                type="password"
+            />
             
             <button class="login__button" @click="signup">Sign up with email</button>
             <span class="login__link" @click="toggleForm">Already have an account?</span>
@@ -82,11 +71,13 @@
 <script>
 import SocialButton from '@/components/SocialButton';
 import UsersService from '@/services/UsersService';
+import AppInput from '@/components/AppInput';
 
 export default {
     name: 'Login',
     components: {
-        SocialButton    
+        SocialButton,
+        AppInput
     },
     data() {
         return {
@@ -109,10 +100,7 @@ export default {
             const response = await UsersService.signup(this.signupForm);
             
             if (response.data.errors) {
-                this.signupErrors = response.data.errors.reduce((obj, item) => {
-                    obj[item.param] = item.msg;
-                    return obj;
-                }, {});
+                this.signupErrors = response.data.errors;
             } else {
                 this.clearSignupForm();
                 this.showLoginForm = true;
@@ -216,47 +204,6 @@ export default {
             font-size: 20px;
         }
 
-        &__control {
-            position: relative;
-            width: 100%;
-        }
-
-        &__input {
-            border: 0;
-            border-bottom: 2px solid #c3c4c4;
-            padding: 8px 0;
-            margin-top: 32px;
-            width: 100%;
-
-            &:focus {
-                outline: 0;
-            }
-
-            &--error {
-                border-bottom-color: #f44336;
-            }
-        }
-
-        &__input ~ &__focus-border {
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 0; 
-            height: 2px; 
-            background: #3399FF; 
-            transition: .4s;
-        }
-
-        &__input:focus ~ &__focus-border {
-            width: 100%;
-            transition: .4s;
-        }
-
-        &__input--error:focus ~ &__focus-border {
-            width: 0%;
-            transition: .4s;
-        }
-
         &__button {
             background: #3399FF; 
             color: #fff;
@@ -283,11 +230,8 @@ export default {
             color: #f44336;
             align-self: flex-start;
             margin-top: 12px;
-
-            &--login {
-                align-self: center;
-                margin-top: 18px;
-            }
+            align-self: center;
+            margin-top: 18px;
         }
 
         &__link {
@@ -303,12 +247,8 @@ export default {
             }
         }
 
-        & input, button {
+        &__button {
             font-family: inherit;
-        }
-
-        & input {
-            font-size: 14px;
         }
 
         @media (max-width: 700px) {

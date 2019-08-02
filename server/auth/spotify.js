@@ -10,7 +10,8 @@ module.exports = new SpotifyStartegy({
         { _id: profile.id }, 
         { 
             name: profile.displayName, 
-            ...(profile.photos.length && { avatar: profile.photos[0].url })
+            ...(profile.photos.length && { avatar: profile.photos[0].url }),
+            socialAuth: true
         }, 
         (err, user) => done(err, user)
     );

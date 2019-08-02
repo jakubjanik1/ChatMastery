@@ -1,5 +1,5 @@
 <template>
-    <div class="overlay" v-if="show">
+    <div class="overlay" v-show="show">
 
         <div class="profile">
             <close-icon 
@@ -10,7 +10,11 @@
             />
             
             <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
-            
+
+            <app-input placeholder="Email address" v-model="user.email" label :error="errors.email" />
+
+            <app-input placeholder="Full name" v-model="user.name" label :error="errors.name" />
+
             <button class="profile__button" @click="update">Save</button>
 
             <div class="profile__updating" v-if="isUpdating">
@@ -27,6 +31,7 @@ import EditPhoto from '@/components/EditPhoto';
 import UploadService from '@/services/UploadService';
 import UsersService from '@/services/UsersService';
 import Loading from 'vue-spinner/src/ClipLoader';
+import AppInput from '@/components/AppInput';
 
 export default {
     name: 'Profile',
@@ -39,12 +44,14 @@ export default {
     components: {
         CloseIcon,
         EditPhoto,
-        Loading
+        Loading,
+        AppInput
     },
     data() {
         return {
             isVisible: this.show,
-            user: { ...this.$root.user },
+            user: {},
+            errors: {},
             isUpdating: false
         };
     },
@@ -68,9 +75,21 @@ export default {
             await this.uploadImage();
 
             const response = await UsersService.update(this.user._id, this.user);
-            this.$root.user = response.data;
+            
+            if (response.data.errors) {
+                this.errors = response.data.errors;
+            } else {
+                this.$root.user = response.data;
+                this.errors = {};
+            }
 
             this.isUpdating = false;
+        }
+    },
+    watch: {
+        show() {
+            this.errors = {};
+            this.user = { ...this.$root.user };
         }
     }
 }

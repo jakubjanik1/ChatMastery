@@ -8,7 +8,11 @@ module.exports = new GithubStartegy({
 }, (accessToken, refreshToken, profile, done) => {
     User.findOrCreate(
         { _id: profile.id }, 
-        { name: profile.displayName, avatar: profile._json.avatar_url }, 
+        { 
+            name: profile.displayName, 
+            avatar: profile._json.avatar_url,
+            socialAuth: true
+        }, 
         (err, user) => done(err, user)
     );
 });

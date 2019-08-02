@@ -10,7 +10,8 @@ module.exports = new FacebookStrategy({
         { _id: profile.id }, 
         { 
             name: profile.displayName,
-            avatar: `http://graph.facebook.com/${ profile.id }/picture?width=200&height=200&access_token=${ accessToken}`
+            avatar: `http://graph.facebook.com/${ profile.id }/picture?width=200&height=200&access_token=${ accessToken}`,
+            socialAuth: true
         }, 
         (err, user) => done(err, user)
     );
