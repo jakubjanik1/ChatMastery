@@ -77,8 +77,8 @@ exports.update = async (req, res) => {
 
 function isValidate(req) {
     const errors = validationResult(req);
-
-    return ! errors.array().filter(err => err.value).length;
+    
+    return ! errors.array().filter(err => err.msg != 'Invalid value').length;
 }
 
 function getValidationErrors(req) {

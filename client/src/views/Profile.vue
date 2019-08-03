@@ -11,9 +11,9 @@
             
             <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
 
-            <app-input placeholder="Email address" v-model="user.email" label :error="errors.email" />
+            <app-input class="profile__input" placeholder="Email address" v-model="user.email" label :error="errors.email" />
 
-            <app-input placeholder="Full name" v-model="user.name" label :error="errors.name" />
+            <app-input class="profile__input" placeholder="Full name" v-model="user.name" label :error="errors.name" />
 
             <button class="profile__button" @click="update">Save</button>
 
@@ -134,6 +134,10 @@ export default {
             &:hover {
                 cursor: pointer;
             }
+        }
+
+        &__input {
+            width: 85%;
         }
 
         &__button {
