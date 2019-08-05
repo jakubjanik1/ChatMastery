@@ -49,8 +49,8 @@ export default {
         }
 
         &__img {
-            width: 100%;
-            height: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
             pointer-events: none;
         }
 
