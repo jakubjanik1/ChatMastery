@@ -103,7 +103,7 @@ export default {
             justify-content: center;
             width: 100%;
             height: 100%;
-            background: #0000003d;
+            background: #00000085;
             position: fixed;
             top: 0;
             left: 0;

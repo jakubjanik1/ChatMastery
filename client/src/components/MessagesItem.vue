@@ -10,17 +10,29 @@
                 class="message__body--image" 
                 v-else-if="isImage"
                 :src="message.body.content"
+                @click="showImage = true"
             >
         </div>
+
+        <image-preview :show="showImage" :img="message.body.content" @close="showImage = false" />
     </div>
 </template>
 
 <script>
 import { formatDate } from '@/helpers';
+import ImagePreview from '@/views/ImagePreview';
 
 export default {
     name: 'MessagesItem',
     props: [ 'message' ],
+    components: {
+        ImagePreview
+    },
+    data() {
+        return {
+            showImage: false
+        };
+    },
     computed: {
         date() {
             return formatDate(this.message.createdAt);
@@ -83,6 +95,7 @@ export default {
             max-width: 100%;
             max-height: 250px;
             margin-bottom: -4px;
+            cursor: pointer;
         }
 
         &__author {
