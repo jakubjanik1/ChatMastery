@@ -1,7 +1,7 @@
 <template>
     <div class="message-input" :class="{ 'message-input--invisible' : !isVisible }">
         <attachment-icon 
-            class="message-input__icon" 
+            class="message-input__icon message-input__icon--attachment" 
             fillColor="#c3c4c4" 
             :size="28" 
             @click="openImageInput" 
@@ -14,6 +14,23 @@
             accept="image/*"
             @change="addImage"
         >
+
+        <emoji-icon 
+            class="message-input__icon message-input__icon--emoji" 
+            fillColor="#c3c4c4"
+            :size="28" 
+            @click="showEmojiPicker = !showEmojiPicker" 
+        />
+
+        <emoji-picker 
+            class="message-input__emoji-picker"
+            v-if="showEmojiPicker"
+            :showPreview="false"
+            :showSearch="false"
+            :showSkinTones="false"
+            color="#009ef7"
+            @select="appendEmoji"
+        />
 
         <div class="message-input__scroll" v-bar>
              <textarea 
@@ -42,22 +59,30 @@ import ChatService from '@/services/ChatService';
 import UploadService from '@/services/UploadService';
 import EventBus from '@/services/EventBus';
 import AttachmentIcon from 'vue-material-design-icons/Paperclip';
+import EmojiIcon from 'vue-material-design-icons/Emoticon';
+import { Picker } from 'emoji-mart-vue-fast';
+import 'emoji-mart-vue-fast/css/emoji-mart.css'
 
 export default {
     name: 'MessageInput',
     components: {
-        AttachmentIcon
+        AttachmentIcon,
+        EmojiPicker: Picker,
+        EmojiIcon
     },
     data() {
         return {
             text: '',
             image: null,
-            isVisible: false
+            isVisible: false,
+            showEmojiPicker: false
         };
     },
     created() {
         EventBus.$on('conversationSelected', this.setup);
         EventBus.$on('newConversation', this.setup);
+
+        document.onclick = this.hideEmojiPicker;
     },
     methods: {
         async addImage(event) {
@@ -111,6 +136,21 @@ export default {
         },
         emitMessageInputFocus() {
             EventBus.$emit('messageInputFocus');
+        },
+        appendEmoji(emoji) {
+            this.text += emoji.native;
+        },
+        hideEmojiPicker(event) {
+            const path = event.path.slice(0, event.path.length - 2);
+
+            const isOutsideEmojiPicker = ! path.some(elem => {
+               return [...elem.classList].includes('message-input__emoji-picker')
+                    || [...elem.classList].includes('emoticon-icon');
+            });
+
+            if (isOutsideEmojiPicker) {
+                this.showEmojiPicker = false;
+            }
         }
     },
     computed: {
@@ -187,11 +227,27 @@ export default {
             }
         }
 
+        &__emoji-picker {
+            position: absolute; 
+            bottom: 64px;
+            left: 8px;
+            font-family: inherit;
+            font-size: inherit;
+            border: 1px solid #d9d9d9 !important;
+        }
+
         &__icon {
-            position: absolute;
-            left: 16px;
-            height: 28px;
             cursor: pointer;
+            height: 28px;
+
+            &--attachment {
+                position: absolute;
+                left: 16px;
+            }
+
+            &--emoji {
+                margin-left: 6px;
+            }
         }
 
         &__button {
@@ -225,6 +281,10 @@ export default {
 
             &__icon {
                 left: 12px;
+
+                &--emoji {
+                    display: none;
+                }
             }
 
             & * {
