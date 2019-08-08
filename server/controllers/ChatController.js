@@ -3,6 +3,7 @@ const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
 const cloudinary = require('../config/cloudinary');
 const { Types } = require('mongoose');
+const PART_SIZE = 10;
 
 exports.getConversations = async (req, res) => {
     const conversations = await Conversation
@@ -58,10 +59,12 @@ exports.getMessages = async (req, res, next) => {
     const messages = await Message
         .find({ conversationId: Types.ObjectId(req.params.id) })
         .populate('author','name avatar')
-        .sort('createdAt')
+        .sort('-createdAt')
+        .skip(req.params.part * PART_SIZE)
+        .limit(PART_SIZE)
         .select('-conversationId')
         
-    return res.json(messages);
+    return res.json(messages.reverse());
 };
 
 exports.storeMessage = async (req, res) => {

@@ -3,7 +3,7 @@
         <loading-circle :loading="isLoading" />
 
         <vue-scroll ref="scroll" v-show="! isLoading" @handle-scroll="handleScroll">
-            <messages-receiver-info />
+            <messages-receiver-info v-show="everythingLoaded" />
 
             <messages-item 
                 :key="message._id"
@@ -42,7 +42,9 @@ export default {
         return {
             messages: [],
             isLoading: false,
-            showScrollDownButton: false
+            showScrollDownButton: false,
+            part: 0,
+            everythingLoaded: false
         };
     },
     mounted() {
@@ -50,6 +52,8 @@ export default {
 
         EventBus.$on('conversationSelected', async ({ _id: id }) => {
             localStorage.setItem('conversationId', id);
+            this.part = 0;
+            this.everythingLoaded = false;
 
             await this.getMessages(id);
 
@@ -70,7 +74,7 @@ export default {
         async getMessages(conversationId) {
             this.isLoading = true;
 
-            const response = await ChatService.fetchMessages(conversationId);
+            const response = await ChatService.fetchMessages(conversationId, this.part);
             this.messages = response.data;    
 
             this.isLoading = false;
@@ -80,7 +84,7 @@ export default {
                 dy: 1000000000000
             });
         },
-        handleScroll(scroll) {
+        async handleScroll(scroll) {
             const { scrollHeight, scrollTop, clientHeight } = this.$refs.scroll.$el.firstChild;
 
             if (scrollHeight - (scrollTop + clientHeight) >= 300) {
@@ -88,7 +92,22 @@ export default {
             } else {
                 this.showScrollDownButton = false;
             }
-        } 
+
+            if (scrollTop == 0 && ! this.everythingLoaded) {
+                this.$refs.scroll.$el.firstChild.firstChild.children[2].id = 'last';
+
+                const conversationId = localStorage.getItem('conversationId');
+                const response = await ChatService.fetchMessages(conversationId, ++this.part);
+                
+                this.messages.unshift(...response.data); 
+
+                if (! response.data.length) {
+                    this.everythingLoaded = true;
+                }
+
+                setTimeout(() => this.$refs.scroll.scrollIntoView('#last', 0), 0);
+            }   
+        }
     },
     sockets: {
         messageAdded(message) {

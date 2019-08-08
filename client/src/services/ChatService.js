@@ -5,8 +5,8 @@ export default {
         return Api().get(`/chat/conversations/${userId}`);
     },
 
-    fetchMessages(conversationId) {
-        return Api().get(`/chat/conversation/${conversationId}/messages`);
+    fetchMessages(conversationId, part) {
+        return Api().get(`/chat/conversation/${conversationId}/messages/part/${part}`);
     },
 
     storeMessage(message) {
