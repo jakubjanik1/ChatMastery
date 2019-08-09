@@ -29,6 +29,7 @@ import MessagesItem from './MessagesItem';
 import MessagesReceiverInfo from './MessagesReceiverInfo';
 import LoadingCircle from './LoadingCircle';
 import ArrowDownIcon from 'vue-material-design-icons/ArrowDown';
+import uniqBy from 'lodash/uniqBy';
 
 export default {
     name: 'MessagesList',
@@ -54,8 +55,13 @@ export default {
             localStorage.setItem('conversationId', id);
             this.part = 0;
             this.everythingLoaded = false;
+            this.showScrollDownButton = false;
 
             await this.getMessages(id);
+
+            if (this.messages.length < 10) {
+                this.everythingLoaded = true;
+            }
 
             this.scrollDown();
         });
@@ -64,6 +70,8 @@ export default {
             localStorage.setItem('conversationId', '');
             
             this.messages = [];
+
+            this.everythingLoaded = true;
         });
 
         EventBus.$on('messageInputFocus', () => {
@@ -75,7 +83,8 @@ export default {
             this.isLoading = true;
 
             const response = await ChatService.fetchMessages(conversationId, this.part);
-            this.messages = response.data;    
+            this.messages = response.data; 
+            this.messages = uniqBy(this.messages, '_id');   
 
             this.isLoading = false;
         },
@@ -100,6 +109,7 @@ export default {
                 const response = await ChatService.fetchMessages(conversationId, ++this.part);
                 
                 this.messages.unshift(...response.data); 
+                this.messages = uniqBy(this.messages, '_id');
 
                 if (! response.data.length) {
                     this.everythingLoaded = true;
