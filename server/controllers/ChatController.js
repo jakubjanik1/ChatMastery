@@ -49,7 +49,10 @@ exports.getConversations = async (req, res) => {
         });
 
         if (conversations.length == fullConversations.length) {
-            fullConversations.sort((x, y) => x.lastMessage.createdAt < y.lastMessage.createdAt);
+            fullConversations.sort((x, y) => 
+                new Date(y.lastMessage.createdAt) - new Date(x.lastMessage.createdAt)
+            );
+            
             return res.json(fullConversations);
         }
     })
