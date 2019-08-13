@@ -50,7 +50,7 @@ export default {
 
         &__img {
             max-width: 90vw;
-            max-height: 90vh;
+            max-height: calc(var(--vh, 1vh) * 90);
             pointer-events: none;
         }
 

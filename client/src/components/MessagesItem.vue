@@ -164,6 +164,7 @@ export default {
         .message {
             padding: 40px 25px 0 25px;
             font-size: 13px;
+            width: calc(100vw - 50px);
 
             &:last-of-type {
                 padding-bottom: 40px;

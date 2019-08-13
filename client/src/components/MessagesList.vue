@@ -164,6 +164,7 @@ export default {
         }
 
         @media (max-width: 900px) {
+            width: 100vw;
             height: calc((var(--vh, 1vh) * 100) - (94px));
         }
     }
