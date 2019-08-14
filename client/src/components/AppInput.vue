@@ -4,21 +4,34 @@
             <div class="app-input__label" v-if="label">{{ placeholder }}</div>
 
             <input 
+                ref="input"
                 :value="value"
                 class="app-input__input"
                 :class="{ 'app-input__input--error' : error }"
                 :placeholder="getPlaceholder"
-                :type="type"
+                :type="inputType"
                 @input="$emit('input', $event.target.value)"
             >
 
             <span class="app-input__focus-border"></span>
+
+            <div 
+                class="app-input__toggle-password" 
+                v-if="type == 'password'" 
+                @click="togglePasswordVisibility"
+            >
+                <show-icon v-if="showPassword" fillColor="#c3c4c4" :size="22" />
+                <hide-icon v-else fillColor="#c3c4c4" :size="22" />
+            </div>
         </div>
         <div class="app-input__error" v-show="error">{{ error }}</div>
     </div>
 </template>
 
 <script>
+import ShowIcon from 'vue-material-design-icons/EyeOutline';
+import HideIcon from 'vue-material-design-icons/EyeOffOutline';
+
 export default {
     name: 'AppInput',
     props: {
@@ -34,9 +47,28 @@ export default {
             default: false
         }
     },
+    components: {
+        ShowIcon, 
+        HideIcon
+    },
+    data() {
+        return {
+            showPassword: false,
+            inputType: this.type
+        };
+    },
     computed: {
         getPlaceholder() {
             return this.label ? '' : this.placeholder;
+        }
+    },
+    methods: {
+        togglePasswordVisibility(event) {
+            this.showPassword = ! this.showPassword;
+
+            this.inputType = this.showPassword ? 'text' : 'password';
+
+            this.$refs.input.focus();
         }
     }
 }
@@ -104,6 +136,13 @@ export default {
             color: #f44336;
             align-self: flex-start;
             margin-top: 12px;
+        }
+
+        &__toggle-password {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            cursor: pointer;
         }
     }
 </style>
