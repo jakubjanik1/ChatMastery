@@ -4,7 +4,6 @@
             <div class="app-input__label" v-if="label">{{ placeholder }}</div>
 
             <input 
-                ref="input"
                 :value="value"
                 class="app-input__input"
                 :class="{ 'app-input__input--error' : error }"
@@ -67,8 +66,6 @@ export default {
             this.showPassword = ! this.showPassword;
 
             this.inputType = this.showPassword ? 'text' : 'password';
-
-            this.$refs.input.focus();
         }
     }
 }

@@ -2,69 +2,70 @@
     <div class="login">
         <img class="login__logo" src="@/assets/logo.png">
 
-        <form class="login__wrapper" @submit.prevent v-if="showLoginForm">
-            <div class="login__title">Login to your account</div>
-            <div class="login__subtitle">
-                Don’t have an account? 
-                <span class="login__link" @click="toggleForm">Sign Up Free!</span>
-            </div>
+        <div class="login__wrapper" @submit.prevent>
+            <form class="login__form" :class="{ 'login__form--active' : showLoginForm }">
+                <div class="login__title">Login to your account</div>
+                <div class="login__subtitle">
+                    Don’t have an account? 
+                    <span class="login__link" @click="toggleForm">Sign Up Free!</span>
+                </div>
 
-            <div class="login__social">
-                <social-button type="github" />
-                <social-button type="facebook" />
-                <social-button type="spotify" />
-                <social-button type="google" />
-            </div>
+                <div class="login__social">
+                    <social-button type="github" />
+                    <social-button type="facebook" />
+                    <social-button type="spotify" />
+                    <social-button type="google" />
+                </div>
 
-            <div class="login__line">
-                <span class="login__or">or</span>
-            </div>
+                <div class="login__line">
+                    <span class="login__or">or</span>
+                </div>
 
-            <app-input 
-                class="login__input" 
-                v-model="loginForm.email" 
-                placeholder="Email address" 
-            />
-            <app-input 
-                class="login__input" 
-                v-model="loginForm.password" 
-                placeholder="Password" 
-                type="password"
-            />
+                <app-input 
+                    class="login__input" 
+                    v-model="loginForm.email" 
+                    placeholder="Email address" 
+                />
+                <app-input 
+                    class="login__input" 
+                    v-model="loginForm.password" 
+                    placeholder="Password" 
+                    type="password"
+                />
 
-            <div class="login__error" v-show="loginError">{{ loginError }}</div>
-            
-            <button class="login__button" @click="login">Login with email</button>
-        </form>
+                <div class="login__error" v-show="loginError">{{ loginError }}</div>
+                
+                <button class="login__button" @click="login">Login with email</button>
+            </form>
+            <form class="login__form" :class="{ 'login__form--active' : ! showLoginForm }">
+                <div class="login__title">Sign up for free!</div>
 
-        <form class="login__wrapper" @submit.prevent v-else>
-            <div class="login__title">Sign up for free!</div>
+                <app-input 
+                    class="login__input" 
+                    v-model="signupForm.email" 
+                    placeholder="Email address" 
+                    :error="signupErrors.email" 
+                />
 
-            <app-input 
-                class="login__input" 
-                v-model="signupForm.email" 
-                placeholder="Email address" 
-                :error="signupErrors.email" 
-            />
+                <app-input 
+                    class="login__input" 
+                    v-model="signupForm.name" 
+                    placeholder="Full name" 
+                    :error="signupErrors.name" 
+                />
 
-            <app-input 
-                class="login__input" 
-                v-model="signupForm.name" 
-                placeholder="Full name" 
-                :error="signupErrors.name" 
-            />
-
-            <app-input 
-                class="login__input" 
-                v-model="signupForm.password" 
-                placeholder="Password" 
-                :error="signupErrors.password" 
-                type="password"
-            />
-            
-            <button class="login__button" @click="signup">Sign up with email</button>
-            <span class="login__link" @click="toggleForm">Already have an account?</span>
-        </form>
+                <app-input 
+                    class="login__input" 
+                    v-model="signupForm.password" 
+                    placeholder="Password" 
+                    :error="signupErrors.password" 
+                    type="password"
+                />
+                
+                <button class="login__button" @click="signup">Sign up with email</button>
+                <span class="login__link" @click="toggleForm">Already have an account?</span>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -155,17 +156,35 @@ export default {
 
         &__wrapper {
             background: #fff;
-            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            min-height: 510px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 3px 5px rgba(0,0,0,.05);
+            border-radius: 2px;
             margin: 0 40px 40px 40px;
+        }
+
+        &__form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-radius: 2px;
-            max-width: 550px;
-            min-height: 510px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 40px;
             width: 100%;
+            height: 100%;
             box-sizing: border-box;
-            box-shadow: 0 3px 5px rgba(0,0,0,.05);
+            transition: all .5s ease;
+            opacity: 0;
+            transform: translateX(-100%);
+
+            &--active {
+                opacity: 1 !important;
+                transform: translateX(0) !important;
+            }
         }
 
         &__title {
@@ -254,9 +273,12 @@ export default {
         @media (max-width: 700px) {
             padding: 0 16px;
 
-            &__wrapper {
+            &__form {
                 margin: 0 0 40px 0;
                 padding: 20px;
+            }
+
+            &__wrapper {
                 min-height: 470px;
             }
 
