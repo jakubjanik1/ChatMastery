@@ -18,6 +18,7 @@
                 class="app-input__toggle-password" 
                 v-if="type == 'password'" 
                 @click="togglePasswordVisibility"
+                v-icon-hover
             >
                 <show-icon v-if="showPassword" fillColor="#c3c4c4" :size="22" />
                 <hide-icon v-else fillColor="#c3c4c4" :size="22" />

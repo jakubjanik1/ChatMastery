@@ -4,7 +4,8 @@
             class="message-input__icon message-input__icon--attachment" 
             fillColor="#c3c4c4" 
             :size="28" 
-            @click="openImageInput" 
+            @click="openImageInput"
+            v-icon-hover
         />
 
         <input 
@@ -20,6 +21,7 @@
             fillColor="#c3c4c4"
             :size="28" 
             @click="showEmojiPicker = !showEmojiPicker" 
+            v-icon-hover
         />
 
         <emoji-picker 

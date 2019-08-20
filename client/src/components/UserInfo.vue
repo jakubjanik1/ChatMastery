@@ -6,7 +6,7 @@
             class="user-info__caret" 
             fillColor="#c3c4c4"
             @click="toggleOptions"
-            
+            v-icon-hover
         />
  
         <transition>

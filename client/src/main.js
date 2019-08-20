@@ -3,6 +3,9 @@ import App from './App.vue';
 import VueSocketIO from 'vue-socket.io';
 import VueScroll from 'vuescroll';
 import Vuebar from 'vuebar';
+import { IconHoverDirective } from './directives/iconHover';
+
+Vue.directive('icon-hover', IconHoverDirective);
 
 Vue.use(Vuebar);
 

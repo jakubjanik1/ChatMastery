@@ -5,7 +5,9 @@
             :size="27" 
             fillColor="#c3c4c4"
             v-show="! isOpen"
-            @click="isOpen = true" />
+            @click="isOpen = true" 
+            v-icon-hover
+        />
 
         <input 
             class="users-search-box__input"
@@ -15,14 +17,17 @@
             v-show="isOpen" 
             v-model="name"
             @focus="isOpen = true"
-            @keyup="refreshResults">
+            @keyup="refreshResults"
+        >
 
         <close-icon
             class="users-search-box__close"
             fillColor="#c3c4c4"
             :size="27"
             v-show="isOpen"
-            @click="hideResultsList" />
+            @click="hideResultsList" 
+            v-icon-hover
+        />
 
         <users-search-results-list 
             :users="foundUsers" 
