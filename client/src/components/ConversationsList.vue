@@ -75,7 +75,6 @@ export default {
     .conversations {
         grid-area: conversations-list;
         height: calc((var(--vh, 1vh) * 100) - (64px));
-        min-width: 360px - 2px;
         border-radius: 2px;
         border-right: 2px solid #f2f2f2;
         border-top: 2px solid #f2f2f2;

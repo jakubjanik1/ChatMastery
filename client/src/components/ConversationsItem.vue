@@ -1,31 +1,49 @@
 <template>
-    <div class="conversation" :class="{ 'conversation--active' : isActive }" @click="emitConversationSelected">
+    <div 
+        class="conversation"
+        :class="{ 'conversation--active' : isActive }"
+        @click="emitConversationSelected"
+        @mouseover="deleteIconColor = '#fff'"
+        @mouseout="deleteIconColor = '#c3c4c4'"
+        v-touch:swipe.left="showDeleteButton"
+        v-touch:swipe.right="hideDeleteButton"
+    >
         <div 
-            class="conversation__profile" 
-            :class="{ 'conversation__profile--active' : active }"
+            class="conversation__wrapper" 
+            :class="{ 'conversation__wrapper--moved-left' : deleteIconVisible }"
         >
-            <img class="conversation__picture" :src="avatar">
+            <div class="conversation__profile">
+                <img class="conversation__picture" :src="avatar">
+            </div>
+
+            <div class="conversation__receiver">{{ receiver }}</div>
+            <div class="conversation__last-message">{{ lastMessage }}</div>
+            
+
+            <div class="conversation__date">{{ date }}</div>
+            <div class="conversation__unread-messages" v-show="unreadMessages">{{ unreadMessages }}</div>
         </div>
 
-        <div class="conversation__receiver">{{ receiver }}</div>
-        <div class="conversation__last-message">{{ lastMessage }}</div>
-        
-
-        <div class="conversation__date">{{ date }}</div>
-        <div class="conversation__unread-messages" v-show="unreadMessages">{{ unreadMessages }}</div>
+        <delete-icon class="conversation__delete" v-show="deleteIconVisible" :fillColor="deleteIconColor" />
     </div>
 </template>
 
 <script>
 import { formatDate } from '@/helpers';
 import EventBus from '@/services/EventBus';
+import DeleteIcon from 'vue-material-design-icons/Delete';
 
 export default {
     name: 'ConversationsItem',
     props: [ 'conversation' ],
+    components: {
+        DeleteIcon
+    },
     data() {
         return {
-            isActive: false
+            isActive: false,
+            deleteIconVisible: false,
+            deleteIconColor: '#c3c4c4'
         };
     },
     mounted() {
@@ -74,11 +92,18 @@ export default {
             this.readMessages();
 
             this.isActive = true;
+            this.deleteIconVisible = false;
         },
         readMessages() {
             const userId = this.$root.user._id;
 
             this.$socket.emit('readMessages', { conversationId: this.conversation._id, userId });
+        },
+        showDeleteButton() {
+            this.deleteIconVisible = true;
+        },
+        hideDeleteButton() {
+            this.deleteIconVisible = false;
         }
     },
     sockets: {
@@ -99,14 +124,61 @@ export default {
 
 <style lang="scss" scoped>
     .conversation {
+        display: flex;
+        align-items: center;
         border-bottom: 1px solid #f9f9f9;
-        padding: 14px 20px;
-        display: grid;
-        grid-template-columns: 70px auto auto;
-        grid-template-rows: 25px 25px;
-        grid-template-areas: "picture receiver date"
-                             "picture last-message unread-messages";
 
+        &:hover, &--active {
+            background: #009ef7;
+            transition: .3s ease-in-out;
+            border-radius: 2px;
+
+            .conversation__unread-messages {
+                background: #fff;
+                color: #009ef7;
+            }
+
+        }
+
+        &:hover *, &--active * * {
+            color: #fff !important;
+        }
+
+        &__delete {
+            margin-left: 16px;
+            transition: .3s ease-in-out;
+
+            @media (min-width: 900px) {
+                display: none;
+            }
+        }
+
+        &__wrapper {
+            transition: .3s ease-in-out;
+            padding: 14px 20px;
+            display: grid;
+            width: 100%;
+            grid-template-columns: 70px auto auto;
+            grid-template-rows: 25px 25px;
+            grid-template-areas: "picture receiver date"
+                                "picture last-message unread-messages";
+
+            @media (max-width: 900px) {     
+                &--moved-left {
+                    margin-left: -70px;
+                }
+            }
+
+            & > * {
+                display: flex;
+                align-items: center;
+            }
+
+            @media (max-width: 900px) {
+                width: calc(100vw - (40px));
+            }
+        }
+            
         &__profile {
             width: 50px;
             height: 50px;
@@ -165,36 +237,6 @@ export default {
             align-self: center;
             justify-content: center;
             padding: 2px;
-        }
-
-         &:hover, &--active {
-            background: #009ef7;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: .3s ease-in-out;
-
-            .conversation__unread-messages {
-                background: #fff;
-                color: #009ef7;
-            }
-
-            .conversation__profile--active::after {
-                transition: .3s ease-in-out;
-                border-color: #009ef7;
-            }
-        }
-
-        &:hover *, &--active * {
-            color: #fff;
-        }
-
-        & > * {
-            display: flex;
-            align-items: center;
-        }
-
-        @media (max-width: 900px) {
-            width: calc(100vw - (40px));
         }
     }
 </style>
