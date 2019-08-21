@@ -4,6 +4,9 @@ import VueSocketIO from 'vue-socket.io';
 import VueScroll from 'vuescroll';
 import Vuebar from 'vuebar';
 import { IconHoverDirective } from './directives/iconHover';
+import Vue2TouchEvents from 'vue2-touch-events';
+
+Vue.use(Vue2TouchEvents);
 
 Vue.directive('icon-hover', IconHoverDirective);
 
