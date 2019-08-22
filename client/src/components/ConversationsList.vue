@@ -66,6 +66,11 @@ export default {
     sockets: {
         messageAdded(message) {
             this.getConversations();
+        },
+        conversationDeleted(conversationId) {
+            this.conversations = this.conversations.filter(conversation => conversation._id != conversationId);
+
+            EventBus.$emit('returnToConversations');
         }
     }
 }

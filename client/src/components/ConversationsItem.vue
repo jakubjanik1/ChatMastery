@@ -3,8 +3,6 @@
         class="conversation"
         :class="{ 'conversation--active' : isActive }"
         @click="emitConversationSelected"
-        @mouseover="deleteIconColor = '#fff'"
-        @mouseout="deleteIconColor = '#c3c4c4'"
         v-touch:swipe.left="showDeleteButton"
         v-touch:swipe.right="hideDeleteButton"
     >
@@ -24,7 +22,12 @@
             <div class="conversation__unread-messages" v-show="unreadMessages">{{ unreadMessages }}</div>
         </div>
 
-        <delete-icon class="conversation__delete" v-show="deleteIconVisible" :fillColor="deleteIconColor" />
+        <delete-icon 
+            class="conversation__delete" 
+            v-show="deleteIconVisible" 
+            fillColor="#c3c4c4" 
+            @click="deleteConversation"
+        />
     </div>
 </template>
 
@@ -32,6 +35,7 @@
 import { formatDate } from '@/helpers';
 import EventBus from '@/services/EventBus';
 import DeleteIcon from 'vue-material-design-icons/Delete';
+import ChatService from '@/services/ChatService';
 
 export default {
     name: 'ConversationsItem',
@@ -42,8 +46,7 @@ export default {
     data() {
         return {
             isActive: false,
-            deleteIconVisible: false,
-            deleteIconColor: '#c3c4c4'
+            deleteIconVisible: false
         };
     },
     mounted() {
@@ -104,6 +107,11 @@ export default {
         },
         hideDeleteButton() {
             this.deleteIconVisible = false;
+        },
+        async deleteConversation(event) {
+            event.stopPropagation();
+            
+            await ChatService.deleteConversation(this.conversation._id);
         }
     },
     sockets: {
@@ -128,20 +136,22 @@ export default {
         align-items: center;
         border-bottom: 1px solid #f9f9f9;
 
-        &:hover, &--active {
-            background: #009ef7;
-            transition: .3s ease-in-out;
-            border-radius: 2px;
+        @media (min-width: 900px) {
+            &:hover, &--active {
+                background: #009ef7;
+                transition: .3s ease-in-out;
+                border-radius: 2px;
 
-            .conversation__unread-messages {
-                background: #fff;
-                color: #009ef7;
+                .conversation__unread-messages {
+                    background: #fff;
+                    color: #009ef7;
+                }
+
             }
 
-        }
-
-        &:hover *, &--active * * {
-            color: #fff !important;
+            &:hover *, &--active * * {
+                color: #fff !important;
+            }
         }
 
         &__delete {

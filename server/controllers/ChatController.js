@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
-const cloudinary = require('../config/cloudinary');
 const { Types } = require('mongoose');
 const PART_SIZE = 10;
 
@@ -87,4 +86,12 @@ exports.storeConversation = async (req, res) => {
 
     const response = await conversation.save();
     return res.send(response._id);
-}
+};
+
+exports.deleteConversation = async ({ params: { id } }, res) => {
+    await Conversation.deleteOne({ _id: id });
+
+    await Message.deleteMany({ conversationId: id });
+
+    require('../socket').io().emit('conversationDeleted', id);
+};

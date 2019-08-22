@@ -162,6 +162,12 @@ export default {
         isMultiline() {
             return this.text.includes('\n');
         }
+    },
+    sockets: {
+        conversationDeleted(conversationId) {
+            const currentConversationId = localStorage.getItem('conversationId');
+            this.isVisible = (currentConversationId != conversationId);
+        }
     }
 }
 </script>

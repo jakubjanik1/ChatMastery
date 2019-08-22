@@ -15,5 +15,9 @@ export default {
 
     storeConversation(conversation) {
         return Api().post('/chat/conversation', conversation);
+    },
+
+    deleteConversation(conversationId) {
+        return Api().delete(`/chat/conversation/${ conversationId }`);
     }
 }
