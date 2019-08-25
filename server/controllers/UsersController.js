@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const ObjectId = require('mongoose').Types.ObjectId;
-const { check, validationResult } = require('express-validator');
+const { check, validationResult, body } = require('express-validator');
 const emailValidator = require('email-validator');
 const passport = require('../auth/passport');
 
@@ -33,6 +33,13 @@ exports.validate = [
         .isLength({ min: 6 }).withMessage('Your password must be at least 6 characters')
         .not().isEmpty().withMessage('Password is required'),
 
+    check('repeatedPassword')
+        .custom((repeatedPassword, { req }) => {
+            if (repeatedPassword != req.body.password) {
+                return Promise.reject('Password does not match')
+            }
+        }),
+
     check('name')
         .not().isEmpty().withMessage('Name is required')
 ]
@@ -42,6 +49,7 @@ exports.signup = async (req, res) => {
         return res.json(getValidationErrors(req));
     }
 
+    delete req.body.repeatedPassword;
     const user = new User(req.body);
     user._id = ObjectId().toHexString();
 

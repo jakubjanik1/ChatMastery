@@ -2,7 +2,7 @@
     <div class="login">
         <img class="login__logo" src="@/assets/logo.png">
 
-        <div class="login__wrapper" @submit.prevent>
+        <div class="login__wrapper" ref="wrapper" @submit.prevent>
             <form class="login__form" :class="{ 'login__form--active' : showLoginForm }">
                 <div class="login__title">Login to your account</div>
                 <div class="login__subtitle">
@@ -61,6 +61,14 @@
                     :error="signupErrors.password" 
                     type="password"
                 />
+
+                <app-input 
+                    class="login__input" 
+                    v-model="signupForm.repeatedPassword" 
+                    placeholder="Repeat password" 
+                    :error="signupErrors.repeatedPassword" 
+                    type="password"
+                />
                 
                 <button class="login__button" @click="signup">Sign up with email</button>
                 <span class="login__link" @click="toggleForm">Already have an account?</span>
@@ -86,7 +94,8 @@ export default {
             signupForm: {
                 email: '',
                 name: '',
-                password: ''
+                password: '',
+                repeatedPassword: ''
             },
             signupErrors: {},
             loginForm: {
@@ -108,9 +117,8 @@ export default {
             }
         },
         clearSignupForm() {
-            this.signupForm.name = '';
-            this.signupForm.email = '';
-            this.signupForm.password = '';
+            this.signupForm.name = this.signupForm.email = 
+            this.signupForm.password = this.signupForm.repeatedPassword = '';
 
             this.signupErrors = {};
         },
@@ -121,8 +129,7 @@ export default {
             this.clearLoginForm();
         },
         clearLoginForm() {
-            this.loginForm.email = '';
-            this.loginForm.password = '';
+            this.loginForm.email = this.loginForm.password = '';
 
             this.loginError = '';
         },
@@ -135,6 +142,20 @@ export default {
                 this.loginError = '';
                 location.reload();
             } 
+        }
+    },
+    watch: {
+        signupErrors: {
+            handler(newValue) {
+                console.log(newValue)
+                if (Object.entries(newValue).length) {
+                    console.log(1)
+                    setTimeout(() => this.$refs.wrapper.style['min-height'] = `${ this.$refs.wrapper.scrollHeight }px`, 0);
+                } else {
+                    this.$refs.wrapper.style['min-height'] = '';
+                }
+            },
+            deep: true
         }
     }
 }
@@ -158,8 +179,8 @@ export default {
             background: #fff;
             max-width: 550px;
             width: 100%;
-            min-height: 510px;
             overflow: hidden;
+            min-height: 510px;
             position: relative;
             box-shadow: 0 3px 5px rgba(0,0,0,.05);
             border-radius: 2px;
@@ -175,7 +196,6 @@ export default {
             left: 0;
             padding: 40px;
             width: 100%;
-            height: 100%;
             box-sizing: border-box;
             transition: all .5s ease;
             opacity: 0;
