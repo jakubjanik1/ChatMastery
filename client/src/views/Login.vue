@@ -3,11 +3,11 @@
         <img class="login__logo" src="@/assets/logo.png">
 
         <div class="login__wrapper" ref="wrapper" @submit.prevent>
-            <form class="login__form" :class="{ 'login__form--active' : showLoginForm }">
+            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'login') }">
                 <div class="login__title">Login to your account</div>
                 <div class="login__subtitle">
                     Don’t have an account? 
-                    <span class="login__link" @click="toggleForm">Sign Up Free!</span>
+                    <span class="login__link" @click="showSignupTab">Sign Up Free!</span>
                 </div>
 
                 <div class="login__social">
@@ -36,8 +36,10 @@
                 <div class="login__error" v-show="loginError">{{ loginError }}</div>
                 
                 <button class="login__button" @click="login">Login with email</button>
+
+                <span class="login__link" @click="showForgotPasswordTab">Forgot password?</span>
             </form>
-            <form class="login__form" :class="{ 'login__form--active' : ! showLoginForm }">
+            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'signup') }">
                 <div class="login__title">Sign up for free!</div>
 
                 <app-input 
@@ -71,7 +73,24 @@
                 />
                 
                 <button class="login__button" @click="signup">Sign up with email</button>
-                <span class="login__link" @click="toggleForm">Already have an account?</span>
+                <span class="login__link" @click="showLoginTab">Already have an account?</span>
+            </form>
+            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'forgotPassword') }">
+                <div class="login__title">Recover your password</div>
+                <div class="login__subtitle">
+                    Enter your email to receive password reset instructions
+                </div>
+
+                <app-input 
+                    class="login__input" 
+                    v-model="forgotPasswordForm.email" 
+                    placeholder="Email address" 
+                />
+                
+                <button class="login__button" @click="login">Recover your password</button>
+
+                <span class="login__link" @click="showLoginTab">Already have an account?</span>
+                <span class="login__link" @click="showSignupTab">Don’t have an account?</span>
             </form>
         </div>
     </div>
@@ -90,7 +109,7 @@ export default {
     },
     data() {
         return {
-            showLoginForm: true,
+            activeTab: 'login',
             signupForm: {
                 email: '',
                 name: '',
@@ -102,7 +121,10 @@ export default {
                 email: '',
                 password: ''
             },
-            loginError: ''
+            loginError: '',
+            forgotPasswordForm: {
+                email: ''
+            }
         };
     },
     methods: {
@@ -122,16 +144,22 @@ export default {
 
             this.signupErrors = {};
         },
-        toggleForm() {
-            this.showLoginForm = !this.showLoginForm;
-
-            this.clearSignupForm();
-            this.clearLoginForm();
+        showLoginTab() {
+            this.activeTab = 'login';
+        },
+        showSignupTab() {
+            this.activeTab = 'signup';
+        },
+        showForgotPasswordTab() {
+            this.activeTab = 'forgotPassword';
         },
         clearLoginForm() {
             this.loginForm.email = this.loginForm.password = '';
 
             this.loginError = '';
+        },
+        clearForgotPasswordForm() {
+            this.forgotPasswordForm.email = '';
         },
         async login() {
             const response = await UsersService.login(this.loginForm);
@@ -147,15 +175,18 @@ export default {
     watch: {
         signupErrors: {
             handler(newValue) {
-                console.log(newValue)
                 if (Object.entries(newValue).length) {
-                    console.log(1)
                     setTimeout(() => this.$refs.wrapper.style['min-height'] = `${ this.$refs.wrapper.scrollHeight }px`, 0);
                 } else {
                     this.$refs.wrapper.style['min-height'] = '';
                 }
             },
             deep: true
+        },
+        activeTab() {
+            this.clearSignupForm();
+            this.clearLoginForm();
+            this.clearForgotPasswordForm();
         }
     }
 }
@@ -180,7 +211,7 @@ export default {
             max-width: 550px;
             width: 100%;
             overflow: hidden;
-            min-height: 510px;
+            min-height: 552px;
             position: relative;
             box-shadow: 0 3px 5px rgba(0,0,0,.05);
             border-radius: 2px;
@@ -216,6 +247,7 @@ export default {
         &__subtitle {
             margin-top: 8px;
             color: #292929;
+            text-align: center;
         }
 
         &__social {
@@ -252,7 +284,7 @@ export default {
             border-radius: 2px;
             padding: 10px 16px;
             width: 100%;
-            margin-top: 50px;
+            margin-top: 40px;
 
             &:focus {
                 outline: 0;
@@ -299,7 +331,7 @@ export default {
             }
 
             &__wrapper {
-                min-height: 470px;
+                min-height: 512px;
             }
 
             &__logo {
@@ -309,7 +341,7 @@ export default {
 
         @media (max-width: 560px) {
             &__wrapper {
-                min-height: 550px;
+                min-height: 592px;
             }
         }
     }
