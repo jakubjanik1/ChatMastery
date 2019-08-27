@@ -15,5 +15,8 @@ export default {
     },
     update(id, user) {
         return Api().put(`/users/${id}`, user);
+    },
+    forgotPassword(email) {
+        return Api().post('/users/forgotPassword', { email });
     }
 }

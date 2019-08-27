@@ -16,4 +16,6 @@ router.get('/logout', UsersController.logout);
 
 router.put('/:id', UsersController.validate, catchAsync(UsersController.update));
 
+router.post('/forgotPassword', catchAsync(UsersController.forgotPassword));
+
 module.exports = router;

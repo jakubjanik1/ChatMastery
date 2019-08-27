@@ -29,6 +29,12 @@ const UserSchema = new Schema({
     socialAuth: {
         type: Boolean,
         deafult: false
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpires: {
+        type: Date
     }
 });
 

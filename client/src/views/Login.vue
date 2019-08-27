@@ -85,9 +85,27 @@
                     class="login__input" 
                     v-model="forgotPasswordForm.email" 
                     placeholder="Email address" 
+                    :error="forgotPasswordError"
+                    v-show="! recoveryEmailSent"
+                    :disabled="recoveryEmailIsSending"
                 />
                 
-                <button class="login__button" @click="login">Recover your password</button>
+                <button 
+                    class="login__button" 
+                    @click="forgotPassword" 
+                    v-show="! recoveryEmailSent"
+                    :disabled="recoveryEmailIsSending"
+                >
+                    Recover your password
+                    <load-icon 
+                        class="login__button--loading" 
+                        size="14px" 
+                        color="#fff" 
+                        :loading="recoveryEmailIsSending" 
+                    />
+                </button>
+
+                <div class="login__info" v-show="recoveryEmailSent">Recovery email sent</div>
 
                 <span class="login__link" @click="showLoginTab">Already have an account?</span>
                 <span class="login__link" @click="showSignupTab">Don’t have an account?</span>
@@ -100,12 +118,14 @@
 import SocialButton from '@/components/SocialButton';
 import UsersService from '@/services/UsersService';
 import AppInput from '@/components/AppInput';
+import LoadIcon from 'vue-spinner/src/ClipLoader';
 
 export default {
     name: 'Login',
     components: {
         SocialButton,
-        AppInput
+        AppInput,
+        LoadIcon
     },
     data() {
         return {
@@ -124,7 +144,10 @@ export default {
             loginError: '',
             forgotPasswordForm: {
                 email: ''
-            }
+            },
+            forgotPasswordError: '',
+            recoveryEmailSent: false,
+            recoveryEmailIsSending: false
         };
     },
     methods: {
@@ -135,7 +158,7 @@ export default {
                 this.signupErrors = response.data.errors;
             } else {
                 this.clearSignupForm();
-                this.showLoginForm = true;
+                this.showLoginTab();
             }
         },
         clearSignupForm() {
@@ -160,6 +183,8 @@ export default {
         },
         clearForgotPasswordForm() {
             this.forgotPasswordForm.email = '';
+            this.forgotPasswordError = '';
+            this.recoveryEmailSent = false;
         },
         async login() {
             const response = await UsersService.login(this.loginForm);
@@ -170,6 +195,20 @@ export default {
                 this.loginError = '';
                 location.reload();
             } 
+        },
+        async forgotPassword() {
+            this.forgotPasswordError = '';
+
+            try {
+                this.recoveryEmailIsSending = true;
+                const response = await UsersService.forgotPassword(this.forgotPasswordForm.email);
+
+                this.recoveryEmailSent = true;
+            } catch (error) {
+                this.forgotPasswordError = error.response.data;
+            } finally {
+                this.recoveryEmailIsSending = false;
+            }
         }
     },
     watch: {
@@ -285,7 +324,9 @@ export default {
             padding: 10px 16px;
             width: 100%;
             margin-top: 40px;
-
+            display: flex;
+            justify-content: center;
+            
             &:focus {
                 outline: 0;
             }
@@ -295,6 +336,20 @@ export default {
                 cursor: pointer;
                 background: darken(#3399FF, 5%);
             }
+
+            &--loading {
+                height: 18px;
+                margin-left: 16px;
+            }
+        }
+
+        &__info {
+            font: {
+                size: 20px;
+                weight: 600
+            }
+            color: #c3c4c4;
+            margin-top: 24px;
         }
 
         &__error {

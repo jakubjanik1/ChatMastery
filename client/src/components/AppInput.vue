@@ -9,6 +9,7 @@
                 :class="{ 'app-input__input--error' : error }"
                 :placeholder="getPlaceholder"
                 :type="inputType"
+                :disabled="disabled"
                 @input="$emit('input', $event.target.value)"
             >
 
@@ -43,6 +44,10 @@ export default {
         value: String,
         error: String,
         label: { 
+            type: Boolean,
+            default: false
+        },
+        disabled: {
             type: Boolean,
             default: false
         }
@@ -107,6 +112,10 @@ export default {
 
             &--error {
                 border-bottom-color: #f44336;
+            }
+            
+            &:disabled {
+                background: inherit;
             }
         }
 

@@ -1,8 +1,10 @@
 const User = require('../models/User');
 const ObjectId = require('mongoose').Types.ObjectId;
-const { check, validationResult, body } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const emailValidator = require('email-validator');
 const passport = require('../auth/passport');
+const crypto = require('crypto');
+const mailer = require('../config/nodemailer');
 
 exports.search = async (req, res) => {
     const regex = new RegExp(`.*${req.params.query}.*`, 'i');
@@ -81,6 +83,45 @@ exports.update = async (req, res) => {
     const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
     
     return res.json(user);
+}
+
+exports.forgotPassword = async (req, res) => {
+    if (req.body.email === '') {
+        return res.status(400).send('Email is required');
+    }
+
+    const user = await User.findOne({ email: req.body.email, socialAuth: { $in: [ false, undefined ]}});
+
+    if (user === null) {
+        return res.status(403).send('User with this email does not exist');
+    }
+    
+    const token = crypto.randomBytes(20).toString('hex');
+    await user.update({
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 360000
+    }).exec();
+
+    const mailOptions = {
+        to: user.email,
+        subject: 'ChatMastery - reset password',
+        text: `
+            You are receiving this because you (or someone else) have requested the reset of the password for your account. 
+            Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:
+            
+            ${ process.env.CLIENT_URL }users/resetPassword/${ token }
+
+            If you did not request this, please ignore this email and your password will remain unchanged.
+        `
+    };
+
+    mailer.sendMail(mailOptions, (err, response) => {
+        if (err) {
+            console.log(err);
+        } else {
+            return res.status(200).send('Recovery email sent');
+        }
+    })
 }
 
 function isValidate(req) {
