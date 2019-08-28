@@ -3,235 +3,38 @@
         <img class="login__logo" src="@/assets/logo.png">
 
         <div class="login__wrapper" ref="wrapper" @submit.prevent>
-            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'login') }">
-                <div class="login__title">Login to your account</div>
-                <div class="login__subtitle">
-                    Don’t have an account? 
-                    <span class="login__link" @click="showSignupTab">Sign Up Free!</span>
-                </div>
-
-                <div class="login__social">
-                    <social-button type="github" />
-                    <social-button type="facebook" />
-                    <social-button type="spotify" />
-                    <social-button type="google" />
-                </div>
-
-                <div class="login__line">
-                    <span class="login__or">or</span>
-                </div>
-
-                <app-input 
-                    class="login__input" 
-                    v-model="loginForm.email" 
-                    placeholder="Email address" 
-                />
-                <app-input 
-                    class="login__input" 
-                    v-model="loginForm.password" 
-                    placeholder="Password" 
-                    type="password"
-                />
-
-                <div class="login__error" v-show="loginError">{{ loginError }}</div>
-                
-                <button class="login__button" @click="login">Login with email</button>
-
-                <span class="login__link" @click="showForgotPasswordTab">Forgot password?</span>
-            </form>
-            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'signup') }">
-                <div class="login__title">Sign up for free!</div>
-
-                <app-input 
-                    class="login__input" 
-                    v-model="signupForm.email" 
-                    placeholder="Email address" 
-                    :error="signupErrors.email" 
-                />
-
-                <app-input 
-                    class="login__input" 
-                    v-model="signupForm.name" 
-                    placeholder="Full name" 
-                    :error="signupErrors.name" 
-                />
-
-                <app-input 
-                    class="login__input" 
-                    v-model="signupForm.password" 
-                    placeholder="Password" 
-                    :error="signupErrors.password" 
-                    type="password"
-                />
-
-                <app-input 
-                    class="login__input" 
-                    v-model="signupForm.repeatedPassword" 
-                    placeholder="Repeat password" 
-                    :error="signupErrors.repeatedPassword" 
-                    type="password"
-                />
-                
-                <button class="login__button" @click="signup">Sign up with email</button>
-                <span class="login__link" @click="showLoginTab">Already have an account?</span>
-            </form>
-            <form class="login__form" :class="{ 'login__form--active' : (activeTab == 'forgotPassword') }">
-                <div class="login__title">Recover your password</div>
-                <div class="login__subtitle">
-                    Enter your email to receive password reset instructions
-                </div>
-
-                <app-input 
-                    class="login__input" 
-                    v-model="forgotPasswordForm.email" 
-                    placeholder="Email address" 
-                    :error="forgotPasswordError"
-                    v-show="! recoveryEmailSent"
-                    :disabled="recoveryEmailIsSending"
-                />
-                
-                <button 
-                    class="login__button" 
-                    @click="forgotPassword" 
-                    v-show="! recoveryEmailSent"
-                    :disabled="recoveryEmailIsSending"
-                >
-                    Recover your password
-                    <load-icon 
-                        class="login__button--loading" 
-                        size="14px" 
-                        color="#fff" 
-                        :loading="recoveryEmailIsSending" 
-                    />
-                </button>
-
-                <div class="login__info" v-show="recoveryEmailSent">Recovery email sent</div>
-
-                <span class="login__link" @click="showLoginTab">Already have an account?</span>
-                <span class="login__link" @click="showSignupTab">Don’t have an account?</span>
-            </form>
+            <forgot-password @changeTab="changeTab" :active="activeTab" />
+            <signup @changeTab="changeTab" :active="activeTab" />
+            <login @changeTab="changeTab" :active="activeTab" />
         </div>
     </div>
 </template>
 
 <script>
-import SocialButton from '@/components/SocialButton';
-import UsersService from '@/services/UsersService';
-import AppInput from '@/components/AppInput';
-import LoadIcon from 'vue-spinner/src/ClipLoader';
+import ForgotPassword from '@/components/ForgotPassword';
+import Signup from '@/components/Signup';
+import Login from '@/components/Login';
 
 export default {
-    name: 'Login',
     components: {
-        SocialButton,
-        AppInput,
-        LoadIcon
+        ForgotPassword,
+        Signup,
+        Login
     },
     data() {
         return {
-            activeTab: 'login',
-            signupForm: {
-                email: '',
-                name: '',
-                password: '',
-                repeatedPassword: ''
-            },
-            signupErrors: {},
-            loginForm: {
-                email: '',
-                password: ''
-            },
-            loginError: '',
-            forgotPasswordForm: {
-                email: ''
-            },
-            forgotPasswordError: '',
-            recoveryEmailSent: false,
-            recoveryEmailIsSending: false
+            activeTab: 'Login'
         };
     },
     methods: {
-        async signup() {
-            const response = await UsersService.signup(this.signupForm);
-            
-            if (response.data.errors) {
-                this.signupErrors = response.data.errors;
-            } else {
-                this.clearSignupForm();
-                this.showLoginTab();
-            }
-        },
-        clearSignupForm() {
-            this.signupForm.name = this.signupForm.email = 
-            this.signupForm.password = this.signupForm.repeatedPassword = '';
-
-            this.signupErrors = {};
-        },
-        showLoginTab() {
-            this.activeTab = 'login';
-        },
-        showSignupTab() {
-            this.activeTab = 'signup';
-        },
-        showForgotPasswordTab() {
-            this.activeTab = 'forgotPassword';
-        },
-        clearLoginForm() {
-            this.loginForm.email = this.loginForm.password = '';
-
-            this.loginError = '';
-        },
-        clearForgotPasswordForm() {
-            this.forgotPasswordForm.email = '';
-            this.forgotPasswordError = '';
-            this.recoveryEmailSent = false;
-        },
-        async login() {
-            const response = await UsersService.login(this.loginForm);
-
-            if (response.data.error) {
-                this.loginError = response.data.error;
-            } else {
-                this.loginError = '';
-                location.reload();
-            } 
-        },
-        async forgotPassword() {
-            this.forgotPasswordError = '';
-
-            try {
-                this.recoveryEmailIsSending = true;
-                const response = await UsersService.forgotPassword(this.forgotPasswordForm.email);
-
-                this.recoveryEmailSent = true;
-            } catch (error) {
-                this.forgotPasswordError = error.response.data;
-            } finally {
-                this.recoveryEmailIsSending = false;
-            }
-        }
-    },
-    watch: {
-        signupErrors: {
-            handler(newValue) {
-                if (Object.entries(newValue).length) {
-                    setTimeout(() => this.$refs.wrapper.style['min-height'] = `${ this.$refs.wrapper.scrollHeight }px`, 0);
-                } else {
-                    this.$refs.wrapper.style['min-height'] = '';
-                }
-            },
-            deep: true
-        },
-        activeTab() {
-            this.clearSignupForm();
-            this.clearLoginForm();
-            this.clearForgotPasswordForm();
+        changeTab(tab) {
+            this.activeTab = tab;
         }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .login {
         display: flex;
         flex-direction: column;
