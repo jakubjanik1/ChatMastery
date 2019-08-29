@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import EventBus from '@/services/EventBus';
+import EventBus from '@/helpers/EventBus';
 
 export default {
     name: 'UsersSearchResultsItem',

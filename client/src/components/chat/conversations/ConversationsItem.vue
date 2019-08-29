@@ -33,7 +33,7 @@
 
 <script>
 import { formatDate } from '@/helpers';
-import EventBus from '@/services/EventBus';
+import EventBus from '@/helpers/EventBus';
 import DeleteIcon from 'vue-material-design-icons/Delete';
 import ChatService from '@/services/ChatService';
 

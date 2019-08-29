@@ -59,7 +59,7 @@
 <script>
 import ChatService from '@/services/ChatService';
 import UploadService from '@/services/UploadService';
-import EventBus from '@/services/EventBus';
+import EventBus from '@/helpers/EventBus';
 import AttachmentIcon from 'vue-material-design-icons/Paperclip';
 import EmojiIcon from 'vue-material-design-icons/Emoticon';
 import { Picker } from 'emoji-mart-vue-fast';

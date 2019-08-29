@@ -25,8 +25,8 @@
 <script>
 import ConversationsItem from './ConversationsItem';
 import ChatService from '@/services/ChatService';
-import EventBus from '@/services/EventBus';
-import LoadingCircle from './LoadingCircle';
+import EventBus from '@/helpers/EventBus';
+import LoadingCircle from '@/components/common/LoadingCircle';
 import MessageIcon from 'vue-material-design-icons/MessageReplyText';
 
 export default {

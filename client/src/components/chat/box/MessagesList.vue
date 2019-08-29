@@ -24,10 +24,10 @@
 
 <script>
 import ChatService from '@/services/ChatService';
-import EventBus from '@/services/EventBus';
+import EventBus from '@/helpers/EventBus';
 import MessagesItem from './MessagesItem';
 import MessagesReceiverInfo from './MessagesReceiverInfo';
-import LoadingCircle from './LoadingCircle';
+import LoadingCircle from '@/components/common/LoadingCircle';
 import ArrowDownIcon from 'vue-material-design-icons/ArrowDown';
 import uniqBy from 'lodash/uniqBy';
 

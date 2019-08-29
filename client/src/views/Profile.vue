@@ -27,11 +27,11 @@
 
 <script>
 import CloseIcon from 'vue-material-design-icons/Close';
-import EditPhoto from '@/components/EditPhoto';
+import EditPhoto from '@/components/profile/EditPhoto';
 import UploadService from '@/services/UploadService';
 import UsersService from '@/services/UsersService';
 import Loading from 'vue-spinner/src/ClipLoader';
-import AppInput from '@/components/AppInput';
+import AppInput from '@/components/ui/AppInput';
 
 export default {
     name: 'Profile',

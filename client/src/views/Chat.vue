@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import ChatHeader from '@/components/ChatHeader';
-import ConversationsList from "@/components/ConversationsList";
-import ChatBox from '@/components/ChatBox';
-import EventBus from '@/services/EventBus';
+import ChatHeader from '@/components/chat/header/ChatHeader';
+import ConversationsList from "@/components/chat/conversations/ConversationsList";
+import ChatBox from '@/components/chat/box/ChatBox';
+import EventBus from '@/helpers/EventBus';
 
 export default {
     name: 'Chat',

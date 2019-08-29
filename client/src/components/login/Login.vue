@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import SocialButton from '@/components/SocialButton';
+import SocialButton from '@/components/login/SocialButton';
 import LoginMixin from '@/mixins/Login';
 import UsersService from '@/services/UsersService';
 

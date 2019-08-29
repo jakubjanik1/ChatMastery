@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import EventBus from '@/services/EventBus';
+import EventBus from '@/helpers/EventBus';
 import ReturnIcon from 'vue-material-design-icons/ChevronLeft';
 
 export default {

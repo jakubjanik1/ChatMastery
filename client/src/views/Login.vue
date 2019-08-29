@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import ForgotPassword from '@/components/ForgotPassword';
-import Signup from '@/components/Signup';
-import Login from '@/components/Login';
+import ForgotPassword from '@/components/login/ForgotPassword';
+import Signup from '@/components/login/Signup';
+import Login from '@/components/login/Login';
 
 export default {
     components: {
