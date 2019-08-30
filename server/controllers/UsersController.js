@@ -104,24 +104,16 @@ exports.forgotPassword = async (req, res) => {
 
     const mailOptions = {
         to: user.email,
+        from: 'ChatMastery',
         subject: 'ChatMastery - reset password',
-        text: `
-            You are receiving this because you (or someone else) have requested the reset of the password for your account. 
-            Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:
-            
-            ${ process.env.CLIENT_URL }users/resetPassword/${ token }
-
-            If you did not request this, please ignore this email and your password will remain unchanged.
-        `
+        template: 'resetPassword',
+        locals: {
+            url: `${ process.env.CLIENT_URL }users/resetPassword/${ token }`
+        }
     };
 
-    mailer.sendMail(mailOptions, (err, response) => {
-        if (err) {
-            console.log(err);
-        } else {
-            return res.status(200).send('Recovery email sent');
-        }
-    })
+    await mailer.sendMail(mailOptions);
+    return res.status(200).send('Recovery email sent');
 }
 
 function isValidate(req) {
