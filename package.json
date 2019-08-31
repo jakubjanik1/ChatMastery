@@ -4,9 +4,9 @@
     "description": "",
     "scripts": {
         "heroku-postbuild": "npm run build-client && npm run install-server",
-        "start": "node server/server.js",
+        "start": "cd ./server && npm start",
         "build-client": "cd ./client && npm install && npm run build",
-        "install-server": "cd ./server && npm install"
+        "install-server": "cd ./server && npm install && npm run build"
     },
     "engines": {
         "node": ">= 4.0.0"

@@ -10,7 +10,10 @@
             class="conversation__wrapper" 
             :class="{ 'conversation__wrapper--moved-left' : deleteIconVisible }"
         >
-            <div class="conversation__profile">
+            <div 
+                class="conversation__profile"
+                :class="{ 'conversation__profile--active' : active }"
+            >
                 <img class="conversation__picture" :src="avatar">
             </div>
 

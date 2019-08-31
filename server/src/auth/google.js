@@ -1,7 +1,7 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/User');
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import User from '../models/User';
 
-module.exports = new GoogleStrategy({
+export const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: `${process.env.SERVER_URL}auth/google/callback`

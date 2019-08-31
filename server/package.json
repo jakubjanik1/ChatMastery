@@ -4,11 +4,17 @@
   "description": "ChatMastery - server side",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "clean": "rimraf dist",
+    "build": "npm run clean && mkdir dist && babel --minified src -d dist",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "Jakub Janik",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.14.0",
@@ -33,6 +39,11 @@
     "passport-local": "^1.0.0",
     "passport-spotify": "^1.0.1",
     "pug": "^2.0.4",
+    "rimraf": "^3.0.0",
     "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5"
   }
 }

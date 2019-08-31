@@ -1,7 +1,7 @@
-const GithubStartegy = require('passport-github').Strategy;
-const User = require('../models/User');
+import { Strategy as GithubStrategy } from 'passport-github';
+import User from '../models/User';
 
-module.exports = new GithubStartegy({
+export const githubStrategy = new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: `${process.env.SERVER_URL}auth/github/callback`

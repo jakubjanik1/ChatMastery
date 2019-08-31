@@ -1,6 +1,8 @@
-const io = require('./index').io();
-const Message = require('../models/Message');
-const User = require('../models/User');
+import socket from './index';
+import Message from '../models/Message';
+import User from '../models/User';
+
+const io = socket.io();
 
 io.on('connection', socket => {
     const changeUserStatus = async status => {

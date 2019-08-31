@@ -1,6 +1,6 @@
-const nodemailer = require('nodemailer');
-const pug = require('pug');
-const juice = require('juice');
+import nodemailer from 'nodemailer';
+import pug from 'pug';
+import juice from 'juice';
 
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_PROVIDER,
@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendMail = (options) => {
+export function sendMail(options) {
     options.html = pug.renderFile(`${ __dirname }/../views/emails/${ options.template }.pug`, options.locals);
     options.html = juice(options.html);
 

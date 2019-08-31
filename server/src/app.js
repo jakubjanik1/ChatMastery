@@ -1,16 +1,16 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
-const path = require('path');
-const chatRoutes = require('./routes/chat');
-const usersRoutes = require('./routes/users');
-const authRoutes = require('./routes/auth');
-const uploadRoutes = require('./routes/upload');
-const { notFound, catchErrors } = require('./middlewares/errors');
+import './config/env';
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import session from 'express-session';
+import passport from 'passport';
+import path from 'path';
+import chatRoutes from './routes/chat';
+import usersRoutes from './routes/users';
+import authRoutes from './routes/auth';
+import uploadRoutes from './routes/upload';
+import { notFound, catchErrors } from './middlewares/errors';
 const app = express();
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useFindAndModify: false });
@@ -65,4 +65,4 @@ app.use('/upload', uploadRoutes);
 app.use(notFound);
 app.use(catchErrors);
 
-module.exports = app;
+export default app;

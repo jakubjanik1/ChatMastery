@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const findOrCreate = require('mongoose-find-or-create');
-const bcrypt = require('bcrypt');
+import mongoose, { Schema } from 'mongoose';
+import findOrCreate from 'mongoose-find-or-create';
+import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema({
     _id: { 
@@ -52,4 +51,4 @@ UserSchema.methods.verifyPassword = function(password) {
 
 UserSchema.plugin(findOrCreate);
 
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

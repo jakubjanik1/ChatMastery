@@ -1,7 +1,7 @@
-const SpotifyStartegy = require('passport-spotify').Strategy;
-const User = require('../models/User');
+import { Strategy as SpotifyStrategy } from 'passport-spotify';
+import User from '../models/User';
 
-module.exports = new SpotifyStartegy({
+export const spotifyStrategy = new SpotifyStrategy({
     clientID: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     callbackURL: `${process.env.SERVER_URL}auth/spotify/callback`

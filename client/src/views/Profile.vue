@@ -90,6 +90,8 @@ export default {
         show() {
             this.errors = {};
             this.user = { ...this.$root.user };
+
+            delete this.user.password;
         }
     }
 }
