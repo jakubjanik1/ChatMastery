@@ -50,10 +50,10 @@ if (process.env.NODE_ENV == 'production') {
         return res.redirect('/');
     });
 
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
 
     app.get(/^(\/|\/users\/resetPassword\/.+)$/, (req, res) => {
-        return res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+        return res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
     });
 } 
 
