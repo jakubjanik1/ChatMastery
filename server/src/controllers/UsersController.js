@@ -4,7 +4,7 @@ import { check, validationResult } from 'express-validator';
 import emailValidator from 'email-validator';
 import passport from '../auth/passport';
 import crypto from 'crypto';
-import mailer from '../config/nodemailer';
+import { sendMail } from '../config/nodemailer';
 
 export default {
     async search(req, res) {
@@ -101,7 +101,7 @@ export default {
         const token = crypto.randomBytes(20).toString('hex');
         await user.update({
             resetPasswordToken: token,
-            resetPasswordExpires: Date.now() + 360000
+            resetPasswordExpires: Date.now() + (24 * 60 * 60 * 1000)
         }).exec();
 
         const mailOptions = {
@@ -114,8 +114,21 @@ export default {
             }
         };
 
-        await mailer.sendMail(mailOptions);
+        await sendMail(mailOptions);
         return res.status(200).send('Recovery email sent');
+    },
+
+    async resetPassword(req, res) {
+        const user = await User.findOne({ 
+            resetPasswordToken: req.params.token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
+
+        if (! user) {
+            return res.status(403).send('Reset password token is invalid');
+        } else {
+            return res.status(200).send(user.email);
+        }
     }
 }
 

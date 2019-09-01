@@ -18,5 +18,8 @@ export default {
     },
     forgotPassword(email) {
         return Api().post('/users/forgotPassword', { email });
+    },
+    resetPassword(token) {
+        return Api().get(`/users/resetPassword/${ token }`);
     }
 }

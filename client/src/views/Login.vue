@@ -6,6 +6,7 @@
             <forgot-password @changeTab="changeTab" :active="activeTab" />
             <signup @changeTab="changeTab" :active="activeTab" />
             <login @changeTab="changeTab" :active="activeTab" />
+            <reset-password @changeTab="changeTab" :active="activeTab" />
         </div>
     </div>
 </template>
@@ -14,17 +15,24 @@
 import ForgotPassword from '@/components/login/ForgotPassword';
 import Signup from '@/components/login/Signup';
 import Login from '@/components/login/Login';
+import ResetPassword from '@/components/login/ResetPassword';
 
 export default {
     components: {
         ForgotPassword,
         Signup,
-        Login
+        Login,
+        ResetPassword
     },
     data() {
         return {
             activeTab: 'Login'
         };
+    },
+    created() {
+        if (window.location.pathname.match(/^\/users\/resetPassword\/.*$/)) {
+            this.activeTab = 'ResetPassword';
+        }
     },
     methods: {
         changeTab(tab) {
