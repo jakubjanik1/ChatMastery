@@ -12,5 +12,6 @@ router.get('/logout', UsersController.logout);
 router.put('/:id', UsersController.validate, catchAsync(UsersController.update));
 router.post('/forgotPassword', catchAsync(UsersController.forgotPassword));
 router.get('/resetPassword/:token', catchAsync(UsersController.resetPassword));
+router.post('/updatePassword', UsersController.validatePassword, catchAsync(UsersController.updatePassword));
 
 export default router;

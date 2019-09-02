@@ -13,6 +13,7 @@ export default {
     methods: {
         changeTab(tab) {
             this.clear();
+            history.replaceState('ChatMastery', 'ChatMastery', '/');
 
             this.$emit('changeTab', tab);
         }

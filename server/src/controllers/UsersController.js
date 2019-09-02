@@ -6,6 +6,21 @@ import passport from '../auth/passport';
 import crypto from 'crypto';
 import { sendMail } from '../config/nodemailer';
 
+const validatePassword = [
+    check('password')
+        .if(check('password').exists())
+        .isLength({ min: 6 }).withMessage('Your password must be at least 6 characters')
+        .not().isEmpty().withMessage('Password is required'),
+
+    check('repeatedPassword')
+        .if(check('password').exists())
+        .custom((repeatedPassword, { req }) => {
+            if (repeatedPassword != req.body.password) {
+                return Promise.reject('Password does not match')
+            }
+        })
+];
+
 export default {
     async search(req, res) {
         const regex = new RegExp(`.*${req.params.query}.*`, 'i');
@@ -31,22 +46,13 @@ export default {
                 }
             })),
 
-        check('password')
-            .if(check('password').exists())
-            .isLength({ min: 6 }).withMessage('Your password must be at least 6 characters')
-            .not().isEmpty().withMessage('Password is required'),
-
-        check('repeatedPassword')
-            .if(check('password').exists())
-            .custom((repeatedPassword, { req }) => {
-                if (repeatedPassword != req.body.password) {
-                    return Promise.reject('Password does not match')
-                }
-            }),
-
+        validatePassword,    
+        
         check('name')
             .not().isEmpty().withMessage('Name is required')
     ],
+
+    validatePassword,
 
     async signup(req, res) {
         if (! isValidate(req)) {
@@ -128,6 +134,28 @@ export default {
             return res.status(403).send('Reset password token is invalid');
         } else {
             return res.status(200).send(user.email);
+        }
+    },
+
+    async updatePassword(req, res) {
+        if (! isValidate(req)) {
+            return res.json(getValidationErrors(req));
+        }
+        
+        const user = await User.findOne({
+            email: req.body.email,
+            resetPasswordToken: req.body.token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
+
+        if (! user) {
+            return res.status(403).send('Reset password token is invalid');
+        } else {
+            user.password = req.body.password;
+            user.resetPasswordToken = user.resetPasswordExpires = null;
+
+            await user.save();
+            return res.status(200).send('Password updated');
         }
     }
 }

@@ -21,5 +21,8 @@ export default {
     },
     resetPassword(token) {
         return Api().get(`/users/resetPassword/${ token }`);
-    }
+    },
+    updatePassword(data) {
+        return Api().post('/users/updatePassword', data);
+    } 
 }
