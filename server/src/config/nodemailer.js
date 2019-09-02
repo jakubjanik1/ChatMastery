@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export function sendMail(options) {
-    options.html = pug.renderFile(`${ __dirname }/../views/emails/${ options.template }.pug`, options.locals);
+    options.html = pug.renderFile(`${ __dirname }/../../src/views/emails/${ options.template }.pug`, options.locals);
     options.html = juice(options.html);
 
     return transporter.sendMail(options);
