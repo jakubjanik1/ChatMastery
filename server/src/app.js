@@ -21,6 +21,7 @@ db.on('open', () => console.log('Connect to MongoDB successfully.'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.set('etag', false);
 
 if (process.env.NODE_ENV == 'development') {
     app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
