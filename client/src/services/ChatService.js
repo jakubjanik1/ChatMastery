@@ -1,23 +1,24 @@
 import Api from '@/services/Api';
+const api = Api('chat');
 
 export default {
     fetchConversations(userId) {
-        return Api().get(`/chat/conversations/${userId}`);
+        return api.get(`/conversations/${userId}`);
     },
 
     fetchMessages(conversationId, part) {
-        return Api().get(`/chat/conversation/${conversationId}/messages/part/${part}`);
+        return api.get(`/conversation/${conversationId}/messages/part/${part}`);
     },
 
     storeMessage(message) {
-        return Api().post(`/chat/conversation/message`, message);
+        return api.post(`/conversation/message`, message);
     },
 
     storeConversation(conversation) {
-        return Api().post('/chat/conversation', conversation);
+        return api.post('/conversation', conversation);
     },
 
     deleteConversation(conversationId) {
-        return Api().delete(`/chat/conversation/${ conversationId }`);
+        return api.delete(`/conversation/${ conversationId }`);
     }
 }

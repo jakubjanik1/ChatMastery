@@ -1,28 +1,36 @@
 import Api from './Api';
+const api = Api('users');
 
 export default {
     search(name) {
-        return Api().get(`/users/search/${name}`);
+        return api.get(`/search/${name}`);
     },
+
     fetchLoggedInUser() {
-        return Api().get('/users/me', { withCredentials: true });
+        return api.get('/me', { withCredentials: true });
     },
+
     signup(user) {
-        return Api().post('/users/signup', user);
+        return api.post('/signup', user);
     },
+
     login(user) {
-        return Api().post('/users/login', user, { withCredentials: true });
+        return api.post('/login', user, { withCredentials: true });
     },
+
     update(id, user) {
-        return Api().put(`/users/${id}`, user);
+        return api.put(`/${id}`, user);
     },
+
     forgotPassword(email) {
-        return Api().post('/users/forgotPassword', { email });
+        return api.post('/forgotPassword', { email });
     },
+
     resetPassword(token) {
-        return Api().get(`/users/resetPassword/${ token }`);
+        return api.get(`/resetPassword/${ token }`);
     },
+    
     updatePassword(data) {
-        return Api().post('/users/updatePassword', data);
+        return api.post('/updatePassword', data);
     } 
 }

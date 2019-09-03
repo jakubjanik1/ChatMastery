@@ -1,4 +1,5 @@
 import Api from './Api';
+const api = Api('upload');
 
 export default {
     uploadImage(image, folder) {
@@ -6,6 +7,6 @@ export default {
         formData.append('image', image);
         formData.append('folder', folder);
 
-        return Api().post('/upload/image', formData);
+        return api.post('/image', formData);
     }
 }
