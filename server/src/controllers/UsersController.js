@@ -126,7 +126,7 @@ export default {
 
     async resetPassword(req, res) {
         const user = await User.findOne({ 
-            resetPasswordToken: req.params.token,
+            resetPasswordToken: req.body.token,
             resetPasswordExpires: { $gt: Date.now() }
         });
 

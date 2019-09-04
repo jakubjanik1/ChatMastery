@@ -11,7 +11,7 @@ router.post('/login', UsersController.login);
 router.get('/logout', UsersController.logout);
 router.put('/:id', UsersController.validate, catchAsync(UsersController.update));
 router.post('/forgotPassword', catchAsync(UsersController.forgotPassword));
-router.get('/resetPassword/:token', catchAsync(UsersController.resetPassword));
+router.post('/resetPassword', catchAsync(UsersController.resetPassword));
 router.post('/updatePassword', UsersController.validatePassword, catchAsync(UsersController.updatePassword));
 
 export default router;

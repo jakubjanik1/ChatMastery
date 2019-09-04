@@ -52,6 +52,7 @@ export default {
         if (this.active != 'ResetPassword') return;
 
         this.token = window.location.pathname.split('/').pop();
+        history.replaceState('ChatMastery', 'ChatMastery', '/');
 
         try {
             const response = await UsersService.resetPassword(this.token);

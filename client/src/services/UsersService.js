@@ -27,7 +27,7 @@ export default {
     },
 
     resetPassword(token) {
-        return api.get(`/resetPassword/${ token }`);
+        return api.post('/resetPassword', { token });
     },
     
     updatePassword(data) {

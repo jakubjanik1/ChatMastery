@@ -26,6 +26,11 @@ export default {
     this.setViewportVariable();
     window.addEventListener('resize', this.setViewportVariable);
 
+    if (location.pathname != '/') {
+      this.isLoading = false;
+      return;
+    }
+
     await this.fetchUser();
     this.isLoading = false;
   },
