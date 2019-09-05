@@ -63,7 +63,7 @@ export default {
                 this.errors = response.data.errors;
             } else {
                 this.clear();
-                this.showLoginTab();
+                this.changeTab('Login');
             }
         },
         clear() {

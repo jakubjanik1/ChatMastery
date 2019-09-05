@@ -1,18 +1,17 @@
 <template>
     <div class="conversations">
-        <loading-circle :loading="isLoading"></loading-circle>
+        <loading-circle :loading="isLoading" />
 
         <vue-scroll v-if="! isLoading && ! isEmpty">
             <conversations-item 
                 :key="conversation._id" 
                 v-for="conversation in conversations"
-                :conversation="conversation">
-
-            </conversations-item>
+                :conversation="conversation" 
+            />
         </vue-scroll>
 
         <div class="conversations--empty" v-else-if="isEmpty">
-            <message-icon :size="80" fillColor="#009ef7"></message-icon>
+            <message-icon :size="80" fillColor="#009ef7" />
             <div class="conversations__info">No conversations, yet</div>
             <div class="conversations__more">
                 <div>No conversations in your inbox yet!</div>

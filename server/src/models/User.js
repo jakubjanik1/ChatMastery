@@ -27,7 +27,7 @@ const UserSchema = new Schema({
     },
     socialAuth: {
         type: Boolean,
-        deafult: false
+        default: false
     },
     resetPasswordToken: {
         type: String

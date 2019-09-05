@@ -138,6 +138,7 @@ export default {
         display: flex;
         align-items: center;
         border-bottom: 1px solid #f9f9f9;
+        cursor: pointer;
 
         @media (min-width: 900px) {
             &:hover, &--active {
@@ -152,7 +153,11 @@ export default {
 
             }
 
-            &:hover *, &--active * * {
+            &:hover * {
+                color: #fff;
+            }
+            
+            &--active * * {
                 color: #fff !important;
             }
         }

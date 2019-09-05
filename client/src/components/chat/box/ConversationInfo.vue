@@ -5,9 +5,7 @@
             :size="38"
             fillColor="#c3c4c4"
             @click="emitReturnToConversations"
-        >
-            BACK
-        </return-icon>
+        />
 
         <div class="conversation-info__receiver">{{ receiver.name }}</div>
         <div class="conversation-info__active" v-show="receiver.active"></div>

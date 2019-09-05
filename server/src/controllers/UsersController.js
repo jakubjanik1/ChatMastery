@@ -98,7 +98,7 @@ export default {
             return res.status(400).send('Email is required');
         }
 
-        const user = await User.findOne({ email: req.body.email, socialAuth: { $in: [ false, undefined ]}});
+        const user = await User.findOne({ email: req.body.email, socialAuth: false });
 
         if (user === null) {
             return res.status(403).send('User with this email does not exist');
