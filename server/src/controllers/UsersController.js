@@ -155,6 +155,16 @@ export default {
             user.resetPasswordToken = user.resetPasswordExpires = null;
 
             await user.save();
+
+            const mailOptions = {
+                to: user.email,
+                from: 'ChatMastery',
+                subject: 'ChatMastery - password updated',
+                template: 'passwordUpdated'
+            };
+    
+            await sendMail(mailOptions);
+            
             return res.status(200).send('Password updated');
         }
     }
