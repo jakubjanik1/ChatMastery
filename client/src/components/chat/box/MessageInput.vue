@@ -179,14 +179,14 @@ export default {
         justify-content: space-between;
         padding: 0 32px 0 16px;
         height: 55px;
-        background: #fafafa;
-        border-top: 2px solid #f2f2f2;
+        background: var(--tertiary-background-color);
+        border-top: 2px solid var(--primary-border-color);
         grid-area: message-input;
         position: relative;
 
         &--invisible {
-            border-top-color: #f6f6f6;
-            background: #f6f6f6;
+            border-top-color: var(--secondary-background-color);
+            background: var(--secondary-background-color);
 
             & > * {
                 display: none;
@@ -199,7 +199,7 @@ export default {
         }
 
         &__text {
-            color: #292929;
+            color: var(--primary-text-color);
             padding: 0;
             background: inherit;
             height: 100%;
@@ -214,7 +214,7 @@ export default {
             &::placeholder {
                 font-size: 14px;
                 font-weight: 500;
-                color: #292929;
+                color: var(--primary-text-color);
             }
 
             &--empty {
@@ -229,7 +229,7 @@ export default {
             &::before {
                 width: 32px;
                 height: 32px;
-                background: #fafafa;
+                background: var(--tertiary-background-color);
                 content: '';
                 display: inline-block;
             }

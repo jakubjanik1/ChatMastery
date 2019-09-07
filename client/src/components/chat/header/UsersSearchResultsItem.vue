@@ -30,7 +30,7 @@ export default {
     .users-search-results-item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #f9f9f9;
+        border-bottom: 1px solid var(--primary-border-color);
         padding: 14px 20px;
 
         &__profile {
@@ -48,7 +48,7 @@ export default {
                 height: 12px;
                 background: #2ecd8a;
                 border-radius: 50%;
-                border: 2px solid #fff;
+                border: 2px solid var(--primary-background-color);
             }
         }
 
@@ -60,7 +60,7 @@ export default {
         }
 
         &__name {
-            color: #292929;
+            color: var(--primary-text-color);
             font-weight: 600;
         }
 

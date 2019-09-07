@@ -79,11 +79,10 @@ export default {
     .conversations {
         grid-area: conversations-list;
         height: calc((var(--vh, 1vh) * 100) - (64px));
-        border-radius: 2px;
-        border-right: 2px solid #f2f2f2;
-        border-top: 2px solid #f2f2f2;
+        border-right: 2px solid var(--primary-border-color);
+        border-top: 2px solid var(--primary-border-color);
         position: relative;
-        background: #fff;
+        background: var(--primary-background-color);
 
         &--empty {
             display: flex;
@@ -95,7 +94,7 @@ export default {
         &__info {
             font-weight: 600;
             font-size: 14px;
-            color: #292929;
+            color: var(--primary-text-color);
         }
 
         &__more {

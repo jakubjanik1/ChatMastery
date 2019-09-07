@@ -11,6 +11,7 @@
  
         <transition>
             <div class="user-info__options" v-show="showOptions">
+                <a class="user-info__option" @click.prevent="changeTheme" href="">Change theme</a>
                 <a class="user-info__option" @click.prevent="showProfile = true" href="">Profile</a>
                 <a class="user-info__option" @click="logout" :href="`${ $baseUrl }/users/logout`">Logout</a>
             </div>
@@ -23,6 +24,7 @@
 <script>
 import ArrowDownIcon from 'vue-material-design-icons/ChevronDown';
 import Profile from '@/views/Profile';
+import EventBus from '@/helpers/EventBus';
 
 export default {
     name: 'UserInfo',
@@ -51,6 +53,9 @@ export default {
         },
         logout() {
             this.$socket.emit('userLogout');
+        },
+        changeTheme() {
+            EventBus.$emit('changeTheme');
         }
     }
 }
@@ -75,7 +80,7 @@ export default {
         &__name {
             font-size: 14px;
             font-weight: 600;
-            color: #292929;
+            color: var(--primary-text-color);
         }
 
         &__caret {
@@ -89,8 +94,8 @@ export default {
             top: 40px;
             right: 5px;
             width: 149px;
-            background: #fff;
-            border: 1px solid #f2f2f2;
+            background: var(--primary-background-color);
+            border: 1px solid var(--primary-border-color);
             border-radius: 2px;
             z-index: 1;
 
@@ -110,8 +115,8 @@ export default {
                 color: #fff;
             }
 
-            &:first-of-type {
-                border-bottom: 1px solid #f9f9f9;
+            &:not(:last-of-type) {
+                border-bottom: 1px solid var(--primary-border-color);
             }
         }
 

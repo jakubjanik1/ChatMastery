@@ -57,7 +57,7 @@ export default {
         justify-content: center;
         position: relative;
         height: 40px;
-        background: #fafafa;
+        background: var(--primary-background-color);
 
         &__return {
             height: 38px;
@@ -70,7 +70,7 @@ export default {
         }
 
         &__receiver {
-            color: #292929;
+            color: var(--primary-text-color);
             font-weight: 600;
         }
 

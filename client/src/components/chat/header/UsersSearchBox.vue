@@ -117,9 +117,11 @@ export default {
             border: 0;
             padding: 8px;
             margin-right: 4px;
-            border: 1px solid #f2f2f2;
+            border: 1px solid var(--primary-border-color);
             border-radius: 2px;
             width: 250px - 16px;
+            background: var(--primary-background-color);
+            color: var(--primary-text-color);
 
             &:focus {
                 outline: 0;

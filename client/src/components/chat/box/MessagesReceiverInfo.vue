@@ -40,7 +40,7 @@ export default {
 
         &__name {
             margin-top: 6px;
-            color: #292929;
+            color: var(--primary-text-color);
             font-weight: 600;
         }
 

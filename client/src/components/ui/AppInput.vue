@@ -89,6 +89,7 @@ export default {
             margin-top: 32px;
             margin-bottom: 4px;
             font-weight: 600;
+            color: var(--primary-text-color);
         }
 
         &__input {
@@ -97,6 +98,8 @@ export default {
             padding: 8px 0;
             width: 100%;
             margin-top: 32px;
+            background: var(--primary-background-color);
+            color: var(--primary-text-color);
             font: {
                 family: inherit;
                 size: 14px;

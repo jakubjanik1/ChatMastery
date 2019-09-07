@@ -54,7 +54,7 @@ export default {
         position: absolute;
         top: 52px;
         width: 360px - 2px;
-        background: #fff;
+        background: var(--primary-background-color);
         z-index: 1;
         left: 0;
         height: calc((var(--vh, 1vh) * 100) - (64px));
@@ -74,7 +74,7 @@ export default {
         &__info {
             font-weight: 600;
             font-size: 14px;
-            color: #292929;
+            color: var(--primary-text-color);
         }
 
         &__more {

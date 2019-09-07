@@ -137,7 +137,7 @@ export default {
     .conversation {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #f9f9f9;
+        border-bottom: 1px solid var(--primary-border-color);
         cursor: pointer;
 
         @media (min-width: 900px) {
@@ -147,10 +147,14 @@ export default {
                 border-radius: 2px;
 
                 .conversation__unread-messages {
-                    background: #fff;
+                    background: var(--primary-background-color);
                     color: #009ef7;
                 }
 
+                .conversation__profile--active::after {
+                    transition: .3s ease-in-out;
+                    border-color: #009ef7;
+                }
             }
 
             &:hover * {
@@ -211,7 +215,7 @@ export default {
                 height: 12px;
                 background: #2ecd8a;
                 border-radius: 50%;
-                border: 2px solid #fff;
+                border: 2px solid var(--primary-background-color);
             }
         }
 
@@ -223,7 +227,7 @@ export default {
         }
 
         &__receiver {
-            color: #292929;
+            color: var(--primary-text-color);
             font-weight: 600;
             grid-area: receiver;
         }

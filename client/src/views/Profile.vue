@@ -121,7 +121,7 @@ export default {
         height: 700px;
         max-width: 800px;
         max-height: 80%;
-        background: #fff;
+        background: var(--primary-background-color);
         position: relative;
         margin: 0 auto;
         z-index: 1;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'app__dark' : this.theme == 'dark' }">
     <chat v-if="isLoggedIn" />
     <login v-else-if="! isLoading" />
   </div>
@@ -9,6 +9,7 @@
 import Chat from '@/views/Chat';
 import Login from '@/views/Login';
 import UsersService from './services/UsersService';
+import EventBus from '@/helpers/EventBus';
 
 export default {
   name: 'app',
@@ -19,12 +20,16 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      isLoading: true
+      isLoading: true,
+      theme: 'light'
     }
   },
   async created() {
     this.setViewportVariable();
     window.addEventListener('resize', this.setViewportVariable);
+
+    localStorage.setItem('theme', 'light');
+    EventBus.$on('changeTheme', this.changeTheme);
 
     if (location.pathname != '/') {
       this.isLoading = false;
@@ -44,6 +49,10 @@ export default {
       
       this.isLoggedIn = (Object.entries(response.data).length != 0);
       this.$root.user = response.data;
+    },
+    changeTheme() {
+      this.theme = (this.theme == 'light') ? 'dark' : 'light';
+      localStorage.setItem('theme', this.theme);
     }
   }
 }
@@ -57,6 +66,22 @@ export default {
     font-size: 14px;
     margin: 0;
     overflow: hidden;
-    background: #f6f6f6;
+    background: var(--secondary-background-color);
+  }
+
+  :root {
+    --primary-text-color: #292929;
+    --primary-background-color: #fff;
+    --secondary-background-color: #f6f6f6;
+    --tertiary-background-color: #fafafa;
+    --primary-border-color: #f2f2f2;
+  }
+
+  .app__dark {
+    --primary-text-color: #fff;
+    --primary-background-color: #414141;
+    --secondary-background-color: #313131;
+    --tertiary-background-color: #353535;
+    --primary-border-color: #525252;
   }
 </style>

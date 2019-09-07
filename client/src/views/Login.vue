@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <img class="login__logo" src="@/assets/logo.png">
+        <img class="login__logo" src="logo_light.png">
 
         <div class="login__wrapper" ref="wrapper" @submit.prevent>
             <forgot-password @changeTab="changeTab" :active="activeTab" />
@@ -47,7 +47,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: #f6f6f6;
+        background: var(--secondary-background-color);
         box-sizing: border-box;
         height: calc((var(--vh, 1vh) * 100));
         overflow: auto;
@@ -57,7 +57,7 @@ export default {
         }
 
         &__wrapper {
-            background: #fff;
+            background: var(--primary-background-color);
             max-width: 550px;
             width: 100%;
             overflow: hidden;
@@ -91,12 +91,12 @@ export default {
         &__title {
             font-weight: bold;
             font-size: 20px;
-            color: #292929;
+            color: var(--primary-text-color);
         }
 
         &__subtitle {
             margin-top: 8px;
-            color: #292929;
+            color: var(--primary-text-color);
             text-align: center;
         }
 
@@ -119,7 +119,7 @@ export default {
         }
 
         &__or {
-            background: #fff;
+            background: var(--primary-background-color);
             color: #c3c4c4;
             padding: 0 16px;
             font-size: 20px;

@@ -2,7 +2,7 @@
     <div class="chat-header">
         <users-search-box />
 
-        <img class="chat-header__logo" src="@/assets/logo.png">
+        <img class="chat-header__logo" :src="logo">
 
         <user-info />
     </div>
@@ -11,12 +11,29 @@
 <script>
 import UsersSearchBox from './UsersSearchBox';
 import UserInfo from './UserInfo';
+import EventBus from '@/helpers/EventBus';
 
 export default {
     name: 'ChatHeader',
     components: {
         UsersSearchBox,
         UserInfo
+    },
+    data() {
+        return {
+            theme: 'light'
+        };
+    },
+    created() {
+        EventBus.$on('changeTheme', () => {
+            console.log(1)
+            this.theme = (this.theme == 'light') ? 'dark' : 'light';
+        });
+    },
+    computed: {
+        logo() {
+            return `logo_${ this.theme }.png`;
+        }
     }
 }
 </script>
@@ -27,11 +44,11 @@ export default {
         justify-content: space-between;
         align-items: center;
         height: 64px;
-        background: #fff;
+        background: var(--primary-background-color);
         grid-area: header;
 
         &__logo {
-            height: 35px;
+            height: 45px;
         }
     }
 

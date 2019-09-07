@@ -135,19 +135,19 @@ export default {
 <style lang="scss" scoped>
     .messages {
         grid-area: messages-list;
-        background: #f6f6f6;
+        background: var(--secondary-background-color);
         width: 100%;
         height: calc((var(--vh, 1vh) * 100) - (121px));
-        border-top: 2px solid #f2f2f2;
+        border-top: 2px solid var(--primary-border-color);
         position: relative;
 
         &__scroll-down {
             position: absolute;
             right: calc(50% - 21px);
-            border: 1px solid #f2f2f2;
+            border: 1px solid var(--primary-border-color);
             border-radius: 50%;
             height: 30px;
-            background: #fff;
+            background: var(--primary-background-color);
             padding: 3px;
             
             @keyframes slide-in {
