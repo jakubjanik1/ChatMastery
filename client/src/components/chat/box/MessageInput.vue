@@ -172,6 +172,25 @@ export default {
 }
 </script>
 
+<style lang="scss">
+    .emoji-mart-category-label > span {
+        background: var(--primary-background-color);
+        color: var(--primary-text-color);
+    }
+
+    .emoji-mart-anchor:hover {
+        color: #009ef7;
+    }
+
+    .emoji-mart-emoji:hover::before {
+        background: var(--tertiary-background-color) !important;
+    }
+
+    .emoji-mart-bar {
+        border-color: var(--secondary-border-color);
+    }
+</style>
+
 <style lang="scss" scoped>
     .message-input {
         display: flex;
@@ -241,7 +260,8 @@ export default {
             left: 8px;
             font-family: inherit;
             font-size: inherit;
-            border: 1px solid #d9d9d9 !important;
+            border: 1px solid var(--secondary-border-color) !important;
+            background: var(--primary-background-color);
         }
 
         &__icon {

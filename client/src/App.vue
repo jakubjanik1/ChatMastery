@@ -75,6 +75,7 @@ export default {
     --secondary-background-color: #f6f6f6;
     --tertiary-background-color: #fafafa;
     --primary-border-color: #f2f2f2;
+    --secondary-border-color: #d9d9d9;
   }
 
   .app__dark {
@@ -83,5 +84,6 @@ export default {
     --secondary-background-color: #313131;
     --tertiary-background-color: #353535;
     --primary-border-color: #525252;
+    --secondary-border-color: #292929;
   }
 </style>
