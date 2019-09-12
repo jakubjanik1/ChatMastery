@@ -18,6 +18,8 @@
                 <div>Start chatting with your friends</div>
             </div>
         </div>
+
+        <div class="conversations__create-group">Create group</div>
     </div>
 </template>
 
@@ -104,10 +106,32 @@ export default {
             text-align: center;
             line-height: 1.5em;
         }
+
+        &__create-group {
+            position: absolute;
+            bottom: 16px;
+            left: calc(50% - 78px);
+            background: #009ef7;
+            color: #fff;
+            border-radius: 2px;
+            padding: 10px 32px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 21px 3px #403d3d45;
+
+            &:hover {
+                transition: 0.3s ease-in-out;
+                background: darken(#009ef7, 5%);
+            }
+        }
         
         @media (max-width: 900px) {
             border-right: 0;
             height: calc((var(--vh, 1vh) * 100) - (160px));
+
+            &__create-group {
+                bottom: 24px;
+            }
         }
     }
 </style>
