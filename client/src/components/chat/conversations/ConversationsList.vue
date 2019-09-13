@@ -19,7 +19,8 @@
             </div>
         </div>
 
-        <div class="conversations__create-group">Create group</div>
+        <div class="conversations__create-group" @click="showCreateGroup = true">Create group</div>
+        <create-group :show="showCreateGroup" @close="showCreateGroup = false" />
     </div>
 </template>
 
@@ -29,19 +30,22 @@ import ChatService from '@/services/ChatService';
 import EventBus from '@/helpers/EventBus';
 import LoadingCircle from '@/components/common/LoadingCircle';
 import MessageIcon from 'vue-material-design-icons/MessageReplyText';
+import CreateGroup from '@/views/CreateGroup';
 
 export default {
     name: 'ConversationsList',
     components: {
         ConversationsItem,
         LoadingCircle,
-        MessageIcon
+        MessageIcon,
+        CreateGroup
     },
     data() {
         return {
             conversations: [],
             isLoading: false,
-            isEmpty: false
+            isEmpty: false,
+            showCreateGroup: false
         };
     },
     async created() {

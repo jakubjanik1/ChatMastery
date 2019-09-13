@@ -1,37 +1,39 @@
 <template>
-    <div class="overlay" v-show="show">
+    <app-modal :show="show" @close="$emit('close')">
+        <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
 
-        <div class="profile">
-            <close-icon 
-                class="profile__close" 
-                @click="close" 
-                fillColor="#c3c4c4" 
-                :size="30" 
-            />
-            
-            <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
+        <app-input 
+            class="profile__input" 
+            placeholder="Email address" 
+            v-model="user.email" 
+            :error="errors.email" 
+            label 
+        />
 
-            <app-input class="profile__input" placeholder="Email address" v-model="user.email" label :error="errors.email" />
+        <app-input 
+            class="profile__input" 
+            placeholder="Full name" 
+            v-model="user.name" 
+            :error="errors.name" 
+            label 
+        />
 
-            <app-input class="profile__input" placeholder="Full name" v-model="user.name" label :error="errors.name" />
+        <button class="profile__button" @click="update">Save</button>
 
-            <button class="profile__button" @click="update">Save</button>
-
-            <div class="profile__updating" v-if="isUpdating">
-                <loading color="#009ef7" size="47px" />
-                <span>Please waiting...</span>
-            </div>
+        <div class="profile__updating" v-if="isUpdating">
+            <loading color="#009ef7" size="47px" />
+            <span>Please waiting...</span>
         </div>
-    </div>
+    </app-modal>
 </template>
 
 <script>
-import CloseIcon from 'vue-material-design-icons/Close';
 import EditPhoto from '@/components/profile/EditPhoto';
 import UploadService from '@/services/UploadService';
 import UsersService from '@/services/UsersService';
 import Loading from 'vue-spinner/src/ClipLoader';
 import AppInput from '@/components/ui/AppInput';
+import AppModal from '@/components/ui/AppModal';
 
 export default {
     name: 'Profile',
@@ -42,24 +44,19 @@ export default {
         }
     },
     components: {
-        CloseIcon,
         EditPhoto,
         Loading,
-        AppInput
+        AppInput,
+        AppModal
     },
     data() {
         return {
-            isVisible: this.show,
             user: {},
             errors: {},
             isUpdating: false
         };
     },
     methods: {
-        close() {
-            this.isVisible = false;
-            this.$emit('close');
-        },
         changePhoto(image) {
             this.user.avatar = image;
         },
@@ -98,46 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @media (min-width: 900px) {
-        .overlay {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            background: #00000085;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-    }
-
     .profile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 700px;
-        height: 700px;
-        max-width: 800px;
-        max-height: 80%;
-        background: var(--primary-background-color);
-        position: relative;
-        margin: 0 auto;
-        z-index: 1;
-        padding: 32px;
-        border-radius: 2px;
-
-        &__close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-
         &__input {
             width: 85%;
         }
@@ -184,17 +142,6 @@ export default {
                 }
                 margin-top: 6px;
             }
-        }
-
-        @media (max-width: 900px) {
-            position: fixed;
-            top: 0;
-            left: 0;
-            max-height: none;
-            max-width: none;
-            width: 100%;
-            height: 100%;
-            padding: 0;
         }
     }
 </style>
