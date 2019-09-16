@@ -17,7 +17,7 @@
             v-show="isOpen" 
             v-model="name"
             @focus="isOpen = true"
-            @keyup="refreshResults"
+            @keyup="searchUser"
         >
 
         <close-icon
@@ -42,9 +42,11 @@ import SearchIcon from 'vue-material-design-icons/Magnify';
 import CloseIcon from 'vue-material-design-icons/Close';
 import UsersSearchResultsList from './UsersSearchResultsList';
 import UsersService from '@/services/UsersService';
+import UsersSearchMixin from '@/mixins/UsersSearch';
 
 export default {
     name: 'UsersSearchBox',
+    mixins: [ UsersSearchMixin ],
     components: {
         SearchIcon,
         CloseIcon,
@@ -52,21 +54,10 @@ export default {
     },
     data() {
         return {
-            isOpen: false,
-            name: '',
-            foundUsers: []
+            isOpen: false
         }
     },
     methods: {
-        async refreshResults() {
-            if (this.name == '') {
-                this.foundUsers = [];
-                return;
-            }
-
-            const response = await UsersService.search(this.name);
-            this.foundUsers = response.data;
-        },
         focusOnInput() {
             if (this.isOpen) {
                 this.$refs.input.focus();

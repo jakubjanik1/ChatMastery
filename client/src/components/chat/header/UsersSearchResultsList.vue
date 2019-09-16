@@ -5,7 +5,9 @@
                 <users-search-results-item
                     :key="user._id" 
                     v-for="user in users" 
-                    :user="user" />
+                    :user="user" 
+                    @click="emitNewConversation(user)"
+                />
 
             </vue-scroll>
         </div>
@@ -34,6 +36,7 @@
 import UsersSearchResultsItem from './UsersSearchResultsItem';
 import UsersSearchIcon from 'vue-material-design-icons/AccountSearch';
 import UsersNotFound from 'vue-material-design-icons/AccountRemove';
+import EventBus from '@/helpers/EventBus';
 
 export default {
     name: 'UsersSearchResultsList',
@@ -45,7 +48,13 @@ export default {
     props: [
         'users',
         'searchedName'
-    ]
+    ],
+    methods: {
+        emitNewConversation(user) {
+            EventBus.$emit('newConversation', user);
+            localStorage.setItem('receiverUserId', user._id);
+        }
+    }
 }
 </script>
 

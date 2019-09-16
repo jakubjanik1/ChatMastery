@@ -5,7 +5,8 @@
                 class="modal__close" 
                 @click="close" 
                 fillColor="#c3c4c4" 
-                :size="30" 
+                :size="30"
+                v-icon-hover 
             />
 
             <slot />
@@ -65,6 +66,7 @@ export default {
             position: absolute;
             top: 16px;
             right: 16px;
+            z-index: 10;
 
             &:hover {
                 cursor: pointer;

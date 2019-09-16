@@ -1,5 +1,5 @@
 <template>
-    <div class="users-search-results-item" @click="emitNewConversation">
+    <div class="users-search-results-item" @click="$emit('click')">
         <div 
             class="users-search-results-item__profile" 
             :class="{ 'users-search-results-item__profile--active' : user.active }"
@@ -12,17 +12,9 @@
 </template>
 
 <script>
-import EventBus from '@/helpers/EventBus';
-
 export default {
     name: 'UsersSearchResultsItem',
-    props: [ 'user' ],
-    methods: {
-        emitNewConversation() {
-            EventBus.$emit('newConversation', this.user);
-            localStorage.setItem('receiverUserId', this.user._id);
-        }
-    }
+    props: [ 'user' ]
 }
 </script>
 

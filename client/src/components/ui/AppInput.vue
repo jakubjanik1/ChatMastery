@@ -11,6 +11,9 @@
                 :type="inputType"
                 :disabled="disabled"
                 @input="$emit('input', $event.target.value)"
+                @keyup="$emit('keyup')"
+                @focus="$emit('focus')"
+                @blur="$emit('blur')"
             >
 
             <span class="app-input__focus-border"></span>
