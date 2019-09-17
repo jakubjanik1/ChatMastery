@@ -29,8 +29,8 @@
 
 <script>
 import EditPhoto from '@/components/profile/EditPhoto';
-import UploadService from '@/services/UploadService';
-import UsersService from '@/services/UsersService';
+import { uploadImage } from '@/services/UploadService';
+import { update } from '@/services/UsersService';
 import Loading from 'vue-spinner/src/ClipLoader';
 import AppInput from '@/components/ui/AppInput';
 import AppModal from '@/components/ui/AppModal';
@@ -62,7 +62,7 @@ export default {
         },
         async uploadImage() {
             if (this.user.avatar instanceof Object) {
-                const response = await UploadService.uploadImage(this.user.avatar, 'users');
+                const response = await uploadImage(this.user.avatar, 'users');
                 this.user.avatar = response.data.url;
             }
         },
@@ -71,7 +71,7 @@ export default {
 
             await this.uploadImage();
 
-            const response = await UsersService.update(this.user._id, this.user);
+            const response = await update(this.user._id, this.user);
             
             if (response.data.errors) {
                 this.errors = response.data.errors;

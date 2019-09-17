@@ -1,4 +1,4 @@
-import UsersService from '@/services/UsersService';
+import { search } from '@/services/UsersService';
 
 export default {
     data() {
@@ -14,7 +14,7 @@ export default {
                 return;
             }
 
-            const response = await UsersService.search(this.name);
+            const response = await search(this.name);
             this.foundUsers = response.data;
         }
     }

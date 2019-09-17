@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import ChatService from '@/services/ChatService';
-import UploadService from '@/services/UploadService';
+import { storeMessage, storeConversation } from '@/services/ChatService';
+import { uploadImage } from '@/services/UploadService';
 import EventBus from '@/helpers/EventBus';
 import AttachmentIcon from 'vue-material-design-icons/Paperclip';
 import EmojiIcon from 'vue-material-design-icons/Emoticon';
@@ -91,7 +91,7 @@ export default {
             const image = event.target.files[0];
             event.target.files = null;
 
-            const response = await UploadService.uploadImage(image, 'messages');
+            const response = await uploadImage(image, 'messages');
             this.image = response.data.url;
 
             this.addMessage();
@@ -107,7 +107,7 @@ export default {
                 content: this.image ? this.image : this.text
             };
             
-            await ChatService.storeMessage({
+            await storeMessage({
                 'body': { ...body },
                 'conversationId': conversationId.data,
                 'author': userId
@@ -121,7 +121,7 @@ export default {
             if (conversationId) {
                 return { data: conversationId };
             } else {
-                return await ChatService.storeConversation({
+                return await storeConversation({
                     'members': [
                         this.$root.user._id,
                         localStorage.getItem('receiverUserId')

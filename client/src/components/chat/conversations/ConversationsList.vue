@@ -26,7 +26,7 @@
 
 <script>
 import ConversationsItem from './ConversationsItem';
-import ChatService from '@/services/ChatService';
+import { fetchConversations } from '@/services/ChatService';
 import EventBus from '@/helpers/EventBus';
 import LoadingCircle from '@/components/common/LoadingCircle';
 import MessageIcon from 'vue-material-design-icons/MessageReplyText';
@@ -59,7 +59,7 @@ export default {
         async getConversations() {
             const userId = this.$root.user._id;
 
-            const response = await ChatService.fetchConversations(userId);
+            const response = await fetchConversations(userId);
             this.conversations = response.data;
         }
     },

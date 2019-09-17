@@ -40,7 +40,7 @@
 <script>
 import SocialButton from '@/components/login/SocialButton';
 import LoginMixin from '@/mixins/Login';
-import UsersService from '@/services/UsersService';
+import { login } from '@/services/UsersService';
 
 export default {
     name: 'Login',
@@ -64,7 +64,7 @@ export default {
             this.error = '';
         },
         async login() {
-            const response = await UsersService.login(this.form);
+            const response = await login(this.form);
 
             if (response.data.error) {
                 this.error = response.data.error;

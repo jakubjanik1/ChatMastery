@@ -31,7 +31,7 @@
 
 <script>
 import LoginMixin from '@/mixins/Login';
-import UsersService from '@/services/UsersService';
+import { resetPassword, updatePassword } from '@/services/UsersService';
 
 export default {
     name: 'ResetPassword',
@@ -55,7 +55,7 @@ export default {
         history.replaceState('ChatMastery', 'ChatMastery', '/');
 
         try {
-            const response = await UsersService.resetPassword(this.token);
+            const response = await resetPassword(this.token);
 
             this.email = response.data;
         } catch (error) {
@@ -69,7 +69,7 @@ export default {
         },
         async updatePassword() {
             const { email, token, form: { password, repeatedPassword } } = this.$data;
-            const response = await UsersService.updatePassword({ email, token, password, repeatedPassword });
+            const response = await updatePassword({ email, token, password, repeatedPassword });
 
             if (response.data.errors) {
                 this.errors = response.data.errors;

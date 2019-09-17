@@ -8,7 +8,7 @@
 <script>
 import Chat from '@/views/Chat';
 import Login from '@/views/Login';
-import UsersService from './services/UsersService';
+import { fetchLoggedInUser } from './services/UsersService';
 import EventBus from '@/helpers/EventBus';
 
 export default {
@@ -45,7 +45,7 @@ export default {
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     },
     async fetchUser() {
-      const response = await UsersService.fetchLoggedInUser();
+      const response = await fetchLoggedInUser();
       
       this.isLoggedIn = (Object.entries(response.data).length != 0);
       this.$root.user = response.data;

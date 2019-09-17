@@ -39,7 +39,7 @@
 
 <script>
 import LoginMixin from '@/mixins/Login';
-import UsersService from '@/services/UsersService';
+import { signup } from '@/services/UsersService';
 
 export default {
     name: 'Signup',
@@ -57,7 +57,7 @@ export default {
     },
     methods: {
         async signup() {
-            const response = await UsersService.signup(this.form);
+            const response = await signup(this.form);
             
             if (response.data.errors) {
                 this.errors = response.data.errors;

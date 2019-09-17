@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import ChatService from '@/services/ChatService';
+import { fetchMessages } from '@/services/ChatService';
 import EventBus from '@/helpers/EventBus';
 import MessagesItem from './MessagesItem';
 import MessagesReceiverInfo from './MessagesReceiverInfo';
@@ -82,7 +82,7 @@ export default {
         async getMessages(conversationId) {
             this.isLoading = true;
 
-            const response = await ChatService.fetchMessages(conversationId, this.part);
+            const response = await fetchMessages(conversationId, this.part);
             this.messages = response.data; 
             this.messages = uniqBy(this.messages, '_id');   
 
@@ -106,7 +106,7 @@ export default {
                 this.$refs.scroll.$el.firstChild.firstChild.children[2].id = 'last';
 
                 const conversationId = localStorage.getItem('conversationId');
-                const response = await ChatService.fetchMessages(conversationId, ++this.part);
+                const response = await fetchMessages(conversationId, ++this.part);
                 
                 this.messages.unshift(...response.data); 
                 this.messages = uniqBy(this.messages, '_id');

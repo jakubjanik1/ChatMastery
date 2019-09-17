@@ -38,7 +38,7 @@
 import { formatDate } from '@/helpers';
 import EventBus from '@/helpers/EventBus';
 import DeleteIcon from 'vue-material-design-icons/Delete';
-import ChatService from '@/services/ChatService';
+import { deleteConversation } from '@/services/ChatService';
 
 export default {
     name: 'ConversationsItem',
@@ -114,7 +114,7 @@ export default {
         async deleteConversation(event) {
             event.stopPropagation();
             
-            await ChatService.deleteConversation(this.conversation._id);
+            await deleteConversation(this.conversation._id);
         }
     },
     sockets: {

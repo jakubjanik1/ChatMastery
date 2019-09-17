@@ -41,7 +41,6 @@
 import SearchIcon from 'vue-material-design-icons/Magnify';
 import CloseIcon from 'vue-material-design-icons/Close';
 import UsersSearchResultsList from './UsersSearchResultsList';
-import UsersService from '@/services/UsersService';
 import UsersSearchMixin from '@/mixins/UsersSearch';
 
 export default {

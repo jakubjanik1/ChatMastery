@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import UsersService from '@/services/UsersService';
+import { forgotPassword } from '@/services/UsersService';
 import LoadIcon from 'vue-spinner/src/ClipLoader';
 import LoginMixin from '@/mixins/Login';
 
@@ -63,7 +63,7 @@ export default {
 
             try {
                 this.recoveryEmailIsSending = true;
-                const response = await UsersService.forgotPassword(this.form.email);
+                const response = await forgotPassword(this.form.email);
 
                 this.recoveryEmailSent = true;
             } catch (error) {
