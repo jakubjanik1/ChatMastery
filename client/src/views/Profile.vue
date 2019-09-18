@@ -18,7 +18,7 @@
             label 
         />
 
-        <button class="profile__button" @click="update">Save</button>
+        <app-button @click="update">Save</app-button>
 
         <div class="profile__updating" v-if="isUpdating">
             <loading color="#009ef7" size="47px" />
@@ -34,6 +34,7 @@ import { update } from '@/services/UsersService';
 import Loading from 'vue-spinner/src/ClipLoader';
 import AppInput from '@/components/ui/AppInput';
 import AppModal from '@/components/ui/AppModal';
+import AppButton from '@/components/ui/AppButton'
 
 export default {
     name: 'Profile',
@@ -47,7 +48,8 @@ export default {
         EditPhoto,
         Loading,
         AppInput,
-        AppModal
+        AppModal,
+        AppButton
     },
     data() {
         return {
@@ -98,30 +100,6 @@ export default {
     .profile {
         &__input {
             width: 85%;
-        }
-
-        &__button {
-            font: {
-                size: 16px;
-                family: inherit;
-            }
-            border: 0;
-            color: #fff;
-            border-radius: 2px;
-            background: #009ef7;
-            padding: 10px 32px;
-            font-weight: 600;
-            margin-top: 32px;
-
-             &:focus {
-                outline: 0;
-            }
-
-            &:hover {
-                transition: .3s ease-in-out;
-                cursor: pointer;
-                background: darken(#3399FF, 5%);
-            }
         }
 
         &__updating {

@@ -7,12 +7,15 @@
         />
 
         <users-select-box class="create-group__input" />
+
+        <app-button class="create-group__button">Create group</app-button>
     </app-modal>
 </template>
 
 <script>
 import AppModal from '@/components/ui/AppModal';
 import AppInput from '@/components/ui/AppInput';
+import AppButton from '@/components/ui/AppButton';
 import UsersSelectBox from '@/components/create-group/UsersSelectBox';
 
 export default {
@@ -26,6 +29,7 @@ export default {
     components: {
         AppModal,
         AppInput,
+        AppButton,
         UsersSelectBox
     },
     data() {
@@ -48,6 +52,10 @@ export default {
                     margin-top: 16px;
                 }
             }
+        }
+
+        &__button {
+            margin-top: 134px;
         }
     }
 </style>

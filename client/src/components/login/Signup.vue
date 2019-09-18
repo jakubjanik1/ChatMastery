@@ -32,7 +32,7 @@
             type="password"
         />
         
-        <button class="login__button" @click="signup">Sign up with email</button>
+        <app-button class="login__button" @click="signup">Sign up with email</app-button>
         <span class="login__link" @click="changeTab('Login')">Already have an account?</span>
     </form>
 </template>

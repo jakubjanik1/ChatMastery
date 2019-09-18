@@ -126,27 +126,9 @@ export default {
         }
 
         &__button {
-            background: #3399FF; 
-            color: #fff;
-            font-weight: 600;
-            font-size: 16px;
-            border: 0;
-            border-radius: 2px;
-            padding: 10px 16px;
             width: 100%;
-            margin-top: 40px;
             display: flex;
             justify-content: center;
-            
-            &:focus {
-                outline: 0;
-            }
-
-            &:hover {
-                transition: .3s ease-in-out;
-                cursor: pointer;
-                background: darken(#3399FF, 5%);
-            }
 
             &--loading {
                 height: 18px;

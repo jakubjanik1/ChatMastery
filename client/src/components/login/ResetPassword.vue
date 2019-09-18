@@ -21,7 +21,7 @@
             v-show="! error"
         />
         
-        <button class="login__button" v-show="! error" @click="updatePassword">Reset your password</button>
+        <app-button class="login__button" v-show="! error" @click="updatePassword">Reset your password</app-button>
 
         <div class="login__info" v-show="error">{{ error }}</div>
         <div class="login__link" @click="changeTab('ForgotPassword')" v-show="error">Send reset email again?</div>

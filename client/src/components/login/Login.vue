@@ -31,7 +31,7 @@
 
         <div class="login__error" v-show="error">{{ error }}</div>
         
-        <button class="login__button" @click="login">Login with email</button>
+        <app-button class="login__button" @click="login">Login with email</app-button>
 
         <span class="login__link" @click="changeTab('ForgotPassword')">Forgot password?</span>
     </form>

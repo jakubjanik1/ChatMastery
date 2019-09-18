@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="conversations__create-group" @click="showCreateGroup = true">Create group</div>
+        <app-button class="conversations__create-group" @click="showCreateGroup = true">Create group</app-button>
         <create-group :show="showCreateGroup" @close="showCreateGroup = false" />
     </div>
 </template>
@@ -31,6 +31,7 @@ import EventBus from '@/helpers/EventBus';
 import LoadingCircle from '@/components/common/LoadingCircle';
 import MessageIcon from 'vue-material-design-icons/MessageReplyText';
 import CreateGroup from '@/views/CreateGroup';
+import AppButton from '@/components/ui/AppButton';
 
 export default {
     name: 'ConversationsList',
@@ -38,7 +39,8 @@ export default {
         ConversationsItem,
         LoadingCircle,
         MessageIcon,
-        CreateGroup
+        CreateGroup,
+        AppButton
     },
     data() {
         return {
@@ -115,18 +117,8 @@ export default {
             position: absolute;
             bottom: 16px;
             left: calc(50% - 78px);
-            background: #009ef7;
-            color: #fff;
-            border-radius: 2px;
-            padding: 10px 32px;
-            font-weight: bold;
-            cursor: pointer;
             box-shadow: 0px 0px 21px 3px #403d3d45;
-
-            &:hover {
-                transition: 0.3s ease-in-out;
-                background: darken(#009ef7, 5%);
-            }
+            font-size: 14px;
         }
         
         @media (max-width: 900px) {

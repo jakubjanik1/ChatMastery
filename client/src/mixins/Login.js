@@ -1,8 +1,10 @@
 import AppInput from '@/components/ui/AppInput';
+import AppButton from '@/components/ui/AppButton';
 
 export default {
     components: {
-        AppInput
+        AppInput,
+        AppButton
     },
     props: [ 'active' ],
     computed: {

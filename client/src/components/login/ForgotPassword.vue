@@ -14,7 +14,7 @@
             :disabled="recoveryEmailIsSending"
         />
         
-        <button 
+        <app-button 
             class="login__button" 
             @click="forgotPassword" 
             v-show="! recoveryEmailSent"
@@ -27,7 +27,7 @@
                 color="#fff" 
                 :loading="recoveryEmailIsSending" 
             />
-        </button>
+        </app-button>
 
         <div class="login__info" v-show="recoveryEmailSent">Recovery email sent</div>
 
