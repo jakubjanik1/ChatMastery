@@ -4,7 +4,14 @@ const ConversationSchema = new Schema({
     members: [{
         type: String,
         ref: 'User'
-    }]
+    }],
+    group: {
+        type: Boolean,
+        default: false
+    },
+    groupName: {
+        type: String
+    }
 });
 
 export default mongoose.model('Conversation', ConversationSchema);

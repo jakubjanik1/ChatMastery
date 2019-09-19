@@ -4,11 +4,16 @@
             class="create-group__input"
             placeholder="Group name"
             v-model="form.groupName"
+            :error="errors.groupName"
         />
 
-        <users-select-box class="create-group__input" />
+        <users-select-box 
+            class="create-group__input" 
+            v-model="form.members" 
+            :error="errors.members"
+        />
 
-        <app-button class="create-group__button">Create group</app-button>
+        <app-button class="create-group__button" @click="storeGroup">Create group</app-button>
     </app-modal>
 </template>
 
@@ -17,6 +22,7 @@ import AppModal from '@/components/ui/AppModal';
 import AppInput from '@/components/ui/AppInput';
 import AppButton from '@/components/ui/AppButton';
 import UsersSelectBox from '@/components/create-group/UsersSelectBox';
+import { storeGroup, storeMessage } from '@/services/ChatService';
 
 export default {
     name: 'CreateGroup',
@@ -35,9 +41,35 @@ export default {
     data() {
         return {
             form: {
-                groupName: ''
-            }
+                groupName: '',
+                members: [ this.$root.user ]  
+            },
+            errors: {}
         };
+    },
+    methods: {
+        async storeGroup() {
+            const response = await storeGroup({
+                group: true,
+                groupName: this.form.groupName,
+                members: this.form.members
+            });
+
+            if (response.data.errors) {
+                this.errors = response.data.errors;
+            } else {
+                await storeMessage({
+                    body: {
+                        type: 'text',
+                        content: 'Welcome in group!'
+                    },
+                    conversationId: response.data,
+                    author: this.$root.user._id
+                });
+
+                this.$emit('close');
+            }
+        }
     }
 }
 </script>

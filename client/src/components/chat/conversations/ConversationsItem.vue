@@ -17,7 +17,7 @@
                 <img class="conversation__picture" :src="avatar">
             </div>
 
-            <div class="conversation__receiver">{{ receiver }}</div>
+            <div class="conversation__name">{{ name }}</div>
             <div class="conversation__last-message">{{ lastMessage }}</div>
             
 
@@ -78,8 +78,8 @@ export default {
                 return message.content.length > 25 ? `${message.content.slice(0, 25)}...` : message.content;
             }
         },
-        receiver() {
-            return this.conversation.members[0].name;
+        name() {
+            return this.conversation.group ? this.conversation.groupName : this.conversation.members[0].name;
         },
         unreadMessages() {
             return this.conversation.unreadMessages;
@@ -182,7 +182,7 @@ export default {
             width: 100%;
             grid-template-columns: 70px auto auto;
             grid-template-rows: 25px 25px;
-            grid-template-areas: "picture receiver date"
+            grid-template-areas: "picture name date"
                                 "picture last-message unread-messages";
 
             @media (max-width: 900px) {     
@@ -226,10 +226,10 @@ export default {
             grid-area: picture;       
         }
 
-        &__receiver {
+        &__name {
             color: var(--primary-text-color);
             font-weight: 600;
-            grid-area: receiver;
+            grid-area: name;
         }
 
         &__last-message {

@@ -3,6 +3,8 @@ import Conversation from '../models/Conversation';
 import Message from '../models/Message';
 import { Types } from 'mongoose';
 import socket from '../socket';
+import { check } from 'express-validator';
+import { isValidate, getValidationErrors } from '../helpers/validation';
 const PART_SIZE = 10;
 
 export default {
@@ -87,6 +89,25 @@ export default {
         const conversation = new Conversation(req.body);
 
         const response = await conversation.save();
+        return res.send(response._id);
+    },
+
+    validateGroup: [
+        check('groupName')
+            .not().isEmpty().withMessage('Group name is required'),
+
+        check('members')
+            .custom(value => value.length < 3 ? Promise.reject('You must choose minimum 3 users') : '')
+    ],
+
+    async storeGroup(req, res) {
+        if (! isValidate(req)) {
+            return res.json(getValidationErrors(req));
+        }
+
+        const group = new Conversation(req.body);
+
+        const response = await group.save();
         return res.send(response._id);
     },
 

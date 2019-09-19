@@ -17,6 +17,10 @@ export function storeConversation(conversation) {
     return api.post('/conversation', conversation);
 }
 
+export function storeGroup(group) {
+    return api.post('conversation/group', group);
+}
+
 export function deleteConversation(conversationId) {
     return api.delete(`/conversation/${ conversationId }`);
 }

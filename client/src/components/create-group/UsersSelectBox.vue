@@ -6,7 +6,7 @@
             v-model="name"
             @keyup="searchUser"
             @focus="isOpen = true"
-            
+            :error="error"
         />
 
         <vue-scroll class="users-select-box__results" v-if="isOpen">
@@ -39,6 +39,7 @@ import UsersSearchMixin from '@/mixins/UsersSearch';
 export default {
     name: 'UsersSelectBox',
     mixins: [ UsersSearchMixin ],
+    props: [ 'value', 'error' ],
     components: {
         AppInput,
         UsersSearchResultsItem
@@ -49,13 +50,15 @@ export default {
     data() {
         return {
             isOpen: false,
-            selectedUsers: []
+            selectedUsers: [ ...this.value ]
         };
     },
     methods: {
         selectUser(user) {
             if (this.selectedUsers.findIndex(x => x._id == user._id) == -1) {
                 this.selectedUsers.push(user);
+
+                this.$emit('input', this.selectedUsers);
             }
         },
         hide() {

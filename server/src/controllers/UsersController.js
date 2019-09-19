@@ -1,6 +1,7 @@
 import User from '../models/User';
 import { Types } from 'mongoose';
-import { check, validationResult } from 'express-validator';
+import { check } from 'express-validator';
+import { isValidate, getValidationErrors } from '../helpers/validation';
 import emailValidator from 'email-validator';
 import passport from '../auth/passport';
 import crypto from 'crypto';
@@ -168,26 +169,4 @@ export default {
             return res.status(200).send('Password updated');
         }
     }
-}
-
-function isValidate(req) {
-    const errors = validationResult(req);
-    
-    return ! errors.array().filter(err => err.msg != 'Invalid value').length;
-}
-
-function getValidationErrors(req) {
-    const parseErrors = errors => {
-        const result = {};
-        errors.map(err => {
-            if (err.msg != 'Invalid value') {
-                result[err.param] = err.msg
-            }
-        });
-
-        return result;
-    };
-
-    const errors = validationResult(req);
-    return { errors: parseErrors(errors.array()) };
 }
