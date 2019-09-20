@@ -1,7 +1,7 @@
 <template>
-    <div class="messages-receiver-info" v-if="receiver">
-        <img class="messages-receiver-info__picture" :src="receiver.avatar">
-        <div class="messages-receiver-info__name">{{ receiver.name }}</div>
+    <div class="messages-receiver-info" v-if="loaded">
+        <img class="messages-receiver-info__picture" :src="avatar">
+        <div class="messages-receiver-info__name">{{ name }}</div>
     </div>
 </template>
 
@@ -12,16 +12,23 @@ export default {
     name: 'MessagesReceiverInfo',
     data() {
         return {
-            receiver: null
+            loaded: null,
+            name: '',
+            avatar: ''
         }
     },
     mounted() {
         EventBus.$on('conversationSelected', conversation => {
-            this.receiver = conversation.members[0];
+            this.name = conversation.group ? conversation.groupName : conversation.members[0].name;
+            this.avatar = conversation.group ? conversation.groupImage : conversation.members[0].avatar;
+            this.loaded = true;
         });
 
-        EventBus.$on('newConversation', user => {
-            this.receiver = user;
+        EventBus.$on('newConversation', ({ name, avatar }) => {
+            this.name = name;
+            this.avatar = avatar;
+
+            this.loaded = true;
         });
     }
 }

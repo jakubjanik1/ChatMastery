@@ -52,6 +52,7 @@ export default {
             const response = await storeGroup({
                 group: true,
                 groupName: this.form.groupName,
+                groupImage: 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png',
                 members: this.form.members
             });
 

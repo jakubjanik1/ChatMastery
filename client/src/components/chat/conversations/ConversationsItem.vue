@@ -58,7 +58,7 @@ export default {
         EventBus.$on('newConversation', ({ _id: userId }) => {
             this.isActive = false;
 
-            const conversationAlreadyExists = (this.conversation.members[0]._id == userId);
+            const conversationAlreadyExists = (this.conversation.members[0]._id == userId && this.conversation.memebers.length <= 2);
             if (conversationAlreadyExists) {
                 this.emitConversationSelected();
             }
@@ -82,13 +82,13 @@ export default {
             return this.conversation.group ? this.conversation.groupName : this.conversation.members[0].name;
         },
         unreadMessages() {
-            return this.conversation.unreadMessages;
+            return this.conversation.group ? 0 : this.conversation.unreadMessages;
         }, 
         avatar() {
-            return this.conversation.members[0].avatar;
+            return this.conversation.group ? this.conversation.groupImage : this.conversation.members[0].avatar;
         },
         active() {
-            return this.conversation.members[0].active;
+            return this.conversation.members.filter(member => member.active).length > 0;
         }
     },
     methods: {
@@ -125,8 +125,10 @@ export default {
             }
         },
         userStatusChanged({ userId, status }) {
-            if (userId == this.conversation.members[0]._id) {
-                this.conversation.members[0].active = status;
+            const userIndex = this.conversation.members.findIndex(user => user._id == userId);
+            
+            if (userIndex != -1) {
+                this.conversation.members[userIndex].active = status;
             }
         }
     }

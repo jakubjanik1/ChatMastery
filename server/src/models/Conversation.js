@@ -11,6 +11,9 @@ const ConversationSchema = new Schema({
     },
     groupName: {
         type: String
+    },
+    groupImage: {
+        type: String
     }
 });
 

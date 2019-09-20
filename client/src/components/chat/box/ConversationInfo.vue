@@ -7,8 +7,8 @@
             @click="emitReturnToConversations"
         />
 
-        <div class="conversation-info__receiver">{{ receiver.name }}</div>
-        <div class="conversation-info__active" v-show="receiver.active"></div>
+        <div class="conversation-info__name">{{ name }}</div>
+        <div class="conversation-info__active" v-show="active"></div>
     </div>
 </template>
 
@@ -23,16 +23,26 @@ export default {
     },
     data() {
         return {
-            receiver: ''
+            userId: null,
+            name: '',
+            active: false
         }
     },
     created() {
-        EventBus.$on('conversationSelected', ({ members: receiver }) => {
-            this.receiver = receiver[0];
+        EventBus.$on('conversationSelected', (conversation) => {
+            if (conversation.group) {
+                this.name = conversation.groupName;
+                this.active = conversation.members.filter(member => member.active).length > 0;
+            } else {
+                this.name = conversation.memebers[0].name;
+                this.active = conversation.members[0].active;
+                this.userId = conversation.members[0]._id;
+            } 
         });
 
         EventBus.$on('newConversation', user => {
-            this.receiver = user;
+            this.name = user.name;
+            this.active = user.active;
         });
     },
     methods: {
@@ -42,8 +52,8 @@ export default {
     },
     sockets: {
         userStatusChanged({ userId, status }) {
-            if (userId == this.receiver._id) {
-                this.receiver.active = status;
+            if (userId == this.userId) {
+                this.active = status;
             }
         }
     }
@@ -69,7 +79,7 @@ export default {
             }
         }
 
-        &__receiver {
+        &__name {
             color: var(--primary-text-color);
             font-weight: 600;
         }
