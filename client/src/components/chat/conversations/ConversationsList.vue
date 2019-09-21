@@ -123,11 +123,7 @@ export default {
         
         @media (max-width: 900px) {
             border-right: 0;
-            height: calc((var(--vh, 1vh) * 100) - (160px));
-
-            &__create-group {
-                bottom: 24px;
-            }
+            height: calc((var(--vh, 1vh) * 100) - (170px));
         }
     }
 </style>

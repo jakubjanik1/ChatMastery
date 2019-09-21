@@ -34,7 +34,7 @@ export default {
                 this.name = conversation.groupName;
                 this.active = conversation.members.filter(member => member.active).length > 0;
             } else {
-                this.name = conversation.memebers[0].name;
+                this.name = conversation.members[0].name;
                 this.active = conversation.members[0].active;
                 this.userId = conversation.members[0]._id;
             } 
