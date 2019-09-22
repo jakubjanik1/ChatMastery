@@ -20,7 +20,7 @@
         </div>
 
         <app-button class="conversations__create-group" @click="showCreateGroup = true">Create group</app-button>
-        <create-group :show="showCreateGroup" @close="showCreateGroup = false" />
+        <create-group :show="showCreateGroup" @close="createGroupClosed" />
     </div>
 </template>
 
@@ -63,6 +63,10 @@ export default {
 
             const response = await fetchConversations(userId);
             this.conversations = response.data;
+        },
+        createGroupClosed() {
+            this.showCreateGroup = false;
+            this.getConversations();
         }
     },
     watch: {

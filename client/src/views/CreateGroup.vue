@@ -1,15 +1,15 @@
 <template>
-    <app-modal :show="show" @close="$emit('close')" class="create-group"> 
+    <app-modal :show="show" @close="close" class="create-group"> 
         <app-input
             class="create-group__input"
             placeholder="Group name"
-            v-model="form.groupName"
+            v-model="group.name"
             :error="errors.groupName"
         />
 
         <users-select-box 
             class="create-group__input" 
-            v-model="form.members" 
+            v-model="group.members" 
             :error="errors.members"
         />
 
@@ -40,8 +40,8 @@ export default {
     },
     data() {
         return {
-            form: {
-                groupName: '',
+            group: {
+                name: '',
                 members: [ this.$root.user ]  
             },
             errors: {}
@@ -51,9 +51,9 @@ export default {
         async storeGroup() {
             const response = await storeGroup({
                 group: true,
-                groupName: this.form.groupName,
+                groupName: this.group.name,
                 groupImage: 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png',
-                members: this.form.members
+                members: this.group.members.map(member => member._id)
             });
 
             if (response.data.errors) {
@@ -68,8 +68,15 @@ export default {
                     author: this.$root.user._id
                 });
 
-                this.$emit('close');
+                this.close();
             }
+        },
+        close() {
+            this.group.name = '';
+            this.group.members = [ this.$root.user ];
+            this.errors = {};
+
+            this.$emit('close');
         }
     }
 }
@@ -87,8 +94,12 @@ export default {
             }
         }
 
-        &__button {
-            margin-top: 134px;
+
+       &__button {
+            margin: {
+                top: 160px;
+                bottom: 16px;
+            }
         }
     }
 </style>

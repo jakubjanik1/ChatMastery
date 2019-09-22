@@ -15,6 +15,7 @@
                 :key="user._id" 
                 :user="user" 
                 @click="selectUser(user)"
+                :selected="isSelected(user)"
             />
             
         </vue-scroll>
@@ -55,14 +56,27 @@ export default {
     },
     methods: {
         selectUser(user) {
-            if (this.selectedUsers.findIndex(x => x._id == user._id) == -1) {
-                this.selectedUsers.push(user);
+            const foundIndex = this.selectedUsers.findIndex(selectedUser => selectedUser._id == user._id);
 
-                this.$emit('input', this.selectedUsers);
+            if (foundIndex == -1) {
+                this.selectedUsers.push(user);
+            } else {
+                this.selectedUsers.splice(foundIndex, 1);
             }
+
+            this.$emit('input', this.selectedUsers);
+        },
+        isSelected(user) {
+            return this.selectedUsers.filter(selectedUser => selectedUser._id == user._id).length;
         },
         hide() {
+            this.name = '';
             this.isOpen = false;
+        }
+    },
+    watch: {
+        value() {
+            this.selectedUsers = [ ...this.value ];
         }
     }
 }
@@ -91,6 +105,10 @@ export default {
             width: calc(100% - 32px) !important;
             height: 100%;
             background: var(--primary-background-color);
+
+            &--selected {
+                background: #009ef7;
+            }
         }
     }
 </style>

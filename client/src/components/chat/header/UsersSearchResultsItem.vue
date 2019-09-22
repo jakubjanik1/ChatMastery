@@ -1,5 +1,5 @@
 <template>
-    <div class="users-search-results-item" @click="$emit('click')">
+    <div class="users-search-results-item" :class="{ 'users-search-results-item--selected' : selected }" @click="$emit('click')">
         <div 
             class="users-search-results-item__profile" 
             :class="{ 'users-search-results-item__profile--active' : user.active }"
@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'UsersSearchResultsItem',
-    props: [ 'user' ]
+    props: [ 'user', 'selected' ]
 }
 </script>
 
@@ -56,7 +56,7 @@ export default {
             font-weight: 600;
         }
 
-         &:hover {
+         &:hover, &--selected {
             background: #009ef7;
             cursor: pointer;
             border-radius: 2px;

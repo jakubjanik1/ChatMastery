@@ -18,7 +18,7 @@
             label 
         />
 
-        <app-button @click="update">Save</app-button>
+        <app-button class="profile__button" @click="update">Save</app-button>
 
         <div class="profile__updating" v-if="isUpdating">
             <loading color="#009ef7" size="47px" />
@@ -100,6 +100,10 @@ export default {
     .profile {
         &__input {
             width: 85%;
+        }
+
+        &__button {
+            margin-bottom: 32px;
         }
 
         &__updating {
