@@ -22,11 +22,24 @@
 
         <vue-scroll class="users-select-box__selected">
             <users-search-results-item
+                class="users-select-box__selected__item"
                  v-for="user in selectedUsers" 
                  :key="user._id"
                  :user="user"
-            />
-
+                 @mouseover="onMouseOver"
+                 @mouseleave="onMouseLeave"
+            >
+                <delete-icon 
+                    class="users-select-box__selected__delete" 
+                    fillColor="#c3c4c4" 
+                    ref="delete" 
+                    title="Delete user"
+                    @click="deleteUser(user._id)"
+                    v-if="user._id != $root.user._id"
+                />
+            </users-search-results-item>
+            
+            
         </vue-scroll>
     </div>
 </template>
@@ -36,6 +49,7 @@ import AppInput from '@/components/ui/AppInput';
 import UsersSearchResultsItem from '@/components/chat/header/UsersSearchResultsItem';
 import ClickOutside from 'vue-click-outside';
 import UsersSearchMixin from '@/mixins/UsersSearch';
+import DeleteIcon from 'vue-material-design-icons/Delete';
 
 export default {
     name: 'UsersSelectBox',
@@ -43,7 +57,8 @@ export default {
     props: [ 'value', 'error' ],
     components: {
         AppInput,
-        UsersSearchResultsItem
+        UsersSearchResultsItem,
+        DeleteIcon
     },
     directives: {
         ClickOutside
@@ -66,12 +81,24 @@ export default {
 
             this.$emit('input', this.selectedUsers);
         },
+        deleteUser(id) {
+            this.selectedUsers = this.selectedUsers.filter(user => user._id != id);
+
+            this.$emit('input', this.selectedUsers);
+        },
         isSelected(user) {
             return this.selectedUsers.filter(selectedUser => selectedUser._id == user._id).length;
         },
         hide() {
             this.name = '';
+            this.foundUsers = [];
             this.isOpen = false;
+        },
+        onMouseOver(event) {
+            event.target.children[2].firstChild.style.fill = '#fff';
+        },
+        onMouseLeave() {
+            event.target.children[2].firstChild.style.fill = '#c3c4c4';
         }
     },
     watch: {
@@ -94,6 +121,17 @@ export default {
             border-radius: 2px;
             margin-top: 32px;
             background: var(--secondary-background-color);
+
+            &__item {
+                position: relative;
+            }
+            
+            &__delete {
+                position: absolute;
+                height: 24px;
+                bottom: calc(50% - 12px);
+                right: 20px;
+            }
         }
         
         &__results {

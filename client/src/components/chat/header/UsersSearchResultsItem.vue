@@ -1,5 +1,5 @@
 <template>
-    <div class="users-search-results-item" :class="{ 'users-search-results-item--selected' : selected }" @click="$emit('click')">
+    <div class="users-search-results-item" :class="{ 'users-search-results-item--selected' : selected }" v-on="$listeners">
         <div 
             class="users-search-results-item__profile" 
             :class="{ 'users-search-results-item__profile--active' : user.active }"
@@ -8,6 +8,7 @@
         </div>
 
         <div class="users-search-results-item__name">{{ user.name }}</div>
+        <slot />
     </div>    
 </template>
 

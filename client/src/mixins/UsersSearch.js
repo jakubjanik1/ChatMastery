@@ -15,7 +15,7 @@ export default {
             }
 
             const response = await search(this.name);
-            this.foundUsers = response.data;
+            this.foundUsers = response.data.filter(({ _id }) => _id != this.$root.user._id);
         }
     }
 }
