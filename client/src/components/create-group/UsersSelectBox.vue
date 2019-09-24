@@ -97,7 +97,7 @@ export default {
         onMouseOver(event) {
             event.target.children[2].firstChild.style.fill = '#fff';
         },
-        onMouseLeave() {
+        onMouseLeave(event) {
             event.target.children[2].firstChild.style.fill = '#c3c4c4';
         }
     },

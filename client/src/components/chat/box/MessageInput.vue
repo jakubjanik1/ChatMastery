@@ -1,7 +1,7 @@
 <template>
     <div class="message-input" :class="{ 'message-input--invisible' : !isVisible }">
         <attachment-icon 
-            class="message-input__icon message-input__icon--attachment" 
+            class="message-input__icon" 
             fillColor="#c3c4c4" 
             :size="28" 
             @click="openImageInput"
@@ -143,7 +143,7 @@ export default {
             this.text += emoji.native;
         },
         hideEmojiPicker(event) {
-            const path = event.path.slice(0, event.path.length - 2);
+            const path = event.composedPath().slice(0, event.composedPath().length - 2);
 
             const isOutsideEmojiPicker = ! path.some(elem => {
                return [...elem.classList].includes('message-input__emoji-picker')
@@ -242,7 +242,7 @@ export default {
         }
 
         &__image {
-            width: 26px;
+            width: 0;
             height: 28px;
 
             &::before {
@@ -267,11 +267,6 @@ export default {
         &__icon {
             cursor: pointer;
             height: 28px;
-
-            &--attachment {
-                position: absolute;
-                left: 16px;
-            }
 
             &--emoji {
                 margin-left: 6px;

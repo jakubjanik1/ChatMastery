@@ -7,7 +7,8 @@
 
             <messages-item 
                 :key="message._id"
-                v-for="message in messages"
+                v-for="(message, index) in messages"
+                :class="{ 'last' : index == messages.length - 1 }"
                 :message="message"
             />
         </vue-scroll>
@@ -89,9 +90,7 @@ export default {
             this.isLoading = false;
         },
         scrollDown() {
-            this.$refs.scroll.scrollBy({
-                dy: 1000000000000
-            });
+            this.$refs.scroll.scrollIntoView('.last', 0);
         },
         async handleScroll(scroll) {
             const { scrollHeight, scrollTop, clientHeight } = this.$refs.scroll.$el.firstChild;
