@@ -1,5 +1,7 @@
 <template>
-    <app-modal :show="show" @close="close" class="create-group"> 
+    <app-modal :show="show" @close="close" class="create-group" :loading="loading">
+        <edit-photo :photo="group.image" @change="changePhoto" />
+
         <app-input
             class="create-group__input"
             placeholder="Group name"
@@ -23,6 +25,8 @@ import AppInput from '@/components/ui/AppInput';
 import AppButton from '@/components/ui/AppButton';
 import UsersSelectBox from '@/components/create-group/UsersSelectBox';
 import { storeGroup, storeMessage } from '@/services/ChatService';
+import { uploadImage } from '@/services/UploadService';
+import EditPhoto from '@/components/common/EditPhoto';
 
 export default {
     name: 'CreateGroup',
@@ -36,23 +40,39 @@ export default {
         AppModal,
         AppInput,
         AppButton,
-        UsersSelectBox
+        UsersSelectBox,
+        EditPhoto
     },
     data() {
         return {
             group: {
+                image: 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png',
                 name: '',
                 members: [ this.$root.user ]  
             },
-            errors: {}
+            errors: {},
+            loading: false
         };
     },
     methods: {
+        changePhoto(image) {
+            this.group.image = image;
+        },
+        async storeImage() {
+            if (this.group.image instanceof Object) {
+                const response = await uploadImage(this.group.image, 'groups');
+                this.group.image = response.data.url;
+            }
+        },
         async storeGroup() {
+            this.loading = true;
+            
+            await this.storeImage();
+
             const response = await storeGroup({
                 group: true,
                 groupName: this.group.name,
-                groupImage: 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png',
+                groupImage: this.group.image,
                 members: this.group.members.map(member => member._id)
             });
 
@@ -70,6 +90,8 @@ export default {
 
                 this.close();
             }
+
+            this.loading = false;
         },
         close() {
             this.group.name = '';
@@ -97,8 +119,8 @@ export default {
 
        &__button {
             margin: {
-                top: 160px;
-                bottom: 16px;
+                top: 32px;
+                bottom: 32px;
             }
         }
     }

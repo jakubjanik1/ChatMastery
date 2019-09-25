@@ -1,5 +1,5 @@
 <template>
-    <app-modal :show="show" @close="$emit('close')">
+    <app-modal :show="show" @close="$emit('close')" :loading="isUpdating">
         <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
 
         <app-input 
@@ -18,20 +18,14 @@
             label 
         />
 
-        <app-button class="profile__button" @click="update">Save</app-button>
-
-        <div class="profile__updating" v-if="isUpdating">
-            <loading color="#009ef7" size="47px" />
-            <span>Please waiting...</span>
-        </div>
+        <app-button class="profile__button" @click="update">Save</app-button>        
     </app-modal>
 </template>
 
 <script>
-import EditPhoto from '@/components/profile/EditPhoto';
+import EditPhoto from '@/components/common/EditPhoto';
 import { uploadImage } from '@/services/UploadService';
 import { update } from '@/services/UsersService';
-import Loading from 'vue-spinner/src/ClipLoader';
 import AppInput from '@/components/ui/AppInput';
 import AppModal from '@/components/ui/AppModal';
 import AppButton from '@/components/ui/AppButton'
@@ -46,7 +40,6 @@ export default {
     },
     components: {
         EditPhoto,
-        Loading,
         AppInput,
         AppModal,
         AppButton
@@ -106,24 +99,6 @@ export default {
             margin-bottom: 32px;
         }
 
-        &__updating {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #ffffffe0;
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-
-            & > span {
-                font: {
-                    size: 16px;
-                    weight: 600
-                }
-                margin-top: 6px;
-            }
-        }
+       
     }
 </style>

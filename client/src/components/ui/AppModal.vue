@@ -10,19 +10,26 @@
             />
 
             <slot />
+
+            <div class="modal__loading" v-show="loading">
+                <loading color="#009ef7" size="47px" />
+                <span>Please waiting...</span>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import CloseIcon from 'vue-material-design-icons/Close';
+import Loading from 'vue-spinner/src/ClipLoader';
 
 export default {
     name: 'AppModal',
     components: {
-        CloseIcon
+        CloseIcon,
+        Loading
     },
-    props: [ 'show' ],
+    props: [ 'show', 'loading' ],
     methods: {
         close() {
             this.$emit('close');
@@ -70,6 +77,26 @@ export default {
 
             &:hover {
                 cursor: pointer;
+            }
+        }
+
+        &__loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffffe0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+
+            & > span {
+                font: {
+                    size: 16px;
+                    weight: 600
+                }
+                margin-top: 6px;
             }
         }
 

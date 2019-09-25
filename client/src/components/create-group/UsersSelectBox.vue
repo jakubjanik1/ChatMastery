@@ -26,8 +26,6 @@
                  v-for="user in selectedUsers" 
                  :key="user._id"
                  :user="user"
-                 @mouseover="onMouseOver"
-                 @mouseleave="onMouseLeave"
             >
                 <delete-icon 
                     class="users-select-box__selected__delete" 
@@ -93,12 +91,6 @@ export default {
             this.name = '';
             this.foundUsers = [];
             this.isOpen = false;
-        },
-        onMouseOver(event) {
-            event.target.children[2].firstChild.style.fill = '#fff';
-        },
-        onMouseLeave(event) {
-            event.target.children[2].firstChild.style.fill = '#c3c4c4';
         }
     },
     watch: {
@@ -112,12 +104,10 @@ export default {
 <style lang="scss" scoped>
     .users-select-box {
         position: relative;
-        height: 100%;
-        max-height: 50%;
 
         &__selected {
             border: 1px solid var(--primary-border-color);
-            height: 100%;
+            height: 250px !important;
             border-radius: 2px;
             margin-top: 32px;
             background: var(--secondary-background-color);
@@ -141,7 +131,7 @@ export default {
             left: 16px;
             z-index: 1;
             width: calc(100% - 32px) !important;
-            height: 100%;
+            height: 67% !important;
             background: var(--primary-background-color);
 
             &--selected {
