@@ -32,7 +32,9 @@ export default {
     props: [ 'show', 'loading' ],
     methods: {
         close() {
-            this.$emit('close');
+            if (! this.loading) {
+                this.$emit('close');
+            }
         }
     }
 }

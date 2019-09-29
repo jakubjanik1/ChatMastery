@@ -37,6 +37,12 @@ export default {
             this.url = URL.createObjectURL(this.image);
 
             this.$emit('change', this.image);
+        },
+        reload() {
+            this.image = null;
+            this.url = this.photo;
+
+            this.$refs.photo.value = '';
         }
     }
 }

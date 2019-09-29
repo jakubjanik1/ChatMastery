@@ -5,6 +5,9 @@ import VueScroll from 'vuescroll';
 import Vuebar from 'vuebar';
 import { IconHoverDirective } from './directives/iconHover';
 import Vue2TouchEvents from 'vue2-touch-events';
+import Vuelidate from 'vuelidate';
+
+Vue.use(Vuelidate);
 
 Vue.use(Vue2TouchEvents);
 

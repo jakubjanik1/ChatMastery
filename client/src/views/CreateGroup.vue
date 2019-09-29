@@ -1,6 +1,11 @@
 <template>
-    <app-modal :show="show" @close="close" class="create-group" :loading="loading">
-        <edit-photo :photo="group.image" @change="changePhoto" />
+    <app-modal 
+        :show="show" 
+        @close="close" 
+        class="create-group" 
+        :loading="loading"
+    >
+        <edit-photo :photo="group.image" @change="changePhoto" ref="photo" />
 
         <app-input
             class="create-group__input"
@@ -27,6 +32,9 @@ import UsersSelectBox from '@/components/create-group/UsersSelectBox';
 import { storeGroup, storeMessage } from '@/services/ChatService';
 import { uploadImage } from '@/services/UploadService';
 import EditPhoto from '@/components/common/EditPhoto';
+import { required, minLength } from 'vuelidate/lib/validators';
+
+const DEFAULT_GROUP_IMAGE = 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png';
 
 export default {
     name: 'CreateGroup',
@@ -46,13 +54,22 @@ export default {
     data() {
         return {
             group: {
-                image: 'https://res.cloudinary.com/djc9jias4/image/upload/v1568965385/chatmastery/r5zqvlvyavmlhuyhgaqe.png',
+                image: DEFAULT_GROUP_IMAGE,
                 name: '',
                 members: [ this.$root.user ]  
             },
             errors: {},
             loading: false
         };
+    },
+    validations: {
+        group: {
+            name: { required },
+            members: {
+                required,
+                minLength: minLength(3)
+            }
+        }
     },
     methods: {
         changePhoto(image) {
@@ -67,7 +84,9 @@ export default {
         async storeGroup() {
             this.loading = true;
             
-            await this.storeImage();
+            if (! this.$v.$invalid) {
+                await this.storeImage();
+            }
 
             const response = await storeGroup({
                 group: true,
@@ -97,8 +116,15 @@ export default {
             this.group.name = '';
             this.group.members = [ this.$root.user ];
             this.errors = {};
+            this.group.image = DEFAULT_GROUP_IMAGE;
 
             this.$emit('close');
+            this.$refs.photo.reload();
+        }
+    },
+    watch: {
+        show() {
+            this.$refs.photo.reload();
         }
     }
 }

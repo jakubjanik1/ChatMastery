@@ -1,6 +1,6 @@
 <template>
-    <app-modal :show="show" @close="$emit('close')" :loading="isUpdating">
-        <edit-photo :photo="$root.user.avatar" @change="changePhoto" />
+    <app-modal :show="show" @close="close" :loading="isUpdating">
+        <edit-photo :photo="$root.user.avatar" @change="changePhoto" ref="photo" />
 
         <app-input 
             class="profile__input" 
@@ -29,6 +29,7 @@ import { update } from '@/services/UsersService';
 import AppInput from '@/components/ui/AppInput';
 import AppModal from '@/components/ui/AppModal';
 import AppButton from '@/components/ui/AppButton'
+import { required, email, requiredIf } from 'vuelidate/lib/validators';
 
 export default {
     name: 'Profile',
@@ -46,12 +47,33 @@ export default {
     },
     data() {
         return {
-            user: {},
+            user: { 
+                _id: '',
+                name: '',
+                email: '',
+                avatar: this.$root.user.avatar
+            },
             errors: {},
             isUpdating: false
         };
     },
+    validations: {
+        user: {
+            name: { required },
+            email: {
+                email,
+                required: requiredIf(function(email) {
+                    return ! this.user.socialAuth;
+                })
+            }
+        }
+    },
     methods: {
+        close() {
+            this.$emit('close');
+
+            this.$refs.photo.reload();
+        },
         changePhoto(image) {
             this.user.avatar = image;
         },
@@ -64,7 +86,9 @@ export default {
         async update() {
             this.isUpdating = true;
 
-            await this.uploadImage();
+            if (! this.$v.$invalid) {
+                await this.uploadImage();
+            }
 
             const response = await update(this.user._id, this.user);
             
@@ -81,7 +105,12 @@ export default {
     watch: {
         show() {
             this.errors = {};
-            this.user = { ...this.$root.user };
+
+            const { _id, name, email, avatar } = this.$root.user;
+            this.user._id = _id;
+            this.user.name = name;
+            this.user.email = email;
+            this.user.avatar = avatar;
 
             delete this.user.password;
         }
