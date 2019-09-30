@@ -1,14 +1,19 @@
 <template>
-     <div class="image-preview" v-if="show" @click="close">
+     <div class="image-preview" v-if="show" @click="onClickOutside">
         <div class="image-preview__wrapper">
             <img class="image-preview__img" :src="img" >
+
             <close-icon class="image-preview__close" @click="close" />
+
+            <download-icon class="image-preview__download" @click="download" />
         </div>
     </div>
 </template>
 
 <script>
 import CloseIcon from 'vue-material-design-icons/Close';
+import DownloadIcon from 'vue-material-design-icons/Download';
+import { saveAs } from 'file-saver';
 
 export default {
     name: 'ImagePreview',
@@ -17,13 +22,20 @@ export default {
         img: String
     },
     components: {
-        CloseIcon
+        CloseIcon,
+        DownloadIcon
     },
     methods: {
-        close(event) {
-            if (event.target.className != 'image-preview__wrapper') {
+        onClickOutside(event) {
+            if (! event.composedPath().filter(el => el.className == 'image-preview__wrapper').length) {
                 this.$emit('close');
             }
+        },
+        close() {
+            this.$emit('close');
+        },
+        download() {
+            saveAs(this.img);
         }
     }
 }
@@ -54,10 +66,8 @@ export default {
             pointer-events: none;
         }
 
-        &__close {
+        %image-link {
             position: absolute;
-            top: -12px;
-            right: -12px;
             color: #fff;
             height: 18px;
             width: 18px;
@@ -72,6 +82,18 @@ export default {
                 transition: .3s ease-in-out;
                 background: darken(#009ef7, 5%);
             }
+        }
+
+        &__close {
+            @extend %image-link;
+            top: -12px;
+            right: -12px;
+        }
+
+        &__download {
+            @extend %image-link;
+            bottom: 12px;
+            left: calc(50% - 13px);
         }
     }
 </style>
