@@ -7,6 +7,6 @@ export default {
             { folder: `${ process.env.CLOUDINARY_MAIN_FOLDER }/${ req.body.folder }` }
         );
     
-        return res.json({ url: result.url });
+        return res.json({ url: result.secure_url });
     }
 }
