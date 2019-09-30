@@ -1,5 +1,5 @@
 <template>
-    <div class="overlay" v-show="show">
+    <div class="overlay" v-if="show">
         <div class="modal">
             <close-icon 
                 class="modal__close" 
@@ -11,7 +11,7 @@
 
             <slot />
 
-            <div class="modal__loading" v-show="loading">
+            <div class="modal__loading" v-if="loading">
                 <loading color="#009ef7" size="47px" />
                 <span>Please waiting...</span>
             </div>

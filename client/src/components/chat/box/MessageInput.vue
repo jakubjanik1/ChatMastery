@@ -293,6 +293,7 @@ export default {
         @media (max-width: 900px) {
             padding: 0 12px 0 12px;
             height: 50px;
+            width: calc(100vw - 24px);
 
             &__input::placeholder {
                 font-size: 13px;
