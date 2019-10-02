@@ -19,6 +19,7 @@
             v-if="showScrollDownButton" 
             fillColor="#c3c4c4" 
             :size="30" 
+            title=""
         />
     </div>
 </template>

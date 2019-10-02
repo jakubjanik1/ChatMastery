@@ -31,7 +31,7 @@
                     class="users-select-box__selected__delete" 
                     fillColor="#c3c4c4" 
                     ref="delete" 
-                    title="Delete user"
+                    title=""
                     @click="deleteUser(user._id)"
                     v-if="user._id != $root.user._id"
                 />

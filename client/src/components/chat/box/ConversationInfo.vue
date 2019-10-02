@@ -5,6 +5,7 @@
             :size="38"
             fillColor="#c3c4c4"
             @click="emitReturnToConversations"
+            title=""
         />
 
         <div class="conversation-info__name">{{ name }}</div>

@@ -29,6 +29,7 @@
             class="conversation__delete" 
             v-show="deleteIconVisible" 
             fillColor="#c3c4c4" 
+            title=""
             @click="deleteConversation"
         />
     </div>

@@ -13,7 +13,7 @@
         </div>
 
         <div class="users-search-results-list--start" v-else-if="searchedName == ''">
-            <users-search-icon :size="80" fillColor="#009ef7" />
+            <users-search-icon :size="80" fillColor="#009ef7" title="" />
             <div class="users-search-results-list__info">Search for chat friends</div>
             <div class="users-search-results-list__more">
                 <div>Find existing chat or start new one.</div>
@@ -22,7 +22,7 @@
         </div>
 
          <div class="users-search-results-list--not-found" v-else>
-            <users-not-found :size="80" fillColor="#009ef7" />
+            <users-not-found :size="80" fillColor="#009ef7" title="" />
             <div class="users-search-results-list__info">Nothing found</div>
             <div class="users-search-results-list__more">
                 <div>Nothing matched your search terms.</div>

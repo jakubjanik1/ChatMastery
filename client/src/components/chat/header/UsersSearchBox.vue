@@ -3,6 +3,7 @@
         <search-icon 
             class="users-search-box__icon"
             :size="27" 
+            title=""
             fillColor="#c3c4c4"
             v-show="! isOpen"
             @click="isOpen = true" 
@@ -24,6 +25,7 @@
             class="users-search-box__close"
             fillColor="#c3c4c4"
             :size="27"
+            title=""
             v-show="isOpen"
             @click="hideResultsList" 
             v-icon-hover

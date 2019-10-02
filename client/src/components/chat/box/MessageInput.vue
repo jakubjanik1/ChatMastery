@@ -6,6 +6,7 @@
             :size="28" 
             @click="openImageInput"
             v-icon-hover
+            title=""
         />
 
         <input 
@@ -20,6 +21,7 @@
             class="message-input__icon message-input__icon--emoji" 
             fillColor="#c3c4c4"
             :size="28" 
+            title=""
             @click="showEmojiPicker = !showEmojiPicker" 
             v-icon-hover
         />

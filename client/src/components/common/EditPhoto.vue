@@ -7,6 +7,7 @@
             fillColor="#fff" 
             :size="18" 
             @click="openFileDialog" 
+            title=""
         />
 
         <input type="file" ref="photo" @change="changePhoto">

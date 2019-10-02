@@ -88,6 +88,7 @@ export default {
 
         &__body--text {
             white-space: pre-line;
+            word-break: break-word;
         }
 
         &__body--image {

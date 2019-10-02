@@ -11,7 +11,7 @@
         </vue-scroll>
 
         <div class="conversations--empty" v-else-if="isEmpty">
-            <message-icon :size="80" fillColor="#009ef7" />
+            <message-icon :size="80" fillColor="#009ef7" title="" />
             <div class="conversations__info">No conversations, yet</div>
             <div class="conversations__more">
                 <div>No conversations in your inbox yet!</div>

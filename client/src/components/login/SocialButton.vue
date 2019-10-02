@@ -26,7 +26,7 @@ export default {
             <a class={`social-button social-button--${ this.type }`} 
                 href={`${ this.$baseUrl }/auth/${ this.type }`}
             >
-                <Icon class="social-button__icon" size={ 28 } />
+                <Icon class="social-button__icon" size={ 28 } title="" />
             </a> 
         );
     }

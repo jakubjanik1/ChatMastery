@@ -24,8 +24,18 @@
                 @click="togglePasswordVisibility"
                 v-icon-hover
             >
-                <show-icon v-if="showPassword" fillColor="#c3c4c4" :size="22" />
-                <hide-icon v-else fillColor="#c3c4c4" :size="22" />
+                <show-icon 
+                    v-if="showPassword" 
+                    fillColor="#c3c4c4" 
+                    :size="22"
+                    title=""
+                />
+                <hide-icon 
+                    v-else 
+                    fillColor="#c3c4c4" 
+                    :size="22" 
+                    title=""
+                />
             </div>
         </div>
         <div class="app-input__error" v-show="error">{{ error }}</div>

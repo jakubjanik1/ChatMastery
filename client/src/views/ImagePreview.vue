@@ -3,9 +3,9 @@
         <div class="image-preview__wrapper">
             <img class="image-preview__img" :src="img" >
 
-            <close-icon class="image-preview__close" @click="close" />
+            <close-icon class="image-preview__close" title="" @click="close" />
 
-            <download-icon class="image-preview__download" @click="download" />
+            <download-icon class="image-preview__download" title="" @click="download" />
         </div>
     </div>
 </template>

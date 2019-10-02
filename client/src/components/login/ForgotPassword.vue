@@ -25,6 +25,7 @@
                 class="login__button--loading" 
                 size="14px" 
                 color="#fff" 
+                title=""
                 :loading="recoveryEmailIsSending" 
             />
         </app-button>
