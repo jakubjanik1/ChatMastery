@@ -3,6 +3,7 @@
         class="conversation"
         :class="{ 'conversation--active' : isActive }"
         @click="emitConversationSelected"
+        @contextmenu="$emit('contextmenu', $event)"
         v-touch:swipe.left="showDeleteButton"
         v-touch:swipe.right="hideDeleteButton"
     >

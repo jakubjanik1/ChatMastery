@@ -19,6 +19,7 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-click-outside": "^1.0.7",
+    "vue-context": "^4.0.3",
     "vue-material-design-icons": "^3.3.1",
     "vue-socket.io": "^3.0.7",
     "vue-spinner": "^1.0.3",

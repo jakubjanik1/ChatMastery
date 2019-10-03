@@ -7,6 +7,7 @@
                 :key="conversation._id" 
                 v-for="conversation in conversations"
                 :conversation="conversation" 
+                @contextmenu.prevent="$refs.menu.open($event, conversation)"
             />
         </vue-scroll>
 
@@ -21,6 +22,12 @@
 
         <app-button class="conversations__create-group" @click="showCreateGroup = true">Create group</app-button>
         <create-group :show="showCreateGroup" @close="createGroupClosed" />
+
+        <vue-context ref="menu" class="conversations__menu">
+            <ul slot-scope="child">
+                <li @click="deleteConversation(child.data._id)">Delete</li>
+            </ul>
+        </vue-context>
     </div>
 </template>
 
@@ -32,6 +39,8 @@ import LoadingCircle from '@/components/common/LoadingCircle';
 import MessageIcon from 'vue-material-design-icons/MessageReplyText';
 import CreateGroup from '@/views/CreateGroup';
 import AppButton from '@/components/ui/AppButton';
+import { VueContext } from 'vue-context';
+import { deleteConversation } from '@/services/ChatService';
 
 export default {
     name: 'ConversationsList',
@@ -40,7 +49,8 @@ export default {
         LoadingCircle,
         MessageIcon,
         CreateGroup,
-        AppButton
+        AppButton,
+        VueContext
     },
     data() {
         return {
@@ -67,6 +77,9 @@ export default {
         createGroupClosed() {
             this.showCreateGroup = false;
             this.getConversations();
+        },
+        async deleteConversation(id) {
+            await deleteConversation(id);
         }
     },
     watch: {
@@ -123,6 +136,27 @@ export default {
             left: calc(50% - 78px);
             box-shadow: 0px 0px 21px 3px #403d3d45;
             font-size: 14px;
+        }
+
+        &__menu {
+            min-width: 80px;
+            text-align: center;
+            border: 1px solid var(--primary-border-color);
+            color: #9e9e9e;
+            padding: 6px;
+            box-shadow: 0px 0px 21px 3px #403d3d45;
+            cursor: pointer;
+            
+            &:hover {
+                background: #009ef7;
+                color: #fff;
+                border-color: #009ef7;
+            }
+
+            ul {
+                list-style: none;    
+                padding: 0;
+            }
         }
         
         @media (max-width: 900px) {
