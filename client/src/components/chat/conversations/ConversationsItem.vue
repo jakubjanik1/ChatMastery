@@ -60,7 +60,7 @@ export default {
         EventBus.$on('newConversation', ({ _id: userId }) => {
             this.isActive = false;
 
-            const conversationAlreadyExists = (this.conversation.members[0]._id == userId && this.conversation.memebers.length <= 2);
+            const conversationAlreadyExists = (this.conversation.members[0]._id == userId && this.conversation.members.length <= 2);
             if (conversationAlreadyExists) {
                 this.emitConversationSelected();
             }
