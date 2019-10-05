@@ -98,7 +98,6 @@ export default {
             border: 1px solid var(--primary-border-color);
             border-radius: 2px;
             z-index: 1;
-
             transition: 1s;
         }
 
@@ -124,7 +123,7 @@ export default {
             order: 2;
             justify-content: center;
             margin-right: 0;
-            margin: 8px 0;
+            margin: 10px 0 5px 0;
             width: auto;
         }
     }

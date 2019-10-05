@@ -96,10 +96,10 @@ export default {
 
         @media (max-width: 900px) {
             width: 100vw;
-            top: 170px;
+            top: 99px;
 
             &--found {
-                height: calc((var(--vh, 1vh) * 100) - (170px));
+                height: calc((var(--vh, 1vh) * 100) - (99px));
             }
         }
     }

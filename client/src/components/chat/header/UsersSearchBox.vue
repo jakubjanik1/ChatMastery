@@ -128,7 +128,7 @@ export default {
 
     @media (max-width: 900px) {
         .users-search-box {
-            margin: 8px 0 12px 0;
+            margin: 5px 0 10px 0;
             padding-left: 0;
             order: 3;
             position: static;

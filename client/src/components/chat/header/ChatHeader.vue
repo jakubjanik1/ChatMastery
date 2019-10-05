@@ -60,8 +60,7 @@ export default {
             align-items: center;
 
             &__logo {
-                order: 1;
-                margin: 12px 0 8px 0;
+                display: none;
             }
         }
     }

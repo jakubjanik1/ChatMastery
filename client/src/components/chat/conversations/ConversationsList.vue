@@ -132,7 +132,7 @@ export default {
 
         &__create-group {
             position: absolute;
-            bottom: 16px;
+            bottom: 14px;
             left: calc(50% - 78px);
             box-shadow: 0px 0px 21px 3px #403d3d45;
             font-size: 14px;
@@ -161,7 +161,7 @@ export default {
         
         @media (max-width: 900px) {
             border-right: 0;
-            height: calc((var(--vh, 1vh) * 100) - (170px));
+            height: calc((var(--vh, 1vh) * 100) - (99px));
         }
     }
 </style>
