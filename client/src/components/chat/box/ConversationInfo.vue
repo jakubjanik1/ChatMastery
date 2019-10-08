@@ -16,6 +16,7 @@
 <script>
 import EventBus from '@/helpers/EventBus';
 import ReturnIcon from 'vue-material-design-icons/ChevronLeft';
+import { isEmpty } from 'lodash';
 
 export default {
     name: 'ConversationInfo',
@@ -31,8 +32,8 @@ export default {
     },
     created() {
         EventBus.$on('conversationSelected', (conversation) => {
-            if (conversation.group) {
-                this.name = conversation.groupName;
+            if (! isEmpty(conversation.group)) {
+                this.name = conversation.group.name;
                 this.active = conversation.members.filter(member => member.active).length > 0;
             } else {
                 this.name = conversation.members[0].name;

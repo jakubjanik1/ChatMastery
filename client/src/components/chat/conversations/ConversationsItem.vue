@@ -41,6 +41,7 @@ import { formatDate } from '@/helpers';
 import EventBus from '@/helpers/EventBus';
 import DeleteIcon from 'vue-material-design-icons/Delete';
 import { deleteConversation } from '@/services/ChatService';
+import { isEmpty } from 'lodash';
 
 export default {
     name: 'ConversationsItem',
@@ -81,13 +82,13 @@ export default {
             }
         },
         name() {
-            return this.conversation.group ? this.conversation.groupName : this.conversation.members[0].name;
+            return isEmpty(this.conversation.group) ? this.conversation.members[0].name : this.conversation.group.name;
         },
         unreadMessages() {
-            return this.conversation.group ? 0 : this.conversation.unreadMessages;
+            return isEmpty(this.conversation.group) ? this.conversation.unreadMessages : 0;
         }, 
         avatar() {
-            return this.conversation.group ? this.conversation.groupImage : this.conversation.members[0].avatar;
+            return isEmpty(this.conversation.group) ? this.conversation.members[0].avatar : this.conversation.group.image;
         },
         active() {
             return this.conversation.members.filter(member => member.active).length > 0;

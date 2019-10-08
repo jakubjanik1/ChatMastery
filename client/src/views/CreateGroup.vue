@@ -11,7 +11,7 @@
             class="create-group__input"
             placeholder="Group name"
             v-model="group.name"
-            :error="errors.groupName"
+            :error="errors['group.name']"
         />
 
         <users-select-box 
@@ -89,9 +89,10 @@ export default {
             }
 
             const response = await storeGroup({
-                group: true,
-                groupName: this.group.name,
-                groupImage: this.group.image,
+                group: {
+                    name: this.group.name,
+                    image: this.group.image
+                },
                 members: this.group.members.map(member => member._id)
             });
 
@@ -124,7 +125,7 @@ export default {
     },
     watch: {
         show() {
-            this.$refs.photo.reload();
+            this.$refs.photo && this.$refs.photo.reload();
         }
     }
 }

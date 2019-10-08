@@ -32,6 +32,7 @@ import MessagesReceiverInfo from './MessagesReceiverInfo';
 import LoadingCircle from '@/components/common/LoadingCircle';
 import ArrowDownIcon from 'vue-material-design-icons/ArrowDown';
 import uniqBy from 'lodash/uniqBy';
+import imagesLoaded from 'imagesloaded';
 
 export default {
     name: 'MessagesList',

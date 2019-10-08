@@ -7,6 +7,7 @@
 
 <script>
 import EventBus from '@/helpers/EventBus';
+import { isEmpty } from 'lodash';
 
 export default {
     name: 'MessagesReceiverInfo',
@@ -19,8 +20,8 @@ export default {
     },
     mounted() {
         EventBus.$on('conversationSelected', conversation => {
-            this.name = conversation.group ? conversation.groupName : conversation.members[0].name;
-            this.avatar = conversation.group ? conversation.groupImage : conversation.members[0].avatar;
+            this.name = isEmpty(conversation.group) ? conversation.members[0].name : conversation.group.name;
+            this.avatar = isEmpty(conversation.group) ? conversation.members[0].avatar : conversation.group.image;
             this.loaded = true;
         });
 

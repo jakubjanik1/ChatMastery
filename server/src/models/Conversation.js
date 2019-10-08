@@ -6,14 +6,8 @@ const ConversationSchema = new Schema({
         ref: 'User'
     }],
     group: {
-        type: Boolean,
-        default: false
-    },
-    groupName: {
-        type: String
-    },
-    groupImage: {
-        type: String
+        name: String,
+        image: String,
     }
 });
 

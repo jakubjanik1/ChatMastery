@@ -93,7 +93,7 @@ export default {
     },
 
     validateGroup: [
-        check('groupName')
+        check('group.name')
             .not().isEmpty().withMessage('Group name is required'),
 
         check('members')
