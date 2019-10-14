@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
-import pug from 'pug';
-import juice from 'juice';
+import mjml2html from 'mjml';
+import fs from 'fs';
+import ejs from 'ejs';
 
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_PROVIDER,
@@ -11,8 +12,10 @@ const transporter = nodemailer.createTransport({
 });
 
 export function sendMail(options) {
-    options.html = pug.renderFile(`${ __dirname }/../../src/views/emails/${ options.template }.pug`, options.locals);
-    options.html = juice(options.html);
+    const mjml = fs.readFileSync(`${ __dirname }/../views/emails/${ options.template }.mjml`, 'utf-8');
+    const html = mjml2html(mjml).html;
 
+    options.html = ejs.render(html, options.locals);
+    
     return transporter.sendMail(options);
 };

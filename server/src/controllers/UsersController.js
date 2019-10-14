@@ -160,13 +160,13 @@ export default {
             const mailOptions = {
                 to: user.email,
                 from: 'ChatMastery',
-                subject: 'ChatMastery - password updated',
-                template: 'passwordUpdated'
+                subject: 'ChatMastery - password changed',
+                template: 'passwordChanged'
             };
     
             await sendMail(mailOptions);
             
-            return res.status(200).send('Password updated');
+            return res.status(200).send('Password changed');
         }
     }
 }
