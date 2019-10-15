@@ -17,6 +17,8 @@
             <span class="login__or">or</span>
         </div>
 
+        <div class="login__error" v-show="errors">{{ errors }}</div>
+
         <app-input 
             class="login__input" 
             v-model="form.email" 
@@ -28,8 +30,6 @@
             placeholder="Password" 
             type="password"
         />
-
-        <div class="login__error" v-show="error">{{ error }}</div>
         
         <app-button class="login__button" @click="login">Login with email</app-button>
 
@@ -54,25 +54,41 @@ export default {
                 email: '',
                 password: ''
             },
-            error: ''  
+            errors: ''  
         };
     },
     methods: {
         clear() {
             this.form.email = this.form.password = '';
 
-            this.error = '';
+            this.errors = '';
         },
         async login() {
             const response = await login(this.form);
 
             if (response.data.error) {
-                this.error = response.data.error;
+                this.errors = response.data.error;
             } else {
-                this.error = '';
+                this.errors = '';
                 location.reload();
             } 
         }
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    .login {
+        &__error {
+            background: #f44336;
+            box-sizing: border-box;
+            width: 100%;
+            color: #fff;
+            padding: 16px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 2px;
+        }
+    }
+</style>

@@ -145,14 +145,6 @@ export default {
             margin-top: 24px;
         }
 
-        &__error {
-            color: #f44336;
-            align-self: flex-start;
-            margin-top: 12px;
-            align-self: center;
-            margin-top: 18px;
-        }
-
         &__link {
             color: #3399FF;
             margin-top: 24px;

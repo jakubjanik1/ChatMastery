@@ -19,5 +19,19 @@ export default {
 
             this.$emit('changeTab', tab);
         }
+    },
+    watch: {
+        errors: {
+            handler(newValue) {
+                if (Object.entries(newValue).length) {
+                    setTimeout(() => {
+                        this.$parent.$refs.wrapper.style['min-height'] = `${ this.$parent.$refs.wrapper.scrollHeight }px`;
+                    }, 0);
+                } else {
+                    this.$parent.$refs.wrapper.style['min-height'] = '';
+                }
+            },
+            deep: true
+        }
     }
 }
