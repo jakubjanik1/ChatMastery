@@ -11,8 +11,12 @@
  
         <transition>
             <div class="user-info__options" v-show="showOptions">
-                <a class="user-info__option" @click.prevent="changeTheme" href="">Change theme</a>
-                <a class="user-info__option" @click.prevent="showProfile = true" href="">Profile</a>
+                <div class="user-info__option">
+                    Dark mode
+                    <toggle-button @change="changeTheme" />
+                </div>
+
+                <div class="user-info__option" @click="showProfile = true">Profile</div>
                 <a class="user-info__option" @click="logout" :href="`${ $baseUrl }/users/logout`">Logout</a>
             </div>
         </transition>
@@ -25,12 +29,14 @@
 import ArrowDownIcon from 'vue-material-design-icons/ChevronDown';
 import Profile from '@/views/Profile';
 import EventBus from '@/helpers/EventBus';
+import ToggleButton from '@/components/ui/ToggleButton';
 
 export default {
     name: 'UserInfo',
     components: {
         ArrowDownIcon,
-        Profile
+        Profile,
+        ToggleButton
     },
     data() {
         return {
@@ -93,7 +99,7 @@ export default {
             position: absolute;
             top: 40px;
             right: 5px;
-            width: 149px;
+            width: 160px;
             background: var(--primary-background-color);
             border: 1px solid var(--primary-border-color);
             border-radius: 2px;
@@ -103,18 +109,20 @@ export default {
 
         &__option {
             padding: 6px;
-            display: block;
+            display: flex;
             text-decoration: none;
-            text-align: center;
+            justify-content: center;
+            align-items: center;
             color: #9e9e9e;
             border-radius: 2px;
 
-            &:hover {
+            &:not(:first-child):hover {
                 background: #009ef7;
                 color: #fff;
+                cursor: pointer;
             }
 
-            &:not(:last-of-type) {
+            &:not(:last-child) {
                 border-bottom: 1px solid var(--primary-border-color);
             }
         }
