@@ -52,8 +52,13 @@ export default {
             this.showOptions = !this.showOptions;
         },
         hideOptions(e) {
+            const isDarkModeOption = e.composedPath().filter(el => {
+                return ! el.previousElementSibling && typeof el.className == 'string' && el.className.includes('option')
+            }).length;
+
             const isNotToggleButton = (e.target.textContent != 'Chevron Down icon');
-            if (isNotToggleButton) {
+
+            if (isNotToggleButton && ! isDarkModeOption) {
                 this.showOptions = false;
             }
         },
@@ -104,7 +109,6 @@ export default {
             border: 1px solid var(--primary-border-color);
             border-radius: 2px;
             z-index: 1;
-            transition: 1s;
         }
 
         &__option {

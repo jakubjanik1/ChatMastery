@@ -26,7 +26,6 @@ export default {
     },
     created() {
         EventBus.$on('changeTheme', () => {
-            console.log(1)
             this.theme = (this.theme == 'light') ? 'dark' : 'light';
         });
     },
