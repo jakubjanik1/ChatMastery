@@ -12,7 +12,11 @@ const transporter = nodemailer.createTransport({
 });
 
 export function sendMail(options) {
-    const mjml = fs.readFileSync(`${ __dirname }/../views/emails/${ options.template }.mjml`, 'utf-8');
+    let mjml = fs.readFileSync(`${ __dirname }/../views/emails/${ options.template }.mjml`, 'utf-8');
+    let layoutMjml = fs.readFileSync(`${ __dirname }/../views/emails/layout.mjml`, 'utf-8');
+
+    mjml = layoutMjml.replace('**CONTENT**', mjml);
+
     const html = mjml2html(mjml).html;
 
     options.html = ejs.render(html, options.locals);

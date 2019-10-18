@@ -1,0 +1,24 @@
+<mjml>
+    <mj-head>
+        <mj-style>
+            .main {
+                box-shadow: 0 3px 5px rgba(0, 0, 0, .05);
+            }    
+        </mj-style>
+    </mj-head>
+    <mj-body background-color="#f6f6f6">
+        <mj-section>
+            <mj-column width="100%">
+                <mj-image src="https://res.cloudinary.com/djc9jias4/image/upload/v1571035312/chatmastery/vo1wntex14iedzl9ydgc.png" width="198px"></mj-image>
+            </mj-column>
+        </mj-section>
+        <mj-section css-class="main" padding-bottom="0" padding-top="0">
+            <mj-column background-color="#fff" padding="32px">
+                **CONTENT**
+            </mj-column>
+        </mj-section>
+        <mj-section>
+            <mj-column></mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>
