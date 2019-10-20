@@ -1,4 +1,5 @@
 import { search } from '@/services/UsersService';
+import { take } from 'lodash';
 
 export default {
     data() {
@@ -15,7 +16,9 @@ export default {
             }
 
             const response = await search(this.name);
+
             this.foundUsers = response.data.filter(({ _id }) => _id != this.$root.user._id);
+            this.foundUsers = take(this.foundUsers, 10);
         }
     }
 }

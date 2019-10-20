@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <img class="login__logo" src="logo_light.png">
+        <img class="login__logo" src="@/assets/logo_light.png">
 
         <div class="login__wrapper" ref="wrapper" @submit.prevent>
             <forgot-password @changeTab="changeTab" :active="activeTab" />
