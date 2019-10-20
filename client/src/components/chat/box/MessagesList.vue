@@ -92,7 +92,9 @@ export default {
             this.isLoading = false;
         },
         scrollDown() {
-            this.$refs.scroll.scrollIntoView('.last', 0);
+             this.$refs.scroll.scrollBy({
+                dy: 100000000000000000
+            });
         },
         async handleScroll(scroll) {
             const { scrollHeight, scrollTop, clientHeight } = this.$refs.scroll.$el.firstChild;
