@@ -88,7 +88,7 @@ export default {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #ffffffe0;
+            background: var(--primary-background-color);
             position: absolute;
             top: 0;
             width: 100%;
@@ -100,6 +100,7 @@ export default {
                     weight: 600
                 }
                 margin-top: 6px;
+                color: var(--primary-text-color);
             }
         }
 
