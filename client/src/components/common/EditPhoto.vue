@@ -10,7 +10,12 @@
             title=""
         />
 
-        <input type="file" ref="photo" @change="changePhoto">
+        <input 
+            type="file" 
+            ref="photo" 
+            accept="image/*"
+            @change="changePhoto"
+        >
     </div>
 </template>
 
@@ -35,9 +40,12 @@ export default {
         },
         async changePhoto(event) {
             this.image = event.target.files[0];
-            this.url = URL.createObjectURL(this.image);
 
-            this.$emit('change', this.image);
+            if (this.image.type.match(/image\/.*/)) {
+                this.url = URL.createObjectURL(this.image);
+
+                this.$emit('change', this.image);
+            }
         },
         reload() {
             this.image = null;

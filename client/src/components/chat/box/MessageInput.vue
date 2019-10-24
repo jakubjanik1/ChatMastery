@@ -93,10 +93,12 @@ export default {
             const image = event.target.files[0];
             event.target.files = null;
 
-            const response = await uploadImage(image, 'messages');
-            this.image = response.data.url;
+            if (image.type.match(/image\/.*/)) {
+                const response = await uploadImage(image, 'messages');
+                this.image = response.data.url;
 
-            this.addMessage();
+                this.addMessage();
+            }
         },
         async addMessage() {
             const userId = this.$root.user._id;
