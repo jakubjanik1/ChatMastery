@@ -14,7 +14,7 @@
     "emoji-mart-vue-fast": "^5.4.15",
     "file-saver": "^2.0.2",
     "imagesloaded": "^4.1.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
